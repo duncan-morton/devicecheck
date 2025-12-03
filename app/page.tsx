@@ -19,10 +19,12 @@ export default function Home() {
             </p>
           </a>
 
-          <div className="bg-white p-8 rounded-lg shadow-md opacity-60">
-            <h2 className="text-2xl font-semibold mb-4">📹 Webcam Test</h2>
-            <p className="text-gray-600">Coming Soon</p>
-          </div>
+          <a href="/webcam-test" className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition">
+  <h2 className="text-2xl font-semibold mb-4">📹 Webcam Test</h2>
+  <p className="text-gray-600">
+    Test your webcam before calls with resolution check and grid overlay
+  </p>
+</a>
 
           <div className="bg-white p-8 rounded-lg shadow-md opacity-60">
             <h2 className="text-2xl font-semibold mb-4">⌨️ Keyboard Test</h2>
