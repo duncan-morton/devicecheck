@@ -11,7 +11,7 @@ export default function VolumeMeter({ stream, isActive }: VolumeMeterProps) {
   const [volume, setVolume] = useState(0)
   const audioContextRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
-  const animationFrameRef = useRef<number>()
+  const animationFrameRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     if (!stream || !isActive) {
