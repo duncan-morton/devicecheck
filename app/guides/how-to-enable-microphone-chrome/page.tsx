@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
-import { JsonLdScript } from '@/components/JsonLdScript'
+import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
