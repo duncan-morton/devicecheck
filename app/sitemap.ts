@@ -34,6 +34,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/guides/chromebook-microphone-not-working',
     '/guides/iphone-microphone-test',
     '/guides/android-microphone-test',
+    '/guides/mic-not-working-windows-11',
+    '/guides/mic-too-quiet',
+    '/guides/mic-static-or-crackling',
+    '/guides/mic-test-for-zoom',
     // Webcam guides
     '/guides/webcam-not-working',
     '/guides/webcam-not-detected-chrome',
@@ -45,6 +49,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/guides/webcam-too-dark-grainy',
     '/guides/webcam-lagging-low-fps',
     '/guides/external-webcam-not-recognised',
+    '/guides/webcam-quality-improve',
+    '/guides/laptop-camera-not-working',
     // Keyboard guides
     '/guides/keyboard-not-working',
     '/guides/keys-not-registering',
@@ -54,12 +60,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/guides/sticky-repeating-keys',
     '/guides/mechanical-keyboard-switch-test',
     '/guides/keyboard-ghosting-explained',
+    '/guides/keyboard-keys-not-working',
     // Screen guides
     '/guides/dead-pixel-test-guide',
     '/guides/how-to-fix-stuck-pixels',
     '/guides/screen-flickering',
     '/guides/screen-looks-washed-out',
-    '/guides/colour-calibration-basics'
+    '/guides/colour-calibration-basics',
+    '/guides/dead-vs-stuck-pixels',
+    '/guides/screen-flickering-fix'
   ]
 
   const routes = [
