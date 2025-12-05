@@ -3,14 +3,12 @@
 import { useState, useEffect } from 'react'
 import { Keyboard, Settings, Globe } from 'lucide-react'
 
-type LayoutType = 'ANSI' | 'ISO'
 type LanguageLayout = 'US' | 'UK' | 'DE' | 'FR' | 'ES' | 'IT'
 
 interface KeyLayout {
   code: string
   label: string
   width?: string
-  secondaryLabel?: string
 }
 
 const layouts: Record<LanguageLayout, Record<string, string>> = {
@@ -38,7 +36,7 @@ const layouts: Record<LanguageLayout, Record<string, string>> = {
     BracketLeft: '[', BracketRight: ']',
     KeyA: 'A', KeyS: 'S', KeyD: 'D', KeyF: 'F', KeyG: 'G',
     KeyH: 'H', KeyJ: 'J', KeyK: 'K', KeyL: 'L',
-    Semicolon: ';', Quote: "'",
+    Semicolon: ';', Quote: "'", Backslash: '#',
     KeyZ: 'Z', KeyX: 'X', KeyC: 'C', KeyV: 'V', KeyB: 'B',
     KeyN: 'N', KeyM: 'M', Comma: ',', Period: '.', Slash: '/'
   },
@@ -49,7 +47,7 @@ const layouts: Record<LanguageLayout, Record<string, string>> = {
     Minus: 'ß', Equal: '´',
     KeyQ: 'Q', KeyW: 'W', KeyE: 'E', KeyR: 'R', KeyT: 'T',
     KeyZ: 'Z', KeyU: 'U', KeyI: 'I', KeyO: 'O', KeyP: 'P',
-    BracketLeft: 'Ü', BracketRight: '+',
+    BracketLeft: 'Ü', BracketRight: '+', Backslash: '#',
     KeyA: 'A', KeyS: 'S', KeyD: 'D', KeyF: 'F', KeyG: 'G',
     KeyH: 'H', KeyJ: 'J', KeyK: 'K', KeyL: 'L',
     Semicolon: 'Ö', Quote: 'Ä',
@@ -63,7 +61,7 @@ const layouts: Record<LanguageLayout, Record<string, string>> = {
     Minus: ')', Equal: '=',
     KeyQ: 'A', KeyW: 'Z', KeyE: 'E', KeyR: 'R', KeyT: 'T',
     KeyY: 'Y', KeyU: 'U', KeyI: 'I', KeyO: 'O', KeyP: 'P',
-    BracketLeft: '^', BracketRight: '$',
+    BracketLeft: '^', BracketRight: '$', Backslash: '*',
     KeyA: 'Q', KeyS: 'S', KeyD: 'D', KeyF: 'F', KeyG: 'G',
     KeyH: 'H', KeyJ: 'J', KeyK: 'K', KeyL: 'L',
     Semicolon: 'M', Quote: 'ù',
@@ -77,7 +75,7 @@ const layouts: Record<LanguageLayout, Record<string, string>> = {
     Minus: "'", Equal: '¡',
     KeyQ: 'Q', KeyW: 'W', KeyE: 'E', KeyR: 'R', KeyT: 'T',
     KeyY: 'Y', KeyU: 'U', KeyI: 'I', KeyO: 'O', KeyP: 'P',
-    BracketLeft: '`', BracketRight: '+',
+    BracketLeft: '`', BracketRight: '+', Backslash: 'ç',
     KeyA: 'A', KeyS: 'S', KeyD: 'D', KeyF: 'F', KeyG: 'G',
     KeyH: 'H', KeyJ: 'J', KeyK: 'K', KeyL: 'L',
     Semicolon: 'ñ', Quote: '´',
@@ -91,7 +89,7 @@ const layouts: Record<LanguageLayout, Record<string, string>> = {
     Minus: "'", Equal: 'ì',
     KeyQ: 'Q', KeyW: 'W', KeyE: 'E', KeyR: 'R', KeyT: 'T',
     KeyY: 'Y', KeyU: 'U', KeyI: 'I', KeyO: 'O', KeyP: 'P',
-    BracketLeft: 'è', BracketRight: '+',
+    BracketLeft: 'è', BracketRight: '+', Backslash: 'ù',
     KeyA: 'A', KeyS: 'S', KeyD: 'D', KeyF: 'F', KeyG: 'G',
     KeyH: 'H', KeyJ: 'J', KeyK: 'K', KeyL: 'L',
     Semicolon: 'ò', Quote: 'à',
@@ -104,7 +102,6 @@ export default function KeyboardTool() {
   const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set())
   const [testedKeys, setTestedKeys] = useState<Set<string>>(new Set())
   const [keyHistory, setKeyHistory] = useState<string[]>([])
-  const [layoutType, setLayoutType] = useState<LayoutType>('ANSI')
   const [languageLayout, setLanguageLayout] = useState<LanguageLayout>('US')
   const [showSettings, setShowSettings] = useState(false)
 
@@ -138,11 +135,7 @@ export default function KeyboardTool() {
     }
   }, [])
 
-  const getKeyLabel = (code: string): string => {
-    return layouts[languageLayout][code] || code.replace('Key', '').replace('Digit', '').replace('Arrow', '')
-  }
-
-  const Key = ({ code, label, width = 'w-12', height = 'h-12' }: { code: string, label: string, width?: string, height?: string }) => {
+  const Key = ({ code, label, width = 'w-12' }: { code: string, label: string, width?: string }) => {
     const isPressed = pressedKeys.has(code)
     const isTested = testedKeys.has(code)
     const displayLabel = layouts[languageLayout][code] || label
@@ -150,7 +143,7 @@ export default function KeyboardTool() {
     return (
       <div
         className={`
-          ${width} ${height} rounded-md flex items-center justify-center text-xs font-semibold
+          ${width} h-12 rounded-md flex items-center justify-center text-xs font-semibold
           transition-all duration-75 select-none cursor-default
           ${isPressed 
             ? 'bg-green-500 text-white scale-[0.95] shadow-lg ring-2 ring-green-400 z-10' 
@@ -159,134 +152,122 @@ export default function KeyboardTool() {
             : 'bg-white text-gray-800 border-2 border-gray-300 hover:border-gray-400 hover:shadow-sm'
           }
         `}
-        style={{
-          fontFamily: 'system-ui, -apple-system, sans-serif'
-        }}
       >
         <span className="text-center leading-tight">{displayLabel}</span>
       </div>
     )
   }
 
-  const buildKeyboardRows = (): KeyLayout[][] => {
-    const rows: KeyLayout[][] = [
-      // Function keys
-      [
-        { code: 'Escape', label: 'Esc', width: 'w-14' },
-        { code: 'F1', label: 'F1' },
-        { code: 'F2', label: 'F2' },
-        { code: 'F3', label: 'F3' },
-        { code: 'F4', label: 'F4' },
-        { code: 'F5', label: 'F5' },
-        { code: 'F6', label: 'F6' },
-        { code: 'F7', label: 'F7' },
-        { code: 'F8', label: 'F8' },
-        { code: 'F9', label: 'F9' },
-        { code: 'F10', label: 'F10' },
-        { code: 'F11', label: 'F11' },
-        { code: 'F12', label: 'F12' },
-      ],
-      // Number row
-      [
-        { code: 'Backquote', label: '`' },
-        { code: 'Digit1', label: '1' },
-        { code: 'Digit2', label: '2' },
-        { code: 'Digit3', label: '3' },
-        { code: 'Digit4', label: '4' },
-        { code: 'Digit5', label: '5' },
-        { code: 'Digit6', label: '6' },
-        { code: 'Digit7', label: '7' },
-        { code: 'Digit8', label: '8' },
-        { code: 'Digit9', label: '9' },
-        { code: 'Digit0', label: '0' },
-        { code: 'Minus', label: '-' },
-        { code: 'Equal', label: '=' },
-        { code: 'Backspace', label: 'Backspace', width: layoutType === 'ISO' ? 'w-24' : 'w-24' },
-      ],
-      // QWERTY row
-      [
-        { code: 'Tab', label: 'Tab', width: 'w-20' },
-        { code: 'KeyQ', label: 'Q' },
-        { code: 'KeyW', label: 'W' },
-        { code: 'KeyE', label: 'E' },
-        { code: 'KeyR', label: 'R' },
-        { code: 'KeyT', label: 'T' },
-        { code: 'KeyY', label: 'Y' },
-        { code: 'KeyU', label: 'U' },
-        { code: 'KeyI', label: 'I' },
-        { code: 'KeyO', label: 'O' },
-        { code: 'KeyP', label: 'P' },
-        { code: 'BracketLeft', label: '[' },
-        { code: 'BracketRight', label: ']' },
-        { code: 'Backslash', label: '\\', width: layoutType === 'ISO' ? 'w-16' : 'w-12' },
-      ],
-      // ASDF row
-      [
-        { code: 'CapsLock', label: 'Caps', width: layoutType === 'ISO' ? 'w-20' : 'w-24' },
-        { code: 'KeyA', label: 'A' },
-        { code: 'KeyS', label: 'S' },
-        { code: 'KeyD', label: 'D' },
-        { code: 'KeyF', label: 'F' },
-        { code: 'KeyG', label: 'G' },
-        { code: 'KeyH', label: 'H' },
-        { code: 'KeyJ', label: 'J' },
-        { code: 'KeyK', label: 'K' },
-        { code: 'KeyL', label: 'L' },
-        { code: 'Semicolon', label: ';' },
-        { code: 'Quote', label: "'" },
-        { code: 'Enter', label: 'Enter', width: layoutType === 'ISO' ? 'w-12' : 'w-28', height: layoutType === 'ISO' ? 'h-24' : 'h-12' },
-      ],
-      // ZXCV row
-      [
-        { code: 'ShiftLeft', label: 'Shift', width: layoutType === 'ISO' ? 'w-16' : 'w-28' },
-        ...(layoutType === 'ISO' ? [{ code: 'IntlBackslash', label: '\\', width: 'w-12' }] : []),
-        { code: 'KeyZ', label: 'Z' },
-        { code: 'KeyX', label: 'X' },
-        { code: 'KeyC', label: 'C' },
-        { code: 'KeyV', label: 'V' },
-        { code: 'KeyB', label: 'B' },
-        { code: 'KeyN', label: 'N' },
-        { code: 'KeyM', label: 'M' },
-        { code: 'Comma', label: ',' },
-        { code: 'Period', label: '.' },
-        { code: 'Slash', label: '/' },
-        { code: 'ShiftRight', label: 'Shift', width: layoutType === 'ISO' ? 'w-28' : 'w-32' },
-      ],
-      // Bottom row
-      [
-        { code: 'ControlLeft', label: 'Ctrl', width: 'w-20' },
-        { code: 'MetaLeft', label: 'Win', width: 'w-16' },
-        { code: 'AltLeft', label: 'Alt', width: 'w-16' },
-        { code: 'Space', label: 'Space', width: 'flex-1' },
-        { code: 'AltRight', label: 'Alt', width: 'w-16' },
-        { code: 'MetaRight', label: 'Win', width: 'w-16' },
-        { code: 'ControlRight', label: 'Ctrl', width: 'w-20' },
-      ],
-    ]
-
-    return rows
-  }
+  const keyboardRows: KeyLayout[][] = [
+    // Function keys
+    [
+      { code: 'Escape', label: 'Esc', width: 'w-14' },
+      { code: 'F1', label: 'F1' },
+      { code: 'F2', label: 'F2' },
+      { code: 'F3', label: 'F3' },
+      { code: 'F4', label: 'F4' },
+      { code: 'F5', label: 'F5' },
+      { code: 'F6', label: 'F6' },
+      { code: 'F7', label: 'F7' },
+      { code: 'F8', label: 'F8' },
+      { code: 'F9', label: 'F9' },
+      { code: 'F10', label: 'F10' },
+      { code: 'F11', label: 'F11' },
+      { code: 'F12', label: 'F12' },
+    ],
+    // Number row
+    [
+      { code: 'Backquote', label: '`' },
+      { code: 'Digit1', label: '1' },
+      { code: 'Digit2', label: '2' },
+      { code: 'Digit3', label: '3' },
+      { code: 'Digit4', label: '4' },
+      { code: 'Digit5', label: '5' },
+      { code: 'Digit6', label: '6' },
+      { code: 'Digit7', label: '7' },
+      { code: 'Digit8', label: '8' },
+      { code: 'Digit9', label: '9' },
+      { code: 'Digit0', label: '0' },
+      { code: 'Minus', label: '-' },
+      { code: 'Equal', label: '=' },
+      { code: 'Backspace', label: 'Bksp', width: 'w-20' },
+    ],
+    // QWERTY row
+    [
+      { code: 'Tab', label: 'Tab', width: 'w-16' },
+      { code: 'KeyQ', label: 'Q' },
+      { code: 'KeyW', label: 'W' },
+      { code: 'KeyE', label: 'E' },
+      { code: 'KeyR', label: 'R' },
+      { code: 'KeyT', label: 'T' },
+      { code: 'KeyY', label: 'Y' },
+      { code: 'KeyU', label: 'U' },
+      { code: 'KeyI', label: 'I' },
+      { code: 'KeyO', label: 'O' },
+      { code: 'KeyP', label: 'P' },
+      { code: 'BracketLeft', label: '[' },
+      { code: 'BracketRight', label: ']' },
+      { code: 'Backslash', label: '\\', width: 'w-16' },
+    ],
+    // ASDF row
+    [
+      { code: 'CapsLock', label: 'Caps', width: 'w-20' },
+      { code: 'KeyA', label: 'A' },
+      { code: 'KeyS', label: 'S' },
+      { code: 'KeyD', label: 'D' },
+      { code: 'KeyF', label: 'F' },
+      { code: 'KeyG', label: 'G' },
+      { code: 'KeyH', label: 'H' },
+      { code: 'KeyJ', label: 'J' },
+      { code: 'KeyK', label: 'K' },
+      { code: 'KeyL', label: 'L' },
+      { code: 'Semicolon', label: ';' },
+      { code: 'Quote', label: "'" },
+      { code: 'Enter', label: 'Enter', width: 'w-24' },
+    ],
+    // ZXCV row
+    [
+      { code: 'ShiftLeft', label: 'Shift', width: 'w-24' },
+      { code: 'KeyZ', label: 'Z' },
+      { code: 'KeyX', label: 'X' },
+      { code: 'KeyC', label: 'C' },
+      { code: 'KeyV', label: 'V' },
+      { code: 'KeyB', label: 'B' },
+      { code: 'KeyN', label: 'N' },
+      { code: 'KeyM', label: 'M' },
+      { code: 'Comma', label: ',' },
+      { code: 'Period', label: '.' },
+      { code: 'Slash', label: '/' },
+      { code: 'ShiftRight', label: 'Shift', width: 'w-28' },
+    ],
+    // Bottom row
+    [
+      { code: 'ControlLeft', label: 'Ctrl', width: 'w-16' },
+      { code: 'MetaLeft', label: 'Win', width: 'w-14' },
+      { code: 'AltLeft', label: 'Alt', width: 'w-14' },
+      { code: 'Space', label: 'Space', width: 'flex-1' },
+      { code: 'AltRight', label: 'Alt', width: 'w-14' },
+      { code: 'MetaRight', label: 'Win', width: 'w-14' },
+      { code: 'ControlRight', label: 'Ctrl', width: 'w-16' },
+    ],
+  ]
 
   const totalKeys = 87
   const testedCount = testedKeys.size
   const progress = Math.min(100, Math.round((testedCount / totalKeys) * 100))
-
-  const keyboardRows = buildKeyboardRows()
 
   return (
     <div className="mb-12">
       {/* Controls */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors"
-            >
-              <Settings size={16} />
-              Settings
-            </button>
-          </div>
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors"
+          >
+            <Settings size={16} />
+            Settings
+          </button>
 
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-gray-700">Keys Tested:</span>
@@ -295,50 +276,22 @@ export default function KeyboardTool() {
         </div>
 
         {showSettings && (
-          <div className="mt-4 pt-4 border-t border-gray-200 space-y-4">
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-gray-700">Layout:</span>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setLayoutType('ANSI')}
-                    className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                      layoutType === 'ANSI'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    ANSI
-                  </button>
-                  <button
-                    onClick={() => setLayoutType('ISO')}
-                    className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                      layoutType === 'ISO'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    ISO
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Globe size={16} className="text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">Language:</span>
-                <select
-                  value={languageLayout}
-                  onChange={(e) => setLanguageLayout(e.target.value as LanguageLayout)}
-                  className="px-3 py-1 border border-gray-300 rounded text-sm font-medium bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="US">US (QWERTY)</option>
-                  <option value="UK">UK (QWERTY)</option>
-                  <option value="DE">DE (QWERTZ)</option>
-                  <option value="FR">FR (AZERTY)</option>
-                  <option value="ES">ES (QWERTY)</option>
-                  <option value="IT">IT (QWERTY)</option>
-                </select>
-              </div>
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="flex items-center gap-2">
+              <Globe size={16} className="text-gray-500" />
+              <span className="text-sm font-medium text-gray-700">Keyboard Layout:</span>
+              <select
+                value={languageLayout}
+                onChange={(e) => setLanguageLayout(e.target.value as LanguageLayout)}
+                className="px-3 py-1 border border-gray-300 rounded text-sm font-medium bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="US">US (QWERTY)</option>
+                <option value="UK">UK (QWERTY)</option>
+                <option value="DE">German (QWERTZ)</option>
+                <option value="FR">French (AZERTY)</option>
+                <option value="ES">Spanish (QWERTY)</option>
+                <option value="IT">Italian (QWERTY)</option>
+              </select>
             </div>
           </div>
         )}
@@ -348,7 +301,7 @@ export default function KeyboardTool() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
         <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
           <div
-            className="bg-gradient-to-r from-blue-500 to-blue-600 h-full transition-all duration-300 shadow-sm"
+            className="bg-gradient-to-r from-blue-500 to-blue-600 h-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -356,121 +309,20 @@ export default function KeyboardTool() {
 
       {/* Keyboard */}
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl p-6 md:p-8 mb-6 border border-gray-700">
-        <div className="space-y-2.5 max-w-5xl mx-auto">
-          {keyboardRows.map((row, rowIndex) => {
-            // Special handling for ISO Enter key - spans rows 3 and 4
-            if (layoutType === 'ISO' && rowIndex === 3) {
-              const isPressed = pressedKeys.has('Enter')
-              const isTested = testedKeys.has('Enter')
-              
-              return (
-                <div key={rowIndex} className="flex gap-1.5 justify-center items-start">
-                  {row.map((key) => {
-                    if (key.code === 'Enter') {
-                      // ISO Enter key - vertical part that extends down
-                      return (
-                        <div key={key.code} className="relative" style={{ marginBottom: '-2.5rem' }}>
-                          <div
-                            className={`
-                              w-12 h-12 rounded-md flex items-center justify-center text-xs font-semibold mb-1.5
-                              transition-all duration-75 select-none cursor-default
-                              ${isPressed 
-                                ? 'bg-green-500 text-white scale-[0.95] shadow-lg ring-2 ring-green-400 z-10' 
-                                : isTested
-                                ? 'bg-blue-100 text-blue-800 border-2 border-blue-400 shadow-sm'
-                                : 'bg-white text-gray-800 border-2 border-gray-300 hover:border-gray-400 hover:shadow-sm'
-                              }
-                            `}
-                          >
-                            <span className="rotate-90 origin-center whitespace-nowrap">Enter</span>
-                          </div>
-                          {/* Extension down to connect with horizontal part */}
-                          <div
-                            className={`
-                              w-12 h-12 rounded-md
-                              transition-all duration-75
-                              ${isPressed 
-                                ? 'bg-green-500 scale-[0.95] shadow-lg ring-2 ring-green-400 z-10' 
-                                : isTested
-                                ? 'bg-blue-100 border-2 border-blue-400 shadow-sm'
-                                : 'bg-white border-2 border-gray-300'
-                              }
-                            `}
-                          />
-                        </div>
-                      )
-                    }
-                    return (
-                      <Key
-                        key={key.code}
-                        code={key.code}
-                        label={key.label}
-                        width={key.width}
-                        height={key.height}
-                      />
-                    )
-                  })}
-                </div>
-              )
-            }
-
-            // Regular row rendering
-            return (
-              <div key={rowIndex} className="flex gap-1.5 justify-center items-start">
-                {rowIndex === 0 && <div className="w-14" />}
-                {row.map((key, keyIndex) => {
-                  // Skip Enter in ISO mode - it's handled in the special case above
-                  if (key.code === 'Enter' && layoutType === 'ISO') {
-                    return null
-                  }
-                  
-                  // Add horizontal part of ISO Enter key in ZXCV row (row 4) 
-                  // Position it after Slash key, before ShiftRight - aligns with vertical Enter above
-                  if (rowIndex === 4 && layoutType === 'ISO' && key.code === 'ShiftRight') {
-                    const isPressed = pressedKeys.has('Enter')
-                    const isTested = testedKeys.has('Enter')
-                    return (
-                      <>
-                        {/* Horizontal extension of Enter key - connects to vertical part above */}
-                        <div
-                          key="iso-enter-horizontal"
-                          className={`
-                            w-28 h-12 rounded-md flex items-center justify-center text-xs font-semibold
-                            transition-all duration-75 select-none cursor-default
-                            ${isPressed
-                              ? 'bg-green-500 text-white scale-[0.95] shadow-lg ring-2 ring-green-400 z-10' 
-                              : isTested
-                              ? 'bg-blue-100 text-blue-800 border-2 border-blue-400 shadow-sm'
-                              : 'bg-white text-gray-800 border-2 border-gray-300 hover:border-gray-400 hover:shadow-sm'
-                            }
-                          `}
-                        >
-                          <span>Enter</span>
-                        </div>
-                        <Key
-                          key={key.code}
-                          code={key.code}
-                          label={key.label}
-                          width={key.width}
-                          height={key.height}
-                        />
-                      </>
-                    )
-                  }
-                  
-                  return (
-                    <Key
-                      key={key.code}
-                      code={key.code}
-                      label={key.label}
-                      width={key.width}
-                      height={key.height}
-                    />
-                  )
-                })}
-              </div>
-            )
-          })}
+        <div className="space-y-2 max-w-5xl mx-auto">
+          {keyboardRows.map((row, rowIndex) => (
+            <div key={rowIndex} className="flex gap-1.5 justify-center">
+              {rowIndex === 0 && <div className="w-14" />}
+              {row.map((key) => (
+                <Key
+                  key={key.code}
+                  code={key.code}
+                  label={key.label}
+                  width={key.width}
+                />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 
