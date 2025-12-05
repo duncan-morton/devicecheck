@@ -17,37 +17,63 @@ export const playTone = (frequency = 440, duration = 0.3) => {
   export const playLeft = () => {
     const ctx = new AudioContext();
     const osc = ctx.createOscillator();
-    const panner = ctx.createStereoPanner();
-    const gain = ctx.createGain();
+    const merger = ctx.createChannelMerger(2);
+    const leftGain = ctx.createGain();
+    const rightGain = ctx.createGain();
     
-    osc.connect(gain);
-    gain.connect(panner);
-    panner.connect(ctx.destination);
+    // Configure oscillator
+    osc.frequency.value = 400;
+    osc.type = 'sine';
     
-    panner.pan.value = -1; // Full left
-    gain.gain.value = 0.3;
-    osc.frequency.value = 300; // Lower frequency for left
+    // Connect oscillator to both gain nodes
+    osc.connect(leftGain);
+    osc.connect(rightGain);
     
-    osc.start();
-    osc.stop(ctx.currentTime + 0.8);
+    // Only enable left channel
+    leftGain.gain.value = 0.3;
+    rightGain.gain.value = 0;
+    
+    // Connect gains to merger (left to left, right to right)
+    leftGain.connect(merger, 0, 0);
+    rightGain.connect(merger, 0, 1);
+    merger.connect(ctx.destination);
+    
+    const duration = 0.8;
+    const startTime = ctx.currentTime;
+    
+    osc.start(startTime);
+    osc.stop(startTime + duration);
   };
   
   export const playRight = () => {
     const ctx = new AudioContext();
     const osc = ctx.createOscillator();
-    const panner = ctx.createStereoPanner();
-    const gain = ctx.createGain();
+    const merger = ctx.createChannelMerger(2);
+    const leftGain = ctx.createGain();
+    const rightGain = ctx.createGain();
     
-    osc.connect(gain);
-    gain.connect(panner);
-    panner.connect(ctx.destination);
+    // Configure oscillator
+    osc.frequency.value = 600;
+    osc.type = 'sine';
     
-    panner.pan.value = 1; // Full right
-    gain.gain.value = 0.3;
-    osc.frequency.value = 600; // Higher frequency for right
+    // Connect oscillator to both gain nodes
+    osc.connect(leftGain);
+    osc.connect(rightGain);
     
-    osc.start();
-    osc.stop(ctx.currentTime + 0.8);
+    // Only enable right channel
+    leftGain.gain.value = 0;
+    rightGain.gain.value = 0.3;
+    
+    // Connect gains to merger (left to left, right to right)
+    leftGain.connect(merger, 0, 0);
+    rightGain.connect(merger, 0, 1);
+    merger.connect(ctx.destination);
+    
+    const duration = 0.8;
+    const startTime = ctx.currentTime;
+    
+    osc.start(startTime);
+    osc.stop(startTime + duration);
   };
   
   export const playStereoSweep = () => {
@@ -56,19 +82,30 @@ export const playTone = (frequency = 440, duration = 0.3) => {
     const panner = ctx.createStereoPanner();
     const gain = ctx.createGain();
     
+    // Set up connections
     osc.connect(gain);
     gain.connect(panner);
     panner.connect(ctx.destination);
     
-    gain.gain.value = 0.3;
+    // Configure audio
     osc.frequency.value = 440;
+    osc.type = 'sine';
     
-    // Sweep from left to right over 2 seconds
-    panner.pan.setValueAtTime(-1, ctx.currentTime);
-    panner.pan.linearRampToValueAtTime(1, ctx.currentTime + 2);
+    const duration = 2;
+    const startTime = ctx.currentTime;
     
-    osc.start();
-    osc.stop(ctx.currentTime + 2);
+    // Sweep from left to right over duration
+    panner.pan.setValueAtTime(-1, startTime);
+    panner.pan.linearRampToValueAtTime(1, startTime + duration);
+    
+    // Fade in/out for smoother sound
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(0.3, startTime + 0.05);
+    gain.gain.linearRampToValueAtTime(0.3, startTime + duration - 0.05);
+    gain.gain.linearRampToValueAtTime(0, startTime + duration);
+    
+    osc.start(startTime);
+    osc.stop(startTime + duration);
   };
   
   export const playFunSound = () => {
