@@ -267,6 +267,17 @@ export default function MicTestPage() {
               All audio processing happens in real-time on your device. Recordings are stored temporarily in your browser's memory and are deleted when you refresh or close the page.
             </p>
 
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Troubleshooting Guides</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
+              <li><Link href="/guides/microphone-not-working" className="text-blue-600 hover:text-blue-800">Microphone not working</Link></li>
+              <li><Link href="/guides/microphone-too-quiet" className="text-blue-600 hover:text-blue-800">Microphone too quiet</Link></li>
+              <li><Link href="/guides/microphone-static-crackling" className="text-blue-600 hover:text-blue-800">Static or crackling sound</Link></li>
+              <li><Link href="/guides/microphone-test-zoom" className="text-blue-600 hover:text-blue-800">Test microphone for Zoom</Link></li>
+              <li><Link href="/guides/microphone-test-microsoft-teams" className="text-blue-600 hover:text-blue-800">Test microphone for Microsoft Teams</Link></li>
+              <li><Link href="/guides/microphone-not-detected-windows-11" className="text-blue-600 hover:text-blue-800">Microphone not detected (Windows 11)</Link></li>
+              <li><Link href="/guides/how-to-enable-microphone-chrome" className="text-blue-600 hover:text-blue-800">Enable microphone in Chrome</Link></li>
+            </ul>
+
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Frequently Asked Questions</h3>
             <div className="space-y-6 mt-6">
               {faqs.map((faq, index) => (

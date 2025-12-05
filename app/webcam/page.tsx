@@ -246,6 +246,17 @@ export default function WebcamTestPage() {
               <li><strong>Opera:</strong> Full support</li>
             </ul>
 
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Troubleshooting Guides</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
+              <li><Link href="/guides/webcam-not-working" className="text-blue-600 hover:text-blue-800">Webcam not working</Link></li>
+              <li><Link href="/guides/webcam-not-detected-chrome" className="text-blue-600 hover:text-blue-800">Webcam not detected in Chrome</Link></li>
+              <li><Link href="/guides/webcam-test-zoom" className="text-blue-600 hover:text-blue-800">Test webcam for Zoom</Link></li>
+              <li><Link href="/guides/webcam-too-dark-grainy" className="text-blue-600 hover:text-blue-800">Webcam too dark or grainy</Link></li>
+              <li><Link href="/guides/webcam-lagging-low-fps" className="text-blue-600 hover:text-blue-800">Webcam lagging or low FPS</Link></li>
+              <li><Link href="/guides/external-webcam-not-recognised" className="text-blue-600 hover:text-blue-800">External webcam not recognised</Link></li>
+              <li><Link href="/guides/how-to-enable-camera-browser" className="text-blue-600 hover:text-blue-800">Enable camera in browser</Link></li>
+            </ul>
+
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Frequently Asked Questions</h3>
             <div className="space-y-6 mt-6">
               {faqs.map((faq, index) => (

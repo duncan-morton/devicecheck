@@ -257,6 +257,17 @@ export default function KeyboardTestPage() {
               <li><strong>Test Regularly:</strong> Use our keyboard test tool monthly to catch issues early</li>
             </ul>
 
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Troubleshooting Guides</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
+              <li><Link href="/guides/keyboard-not-working" className="text-blue-600 hover:text-blue-800">Keyboard not working</Link></li>
+              <li><Link href="/guides/keys-not-registering" className="text-blue-600 hover:text-blue-800">Keys not registering</Link></li>
+              <li><Link href="/guides/sticky-repeating-keys" className="text-blue-600 hover:text-blue-800">Sticky or repeating keys</Link></li>
+              <li><Link href="/guides/keyboard-ghosting-explained" className="text-blue-600 hover:text-blue-800">Keyboard ghosting explained</Link></li>
+              <li><Link href="/guides/mechanical-keyboard-switch-test" className="text-blue-600 hover:text-blue-800">Mechanical keyboard switch test</Link></li>
+              <li><Link href="/guides/how-to-test-keyboard-windows" className="text-blue-600 hover:text-blue-800">Test keyboard on Windows</Link></li>
+              <li><Link href="/guides/how-to-test-keyboard-mac" className="text-blue-600 hover:text-blue-800">Test keyboard on Mac</Link></li>
+            </ul>
+
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Frequently Asked Questions</h3>
             <div className="space-y-6 mt-6">
               {faqs.map((faq, index) => (

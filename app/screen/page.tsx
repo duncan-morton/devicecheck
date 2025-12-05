@@ -213,6 +213,15 @@ export default function ScreenTestPage() {
               <li><strong>Center Screen:</strong> Dead pixels in the center of the screen are more likely to qualify for replacement</li>
             </ul>
 
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Troubleshooting Guides</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
+              <li><Link href="/guides/dead-pixel-test-guide" className="text-blue-600 hover:text-blue-800">Dead pixel test guide</Link></li>
+              <li><Link href="/guides/how-to-fix-stuck-pixels" className="text-blue-600 hover:text-blue-800">Fix stuck pixels</Link></li>
+              <li><Link href="/guides/screen-flickering" className="text-blue-600 hover:text-blue-800">Screen flickering</Link></li>
+              <li><Link href="/guides/screen-looks-washed-out" className="text-blue-600 hover:text-blue-800">Screen looks washed out</Link></li>
+              <li><Link href="/guides/colour-calibration-basics" className="text-blue-600 hover:text-blue-800">Colour calibration basics</Link></li>
+            </ul>
+
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Frequently Asked Questions</h3>
             <div className="space-y-6 mt-6">
               {faqs.map((faq, index) => (
