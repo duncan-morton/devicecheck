@@ -5,6 +5,8 @@ import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQ
 import ScreenTool from '@/components/ScreenTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -246,8 +248,11 @@ export default function ScreenTestPage() {
               Ready to test your screen? <Link href="#test" className="text-blue-600 hover:text-blue-800 font-semibold">Scroll up and click "Run Screen Test"</Link> to check for dead pixels, stuck pixels, and color accuracy. The test takes just minutes and helps ensure your monitor is in perfect condition.
             </p>
           </article>
+
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Screen Test" toolHref="/screen" />
     </>
   )
 }

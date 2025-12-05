@@ -3,6 +3,11 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import TOC from '@/components/TOC'
+import RelatedGuides from '@/components/RelatedGuides'
+import HelpfulWidget from '@/components/HelpfulWidget'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -69,7 +74,9 @@ export default function MicrophoneTooQuietPage() {
             { name: 'Microphone Too Quiet', path: '/guides/microphone-too-quiet' }
           ]} />
           
-          <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+          <TOC contentId="article-content" />
+          
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Microphone Too Quiet</h1>
             
             <p className="text-lg text-gray-700 mb-8">
@@ -155,14 +162,11 @@ export default function MicrophoneTooQuietPage() {
               After making adjustments, use the <Link href="/mic" className="text-blue-600 hover:text-blue-800 font-semibold">online microphone test</Link> to verify volume levels. The test shows real-time input levels and helps you find the optimal settings.
             </p>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 my-8">
-              <h3 className="font-semibold text-blue-900 mb-2">Related Guides</h3>
-              <ul className="space-y-2 text-sm text-blue-800">
-                <li><Link href="/guides/microphone-not-working" className="hover:text-blue-600 underline">Microphone Not Working</Link></li>
-                <li><Link href="/guides/microphone-static-crackling" className="hover:text-blue-600 underline">Microphone Static or Crackling</Link></li>
-                <li><Link href="/guides/microphone-test-zoom" className="hover:text-blue-600 underline">Microphone Test for Zoom</Link></li>
-              </ul>
-            </div>
+            <RelatedGuides guides={[
+              { title: 'Microphone Not Working', href: '/guides/microphone-not-working' },
+              { title: 'Microphone Static or Crackling', href: '/guides/microphone-static-crackling' },
+              { title: 'Microphone Test for Zoom', href: '/guides/microphone-test-zoom' }
+            ]} />
 
             <p className="text-gray-700 mb-6 mt-8">
               You can use the <Link href="/mic" className="text-blue-600 hover:text-blue-800">online microphone test</Link> to confirm everything is working.
@@ -178,20 +182,16 @@ export default function MicrophoneTooQuietPage() {
               ))}
             </div>
 
-            <div className="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
-              <p className="text-gray-700 mb-4">
-                <strong>Next step:</strong> Test your microphone volume to confirm levels are adequate.
-              </p>
-              <Link 
-                href="/mic" 
-                className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Run Microphone Test →
-              </Link>
-            </div>
+            <p className="text-gray-700 mb-6 mt-8">
+              Use the <Link href="/mic" className="text-blue-600 hover:text-blue-800">online microphone test</Link> to confirm everything is working.
+            </p>
           </article>
+
+          <HelpfulWidget />
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Microphone Test" toolHref="/mic" />
     </>
   )
 }

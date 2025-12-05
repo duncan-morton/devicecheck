@@ -3,6 +3,11 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import TOC from '@/components/TOC'
+import RelatedGuides from '@/components/RelatedGuides'
+import HelpfulWidget from '@/components/HelpfulWidget'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -82,7 +87,9 @@ export default function DeadVsStuckPixelsPage() {
             { name: 'Dead vs Stuck Pixels', path: '/guides/dead-vs-stuck-pixels' }
           ]} />
           
-          <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+          <TOC contentId="article-content" />
+          
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Dead vs Stuck Pixels</h1>
             
             <p className="text-lg text-gray-700 mb-8">
@@ -265,21 +272,22 @@ export default function DeadVsStuckPixelsPage() {
               ))}
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 my-8">
-              <h3 className="font-semibold text-blue-900 mb-2">Related Guides</h3>
-              <ul className="space-y-2 text-sm text-blue-800">
-                <li><Link href="/guides/dead-pixel-test-guide" className="hover:text-blue-600 underline">Dead Pixel Test Guide</Link></li>
-                <li><Link href="/guides/how-to-fix-stuck-pixels" className="hover:text-blue-600 underline">How to Fix Stuck Pixels</Link></li>
-                <li><Link href="/guides/screen-flickering-fix" className="hover:text-blue-600 underline">Screen Flickering Fix</Link></li>
-              </ul>
-            </div>
+            <RelatedGuides guides={[
+              { title: 'Dead Pixel Test Guide', href: '/guides/dead-pixel-test-guide' },
+              { title: 'How to Fix Stuck Pixels', href: '/guides/how-to-fix-stuck-pixels' },
+              { title: 'Screen Flickering Fix', href: '/guides/screen-flickering-fix' }
+            ]} />
 
             <p className="text-gray-700 mb-6 mt-8">
               Use the <Link href="/screen" className="text-blue-600 hover:text-blue-800">online screen test</Link> to identify dead or stuck pixels.
             </p>
           </article>
+
+          <HelpfulWidget />
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Screen Test" toolHref="/screen" />
     </>
   )
 }

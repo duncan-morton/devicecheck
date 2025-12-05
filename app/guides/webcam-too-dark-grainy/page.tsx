@@ -3,6 +3,11 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import TOC from '@/components/TOC'
+import RelatedGuides from '@/components/RelatedGuides'
+import HelpfulWidget from '@/components/HelpfulWidget'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -61,7 +66,9 @@ export default function WebcamTooDarkGrainyPage() {
             { name: 'Webcam Too Dark or Grainy', path: '/guides/webcam-too-dark-grainy' }
           ]} />
           
-          <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+          <TOC contentId="article-content" />
+          
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Webcam Too Dark or Grainy</h1>
             
             <p className="text-lg text-gray-700 mb-8">
@@ -146,14 +153,11 @@ export default function WebcamTooDarkGrainyPage() {
               After making adjustments, use the <Link href="/webcam" className="text-blue-600 hover:text-blue-800 font-semibold">online webcam test</Link> to verify video quality. The test shows live video feed and helps you see the effects of lighting and settings changes.
             </p>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 my-8">
-              <h3 className="font-semibold text-blue-900 mb-2">Related Guides</h3>
-              <ul className="space-y-2 text-sm text-blue-800">
-                <li><Link href="/guides/webcam-lagging-low-fps" className="hover:text-blue-600 underline">Webcam Lagging or Low FPS</Link></li>
-                <li><Link href="/guides/webcam-not-working" className="hover:text-blue-600 underline">Webcam Not Working</Link></li>
-                <li><Link href="/guides/webcam-test-zoom" className="hover:text-blue-600 underline">Webcam Test for Zoom</Link></li>
-              </ul>
-            </div>
+            <RelatedGuides guides={[
+              { title: 'Webcam Lagging or Low FPS', href: '/guides/webcam-lagging-low-fps' },
+              { title: 'Webcam Not Working', href: '/guides/webcam-not-working' },
+              { title: 'Webcam Test for Zoom', href: '/guides/webcam-test-zoom' }
+            ]} />
 
             <p className="text-gray-700 mb-6 mt-8">
               <Link href="/webcam" className="text-blue-600 hover:text-blue-800">Run the webcam test</Link> to verify your camera setup.
@@ -169,20 +173,16 @@ export default function WebcamTooDarkGrainyPage() {
               ))}
             </div>
 
-            <div className="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
-              <p className="text-gray-700 mb-4">
-                <strong>Next step:</strong> Test your webcam to check video quality.
-              </p>
-              <Link 
-                href="/webcam" 
-                className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Run Webcam Test →
-              </Link>
-            </div>
+            <p className="text-gray-700 mb-6 mt-8">
+              Use the <Link href="/webcam" className="text-blue-600 hover:text-blue-800">online webcam test</Link> to verify your camera setup.
+            </p>
           </article>
+
+          <HelpfulWidget />
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Webcam Test" toolHref="/webcam" />
     </>
   )
 }

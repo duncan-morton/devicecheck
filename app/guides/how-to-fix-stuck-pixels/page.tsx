@@ -3,6 +3,11 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import TOC from '@/components/TOC'
+import RelatedGuides from '@/components/RelatedGuides'
+import HelpfulWidget from '@/components/HelpfulWidget'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -61,7 +66,9 @@ export default function HowToFixStuckPixelsPage() {
             { name: 'How to Fix Stuck Pixels', path: '/guides/how-to-fix-stuck-pixels' }
           ]} />
           
-          <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+          <TOC contentId="article-content" />
+          
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
             <h1 className="text-4xl font-bold text-gray-900 mb-6">How to Fix Stuck Pixels</h1>
             
             <p className="text-lg text-gray-700 mb-8">
@@ -151,14 +158,11 @@ export default function HowToFixStuckPixelsPage() {
               After attempting repairs, use the <Link href="/screen" className="text-blue-600 hover:text-blue-800 font-semibold">online screen test</Link> to verify if the stuck pixel is fixed. Test with different colors to confirm the pixel responds correctly.
             </p>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 my-8">
-              <h3 className="font-semibold text-blue-900 mb-2">Related Guides</h3>
-              <ul className="space-y-2 text-sm text-blue-800">
-                <li><Link href="/guides/dead-pixel-test-guide" className="hover:text-blue-600 underline">Dead Pixel Test Guide</Link></li>
-                <li><Link href="/guides/screen-flickering" className="hover:text-blue-600 underline">Screen Flickering</Link></li>
-                <li><Link href="/guides/colour-calibration-basics" className="hover:text-blue-600 underline">Colour Calibration Basics</Link></li>
-              </ul>
-            </div>
+            <RelatedGuides guides={[
+              { title: 'Dead Pixel Test Guide', href: '/guides/dead-pixel-test-guide' },
+              { title: 'Screen Flickering', href: '/guides/screen-flickering' },
+              { title: 'Colour Calibration Basics', href: '/guides/colour-calibration-basics' }
+            ]} />
 
             <p className="text-gray-700 mb-6 mt-8">
               Open the <Link href="/screen" className="text-blue-600 hover:text-blue-800">screen test</Link> to confirm the issue is resolved.
@@ -174,20 +178,16 @@ export default function HowToFixStuckPixelsPage() {
               ))}
             </div>
 
-            <div className="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
-              <p className="text-gray-700 mb-4">
-                <strong>Next step:</strong> Test your screen to check for stuck pixels.
-              </p>
-              <Link 
-                href="/screen" 
-                className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Run Screen Test →
-              </Link>
-            </div>
+            <p className="text-gray-700 mb-6 mt-8">
+              Use the <Link href="/screen" className="text-blue-600 hover:text-blue-800">online screen test</Link> to check your display for issues.
+            </p>
           </article>
+
+          <HelpfulWidget />
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Screen Test" toolHref="/screen" />
     </>
   )
 }

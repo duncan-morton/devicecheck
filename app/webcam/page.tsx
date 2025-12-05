@@ -5,6 +5,8 @@ import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQ
 import WebcamTool from '@/components/WebcamTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -280,8 +282,11 @@ export default function WebcamTestPage() {
               Ready to test your webcam? <Link href="#test" className="text-blue-600 hover:text-blue-800 font-semibold">Scroll up and click "Run Webcam Test"</Link> to get started. The entire process takes just seconds, and you'll have complete confidence that your camera is ready for your next important video call.
             </p>
           </article>
+
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Webcam Test" toolHref="/webcam" />
     </>
   )
 }

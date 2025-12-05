@@ -5,6 +5,8 @@ import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQ
 import MeetingCheckTool from '@/components/MeetingCheckTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -244,8 +246,11 @@ export default function MeetingCheckPage() {
               Ready to check your meeting setup? <Link href="#test" className="text-blue-600 hover:text-blue-800 font-semibold">Scroll up and click "Run Meeting Check"</Link> to test your network, camera, and microphone. Ensure everything works perfectly before your next important video call.
             </p>
           </article>
+
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Meeting Check" toolHref="/meeting-check" />
     </>
   )
 }

@@ -3,6 +3,11 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import TOC from '@/components/TOC'
+import RelatedGuides from '@/components/RelatedGuides'
+import HelpfulWidget from '@/components/HelpfulWidget'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -82,7 +87,9 @@ export default function KeyboardGhostingExplainedPage() {
             { name: 'Keyboard Ghosting Explained', path: '/guides/keyboard-ghosting-explained' }
           ]} />
           
-          <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+          <TOC contentId="article-content" />
+          
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Keyboard Ghosting Explained</h1>
             
             <p className="text-lg text-gray-700 mb-8">
@@ -271,21 +278,22 @@ export default function KeyboardGhostingExplainedPage() {
               ))}
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 my-8">
-              <h3 className="font-semibold text-blue-900 mb-2">Related Guides</h3>
-              <ul className="space-y-2 text-sm text-blue-800">
-                <li><Link href="/guides/keyboard-not-working" className="hover:text-blue-600 underline">Keyboard Not Working</Link></li>
-                <li><Link href="/guides/keyboard-keys-not-working" className="hover:text-blue-600 underline">Keyboard Keys Not Working</Link></li>
-                <li><Link href="/guides/keys-not-registering" className="hover:text-blue-600 underline">Keys Not Registering</Link></li>
-              </ul>
-            </div>
+            <RelatedGuides guides={[
+              { title: 'Keyboard Not Working', href: '/guides/keyboard-not-working' },
+              { title: 'Keyboard Keys Not Working', href: '/guides/keyboard-keys-not-working' },
+              { title: 'Keys Not Registering', href: '/guides/keys-not-registering' }
+            ]} />
 
             <p className="text-gray-700 mb-6 mt-8">
               Use the <Link href="/keyboard" className="text-blue-600 hover:text-blue-800">online keyboard test</Link> to check for ghosting issues.
             </p>
           </article>
+
+          <HelpfulWidget />
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Keyboard Test" toolHref="/keyboard" />
     </>
   )
 }

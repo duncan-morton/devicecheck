@@ -5,6 +5,8 @@ import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQ
 import KeyboardTool from '@/components/KeyboardTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -295,8 +297,11 @@ export default function KeyboardTestPage() {
               Ready to test your keyboard? <Link href="#test" className="text-blue-600 hover:text-blue-800 font-semibold">Scroll up and click "Run Keyboard Test"</Link> to verify all your keys are working perfectly. The test takes just minutes and helps ensure your keyboard is ready for work, gaming, or any task.
             </p>
           </article>
+
+          <DeviceNavigation />
         </div>
       </div>
+      <StickyActionBar toolName="Keyboard Test" toolHref="/keyboard" />
     </>
   )
 }
