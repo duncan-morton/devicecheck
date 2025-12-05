@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Monitor, Maximize2, X } from 'lucide-react'
 
 type TestMode = 'solid' | 'gradient' | 'grid' | 'pixel'
@@ -21,14 +21,34 @@ export default function ScreenTool() {
   const [testMode, setTestMode] = useState<TestMode>('solid')
   const [currentColor, setCurrentColor] = useState(0)
   const [isAutoCycling, setIsAutoCycling] = useState(false)
+  const fullscreenRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement)
     }
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && document.fullscreenElement) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen()
+        } else if ((document as any).webkitExitFullscreen) {
+          (document as any).webkitExitFullscreen()
+        } else if ((document as any).mozCancelFullScreen) {
+          (document as any).mozCancelFullScreen()
+        } else if ((document as any).msExitFullscreen) {
+          (document as any).msExitFullscreen()
+        }
+      }
+    }
+
     document.addEventListener('fullscreenchange', handleFullscreenChange)
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('keydown', handleKeyDown)
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
   }, [])
 
   useEffect(() => {
@@ -41,10 +61,18 @@ export default function ScreenTool() {
   }, [isAutoCycling, testMode])
 
   const enterFullscreen = async () => {
-    const elem = document.documentElement
+    const elem = fullscreenRef.current
+    if (!elem) return
+    
     try {
       if (elem.requestFullscreen) {
         await elem.requestFullscreen()
+      } else if ((elem as any).webkitRequestFullscreen) {
+        await (elem as any).webkitRequestFullscreen()
+      } else if ((elem as any).mozRequestFullScreen) {
+        await (elem as any).mozRequestFullScreen()
+      } else if ((elem as any).msRequestFullscreen) {
+        await (elem as any).msRequestFullscreen()
       }
     } catch (err) {
       console.error('Fullscreen error:', err)
@@ -55,6 +83,12 @@ export default function ScreenTool() {
     try {
       if (document.exitFullscreen) {
         await document.exitFullscreen()
+      } else if ((document as any).webkitExitFullscreen) {
+        await (document as any).webkitExitFullscreen()
+      } else if ((document as any).mozCancelFullScreen) {
+        await (document as any).mozCancelFullScreen()
+      } else if ((document as any).msExitFullscreen) {
+        await (document as any).msExitFullscreen()
       }
     } catch (err) {
       console.error('Exit fullscreen error:', err)
@@ -94,88 +128,88 @@ export default function ScreenTool() {
 
   return (
     <div className="mb-12">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-        <div className="flex flex-wrap items-center gap-4 mb-4">
-          <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-            <Monitor size={20} className="text-blue-600" />
-            Screen Test Mode
-          </h3>
-          <div className="flex gap-2 flex-wrap">
-            <button
-              onClick={() => setTestMode('solid')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                testMode === 'solid'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Solid Colors
-            </button>
-            <button
-              onClick={() => setTestMode('gradient')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                testMode === 'gradient'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Gradient
-            </button>
-            <button
-              onClick={() => setTestMode('grid')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                testMode === 'grid'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Grid
-            </button>
-            <button
-              onClick={() => setTestMode('pixel')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                testMode === 'pixel'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Pixel Check
-            </button>
-          </div>
-        </div>
-
-        {testMode === 'solid' && (
-          <div className="mb-4">
-            <div className="flex flex-wrap gap-2 mb-3">
-              {colors.map((color, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentColor(index)}
-                  className={`w-12 h-12 rounded-lg border-2 transition-all ${
-                    currentColor === index
-                      ? 'border-blue-600 ring-2 ring-blue-300'
-                      : 'border-gray-300 hover:border-gray-400'
-                  }`}
-                  style={{ backgroundColor: color.value }}
-                  title={color.name}
-                />
-              ))}
+      {!isFullscreen && (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+          <div className="flex flex-wrap items-center gap-4 mb-4">
+            <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+              <Monitor size={20} className="text-blue-600" />
+              Screen Test Mode
+            </h3>
+            <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={() => setTestMode('solid')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  testMode === 'solid'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Solid Colors
+              </button>
+              <button
+                onClick={() => setTestMode('gradient')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  testMode === 'gradient'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Gradient
+              </button>
+              <button
+                onClick={() => setTestMode('grid')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  testMode === 'grid'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Grid
+              </button>
+              <button
+                onClick={() => setTestMode('pixel')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  testMode === 'pixel'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Pixel Check
+              </button>
             </div>
-            <button
-              onClick={() => setIsAutoCycling(!isAutoCycling)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                isAutoCycling
-                  ? 'bg-green-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {isAutoCycling ? 'Stop Auto Cycle' : 'Start Auto Cycle'}
-            </button>
           </div>
-        )}
 
-        <div className="flex gap-3">
-          {!isFullscreen ? (
+          {testMode === 'solid' && (
+            <div className="mb-4">
+              <div className="flex flex-wrap gap-2 mb-3">
+                {colors.map((color, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentColor(index)}
+                    className={`w-12 h-12 rounded-lg border-2 transition-all ${
+                      currentColor === index
+                        ? 'border-blue-600 ring-2 ring-blue-300'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
+                    style={{ backgroundColor: color.value }}
+                    title={color.name}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={() => setIsAutoCycling(!isAutoCycling)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium ${
+                  isAutoCycling
+                    ? 'bg-green-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {isAutoCycling ? 'Stop Auto Cycle' : 'Start Auto Cycle'}
+              </button>
+            </div>
+          )}
+
+          <div className="flex items-center gap-4">
             <button
               onClick={enterFullscreen}
               className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
@@ -183,23 +217,17 @@ export default function ScreenTool() {
               <Maximize2 size={20} />
               Enter Fullscreen Mode
             </button>
-          ) : (
-            <button
-              onClick={exitFullscreen}
-              className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
-            >
-              <X size={20} />
-              Exit Fullscreen
-            </button>
-          )}
+            <p className="text-sm text-gray-600">Press ESC to exit fullscreen</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <div
-        className="rounded-xl overflow-hidden shadow-2xl aspect-video min-h-[400px] relative"
+        ref={fullscreenRef}
+        className={`${isFullscreen ? 'fixed inset-0 w-screen h-screen' : 'rounded-xl overflow-hidden shadow-2xl aspect-video min-h-[400px]'} relative`}
         style={getBackgroundStyle()}
       >
-        {testMode === 'solid' && (
+        {!isFullscreen && testMode === 'solid' && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="bg-black/50 text-white px-6 py-3 rounded-lg backdrop-blur-sm">
               <p className="text-2xl font-bold">{colors[currentColor].name}</p>
@@ -209,17 +237,19 @@ export default function ScreenTool() {
         )}
       </div>
 
-      <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-6">
-        <h4 className="font-semibold text-blue-900 mb-2">How to Check for Dead Pixels</h4>
-        <ol className="list-decimal pl-6 space-y-2 text-sm text-blue-800">
-          <li>Click "Enter Fullscreen Mode" for best results</li>
-          <li>Cycle through solid colors (especially black, white, red, green, blue)</li>
-          <li>Look for pixels that don't change color or appear stuck</li>
-          <li>Use the pixel check mode to see individual pixels clearly</li>
-          <li>Dead pixels appear as black dots on colored backgrounds</li>
-          <li>Stuck pixels appear as colored dots on black/white backgrounds</li>
-        </ol>
-      </div>
+      {!isFullscreen && (
+        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-6">
+          <h4 className="font-semibold text-blue-900 mb-2">How to Check for Dead Pixels</h4>
+          <ol className="list-decimal pl-6 space-y-2 text-sm text-blue-800">
+            <li>Click "Enter Fullscreen Mode" for best results</li>
+            <li>Cycle through solid colors (especially black, white, red, green, blue)</li>
+            <li>Look for pixels that don't change color or appear stuck</li>
+            <li>Use the pixel check mode to see individual pixels clearly</li>
+            <li>Dead pixels appear as black dots on colored backgrounds</li>
+            <li>Stuck pixels appear as colored dots on black/white backgrounds</li>
+          </ol>
+        </div>
+      )}
     </div>
   )
 }

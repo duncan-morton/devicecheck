@@ -13,20 +13,36 @@ export default function WebcamTool() {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
+    let currentStream: MediaStream | null = null
+
     getMediaStream(true, false)
       .then(s => {
+        currentStream = s
         setStream(s)
         const track = s.getVideoTracks()[0]
-        const settings = track.getSettings()
-        if (settings.width && settings.height) {
-          setResolution({ w: settings.width, h: settings.height })
+        if (track) {
+          const settings = track.getSettings()
+          if (settings.width && settings.height) {
+            setResolution({ w: settings.width, h: settings.height })
+          }
         }
       })
-      .catch(e => setError('Camera access denied. Please check permissions.'))
+      .catch(e => {
+        console.error('Camera error:', e)
+        if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError') {
+          setError('Camera access denied. Please check browser permissions and allow camera access.')
+        } else if (e.name === 'NotFoundError' || e.name === 'DevicesNotFoundError') {
+          setError('No camera found. Please connect a camera and try again.')
+        } else if (e.name === 'NotReadableError' || e.name === 'TrackStartError') {
+          setError('Camera is already in use by another application. Please close other apps using the camera.')
+        } else {
+          setError('Failed to access camera. Please check permissions and try again.')
+        }
+      })
 
     return () => {
-      if (stream) {
-        stream.getTracks().forEach(t => t.stop())
+      if (currentStream) {
+        currentStream.getTracks().forEach(t => t.stop())
       }
     }
   }, [])
