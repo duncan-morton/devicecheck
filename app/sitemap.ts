@@ -1,4 +1,21 @@
 import { MetadataRoute } from 'next'
+import * as fs from 'fs'
+import * as path from 'path'
+
+interface IssueData {
+  slug: string
+  title: string
+  deviceType: 'mic' | 'webcam' | 'keyboard' | 'screen'
+  platform: string
+  problem: string
+  keywords: string[]
+}
+
+function getIssuesData(): IssueData[] {
+  const filePath = path.join(process.cwd(), 'data', 'issues.json')
+  const fileContent = fs.readFileSync(filePath, 'utf-8')
+  return JSON.parse(fileContent) as IssueData[]
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://devicecheck.io'
@@ -11,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/screen',
     '/meeting-check',
     '/guides',
+    '/issues',
     '/privacy',
     '/terms',
     '/contact'
@@ -71,6 +89,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/guides/screen-flickering-fix'
   ]
 
+  // Get all issues from issues.json
+  const issues = getIssuesData()
+  const issueRoutes = issues.map((issue) => `/issues/${issue.slug}`)
+
   const routes = [
     ...staticRoutes.map((route) => ({
       url: `${baseUrl}${route}`,
@@ -83,6 +105,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
+    })),
+    ...issueRoutes.map((route) => ({
+      url: `${baseUrl}${route}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     }))
   ]
 

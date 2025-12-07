@@ -1,0 +1,692 @@
+[
+  {
+    "slug": "microphone-not-working-chrome",
+    "title": "Microphone Not Working in Chrome",
+    "deviceType": "mic",
+    "platform": "Chrome",
+    "problem": "Microphone not detected or no sound in Chrome browser",
+    "keywords": [
+      "microphone not working chrome",
+      "chrome mic fix",
+      "chrome microphone not detected",
+      "mic not working chrome browser",
+      "chrome microphone permission"
+    ]
+  },
+  {
+    "slug": "camera-not-detected-teams",
+    "title": "Camera Not Detected in Teams",
+    "deviceType": "webcam",
+    "platform": "Microsoft Teams",
+    "problem": "Camera not showing or detected in Microsoft Teams",
+    "keywords": [
+      "camera not detected teams",
+      "teams webcam not working",
+      "microsoft teams camera fix",
+      "teams camera not showing",
+      "webcam not working teams"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-windows-11",
+    "title": "Webcam Not Working on Windows 11",
+    "deviceType": "webcam",
+    "platform": "Windows 11",
+    "problem": "Webcam not detected or not working on Windows 11",
+    "keywords": [
+      "webcam not working windows 11",
+      "windows 11 camera fix",
+      "camera not detected windows 11",
+      "webcam not working windows",
+      "windows 11 webcam troubleshooting"
+    ]
+  },
+  {
+    "slug": "mic-not-working-discord-mobile",
+    "title": "Microphone Not Working on Discord Mobile",
+    "deviceType": "mic",
+    "platform": "Discord Mobile",
+    "problem": "Microphone not working in Discord mobile app",
+    "keywords": [
+      "mic not working discord mobile",
+      "discord mobile microphone fix",
+      "discord mobile mic not working",
+      "discord microphone permission mobile",
+      "discord mobile audio issues"
+    ]
+  },
+  {
+    "slug": "keyboard-typing-wrong-characters-windows",
+    "title": "Keyboard Typing Wrong Characters on Windows",
+    "deviceType": "keyboard",
+    "platform": "Windows",
+    "problem": "Keyboard typing incorrect characters or symbols",
+    "keywords": [
+      "keyboard typing wrong characters windows",
+      "keyboard typing symbols instead of letters",
+      "keyboard layout wrong windows",
+      "keyboard typing numbers instead of letters",
+      "windows keyboard fix"
+    ]
+  },
+  {
+    "slug": "screen-flickering-macbook-pro",
+    "title": "Screen Flickering on MacBook Pro",
+    "deviceType": "screen",
+    "platform": "MacBook Pro",
+    "problem": "Screen flickering or display issues on MacBook Pro",
+    "keywords": [
+      "screen flickering macbook pro",
+      "macbook pro display flickering",
+      "macbook pro screen issues",
+      "macbook pro screen flicker fix",
+      "macbook pro display problems"
+    ]
+  },
+  {
+    "slug": "monitor-ghosting-games",
+    "title": "Monitor Ghosting in Games",
+    "deviceType": "screen",
+    "platform": "Gaming",
+    "problem": "Monitor showing ghosting or motion blur in games",
+    "keywords": [
+      "monitor ghosting games",
+      "gaming monitor ghosting",
+      "monitor motion blur games",
+      "gaming display ghosting fix",
+      "monitor response time ghosting"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-safari",
+    "title": "Microphone Not Working in Safari",
+    "deviceType": "mic",
+    "platform": "Safari",
+    "problem": "Microphone not detected or not working in Safari browser",
+    "keywords": [
+      "microphone not working safari",
+      "safari mic fix",
+      "safari microphone permission",
+      "mic not working safari mac",
+      "safari microphone not detected"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-firefox",
+    "title": "Webcam Not Working in Firefox",
+    "deviceType": "webcam",
+    "platform": "Firefox",
+    "problem": "Webcam not detected or not working in Firefox browser",
+    "keywords": [
+      "webcam not working firefox",
+      "firefox camera fix",
+      "firefox webcam permission",
+      "camera not detected firefox",
+      "firefox webcam not showing"
+    ]
+  },
+  {
+    "slug": "keyboard-not-working-mac",
+    "title": "Keyboard Not Working on Mac",
+    "deviceType": "keyboard",
+    "platform": "macOS",
+    "problem": "Keyboard not responding or keys not registering on Mac",
+    "keywords": [
+      "keyboard not working mac",
+      "mac keyboard fix",
+      "keyboard not responding mac",
+      "mac keyboard troubleshooting",
+      "macbook keyboard not working"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-zoom",
+    "title": "Microphone Not Working in Zoom",
+    "deviceType": "mic",
+    "platform": "Zoom",
+    "problem": "Microphone not detected or no audio in Zoom",
+    "keywords": [
+      "microphone not working zoom",
+      "zoom mic fix",
+      "zoom microphone not detected",
+      "zoom audio not working",
+      "zoom microphone settings"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-zoom",
+    "title": "Webcam Not Working in Zoom",
+    "deviceType": "webcam",
+    "platform": "Zoom",
+    "problem": "Webcam not showing or detected in Zoom",
+    "keywords": [
+      "webcam not working zoom",
+      "zoom camera fix",
+      "zoom webcam not detected",
+      "zoom camera not showing",
+      "zoom video not working"
+    ]
+  },
+  {
+    "slug": "keyboard-keys-sticking-windows",
+    "title": "Keyboard Keys Sticking on Windows",
+    "deviceType": "keyboard",
+    "platform": "Windows",
+    "problem": "Keyboard keys sticking or repeating on Windows",
+    "keywords": [
+      "keyboard keys sticking windows",
+      "sticky keys windows fix",
+      "keyboard repeating keys windows",
+      "windows keyboard keys stuck",
+      "keyboard sticky keys fix"
+    ]
+  },
+  {
+    "slug": "screen-dead-pixels-mac",
+    "title": "Screen Dead Pixels on Mac",
+    "deviceType": "screen",
+    "platform": "macOS",
+    "problem": "Dead or stuck pixels on Mac display",
+    "keywords": [
+      "screen dead pixels mac",
+      "mac dead pixel fix",
+      "macbook dead pixels",
+      "mac display dead pixels",
+      "mac screen pixel issues"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-edge",
+    "title": "Microphone Not Working in Edge",
+    "deviceType": "mic",
+    "platform": "Edge",
+    "problem": "Microphone not detected or not working in Microsoft Edge",
+    "keywords": [
+      "microphone not working edge",
+      "edge mic fix",
+      "edge microphone permission",
+      "mic not working edge browser",
+      "edge microphone not detected"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-google-meet",
+    "title": "Webcam Not Working in Google Meet",
+    "deviceType": "webcam",
+    "platform": "Google Meet",
+    "problem": "Webcam not showing or detected in Google Meet",
+    "keywords": [
+      "webcam not working google meet",
+      "google meet camera fix",
+      "google meet webcam not detected",
+      "google meet camera not showing",
+      "google meet video not working"
+    ]
+  },
+  {
+    "slug": "keyboard-ghosting-windows",
+    "title": "Keyboard Ghosting on Windows",
+    "deviceType": "keyboard",
+    "platform": "Windows",
+    "problem": "Keyboard ghosting or keys not registering when pressing multiple keys",
+    "keywords": [
+      "keyboard ghosting windows",
+      "keyboard ghosting fix",
+      "keys not registering windows",
+      "keyboard rollover issues",
+      "windows keyboard ghosting"
+    ]
+  },
+  {
+    "slug": "screen-color-calibration-windows",
+    "title": "Screen Color Calibration on Windows",
+    "deviceType": "screen",
+    "platform": "Windows",
+    "problem": "Screen colors look incorrect or need calibration on Windows",
+    "keywords": [
+      "screen color calibration windows",
+      "windows display calibration",
+      "monitor color calibration windows",
+      "windows screen color fix",
+      "display calibration windows"
+    ]
+  },
+  {
+    "slug": "microphone-static-crackling-windows",
+    "title": "Microphone Static or Crackling on Windows",
+    "deviceType": "mic",
+    "platform": "Windows",
+    "problem": "Microphone producing static, crackling, or distorted audio on Windows",
+    "keywords": [
+      "microphone static windows",
+      "mic crackling windows",
+      "microphone distortion windows",
+      "windows mic static fix",
+      "microphone audio issues windows"
+    ]
+  },
+  {
+    "slug": "webcam-lagging-windows",
+    "title": "Webcam Lagging on Windows",
+    "deviceType": "webcam",
+    "platform": "Windows",
+    "problem": "Webcam video lagging or low frame rate on Windows",
+    "keywords": [
+      "webcam lagging windows",
+      "camera lagging windows",
+      "webcam low fps windows",
+      "windows webcam performance",
+      "webcam frame rate issues windows"
+    ]
+  },
+  {
+    "slug": "keyboard-numpad-not-working-windows",
+    "title": "Keyboard Numpad Not Working on Windows",
+    "deviceType": "keyboard",
+    "platform": "Windows",
+    "problem": "Keyboard number pad not responding on Windows",
+    "keywords": [
+      "keyboard numpad not working windows",
+      "numpad not working windows",
+      "number pad not working",
+      "windows numpad fix",
+      "keyboard number pad issues"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-windows-10",
+    "title": "Microphone Not Working on Windows 10",
+    "deviceType": "mic",
+    "platform": "Windows 10",
+    "problem": "Microphone not detected or silent on Windows 10",
+    "keywords": [
+      "microphone not working windows 10",
+      "windows 10 mic fix",
+      "windows mic not detected"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-windows-11",
+    "title": "Microphone Not Working on Windows 11",
+    "deviceType": "mic",
+    "platform": "Windows 11",
+    "problem": "Microphone not detected on Windows 11",
+    "keywords": [
+      "microphone not working windows 11",
+      "windows 11 mic not detected",
+      "windows 11 microphone fix"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-mac",
+    "title": "Microphone Not Working on Mac",
+    "deviceType": "mic",
+    "platform": "Mac",
+    "problem": "Mac cannot access microphone",
+    "keywords": [
+      "microphone not working mac",
+      "mac mic not detected",
+      "macos microphone issues"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-discord",
+    "title": "Microphone Not Working in Discord",
+    "deviceType": "mic",
+    "platform": "Discord",
+    "problem": "Discord not receiving audio",
+    "keywords": [
+      "microphone not working discord",
+      "discord mic fix",
+      "discord no input detected"
+    ]
+  },
+  {
+    "slug": "microphone-not-working-teams",
+    "title": "Microphone Not Working in Microsoft Teams",
+    "deviceType": "mic",
+    "platform": "Teams",
+    "problem": "Teams not receiving microphone input",
+    "keywords": [
+      "microphone not working teams",
+      "teams mic fix",
+      "teams audio not detected"
+    ]
+  },
+  {
+    "slug": "microphone-too-quiet-windows",
+    "title": "Microphone Too Quiet on Windows",
+    "deviceType": "mic",
+    "platform": "Windows",
+    "problem": "Low microphone volume",
+    "keywords": [
+      "microphone too quiet windows",
+      "mic volume low fix",
+      "quiet microphone windows"
+    ]
+  },
+  {
+    "slug": "microphone-static-noise",
+    "title": "Microphone Static, Crackling, or Background Noise",
+    "deviceType": "mic",
+    "platform": "All",
+    "problem": "Static or interference in audio",
+    "keywords": [
+      "microphone static noise",
+      "mic crackling fix",
+      "background noise microphone"
+    ]
+  },
+  {
+    "slug": "microphone-not-detected-usb",
+    "title": "USB Microphone Not Detected",
+    "deviceType": "mic",
+    "platform": "USB",
+    "problem": "USB microphone not showing as input",
+    "keywords": [
+      "usb microphone not detected",
+      "usb mic not working",
+      "usb microphone fix"
+    ]
+  },
+  {
+    "slug": "webcam-not-detected-chrome",
+    "title": "Webcam Not Detected in Chrome",
+    "deviceType": "webcam",
+    "platform": "Chrome",
+    "problem": "Camera blocked by Chrome permissions",
+    "keywords": [
+      "webcam not detected chrome",
+      "chrome camera fix",
+      "camera blocked chrome"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-windows-10",
+    "title": "Webcam Not Working on Windows 10",
+    "deviceType": "webcam",
+    "platform": "Windows 10",
+    "problem": "Camera not detected on Windows 10",
+    "keywords": [
+      "webcam not working windows 10",
+      "camera fix windows 10",
+      "windows 10 camera not detected"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-mac",
+    "title": "Webcam Not Working on Mac",
+    "deviceType": "webcam",
+    "platform": "Mac",
+    "problem": "Mac cannot access camera",
+    "keywords": [
+      "webcam not working mac",
+      "mac camera not detected",
+      "macos webcam fix"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-teams",
+    "title": "Webcam Not Working in Microsoft Teams",
+    "deviceType": "webcam",
+    "platform": "Teams",
+    "problem": "Teams cannot access camera",
+    "keywords": [
+      "webcam not working teams",
+      "teams camera fix",
+      "teams can't detect webcam"
+    ]
+  },
+  {
+    "slug": "webcam-poor-quality",
+    "title": "Webcam Quality Poor or Grainy",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Low resolution or bad lighting",
+    "keywords": [
+      "webcam grainy fix",
+      "improve webcam quality",
+      "webcam low resolution"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-discord",
+    "title": "Webcam Not Working in Discord",
+    "deviceType": "webcam",
+    "platform": "Discord",
+    "problem": "Discord cannot access camera",
+    "keywords": [
+      "webcam not working discord",
+      "discord camera fix",
+      "discord video not working"
+    ]
+  },
+  {
+    "slug": "webcam-in-use-by-another-app",
+    "title": "Webcam In Use by Another Application",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Camera locked by another program",
+    "keywords": [
+      "webcam in use",
+      "camera in use by another app",
+      "camera busy fix"
+    ]
+  },
+  {
+    "slug": "webcam-mirror-image-issue",
+    "title": "Webcam Appears Mirrored or Flipped",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Video preview flipped horizontally",
+    "keywords": [
+      "webcam mirrored",
+      "camera flipped",
+      "webcam reverse image fix"
+    ]
+  },
+  {
+    "slug": "keyboard-not-working-windows-10",
+    "title": "Keyboard Not Working on Windows 10",
+    "deviceType": "keyboard",
+    "platform": "Windows 10",
+    "problem": "Keyboard stops responding",
+    "keywords": [
+      "keyboard not working windows 10",
+      "windows keyboard fix",
+      "windows 10 keys not responding"
+    ]
+  },
+  {
+    "slug": "keyboard-not-working-windows-11",
+    "title": "Keyboard Not Working on Windows 11",
+    "deviceType": "keyboard",
+    "platform": "Windows 11",
+    "problem": "Keyboard not responding on Windows 11",
+    "keywords": [
+      "keyboard not working windows 11",
+      "windows 11 keyboard fix",
+      "keyboard not detected windows 11"
+    ]
+  },
+  {
+    "slug": "keyboard-keys-typing-wrong",
+    "title": "Keyboard Typing the Wrong Characters",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Incorrect characters appear when typing",
+    "keywords": [
+      "keyboard typing wrong characters",
+      "wrong keyboard layout fix",
+      "keyboard types wrong letters"
+    ]
+  },
+  {
+    "slug": "keyboard-not-detected-usb",
+    "title": "USB Keyboard Not Detected",
+    "deviceType": "keyboard",
+    "platform": "USB",
+    "problem": "USB keyboard not recognised",
+    "keywords": [
+      "usb keyboard not detected",
+      "keyboard not working usb",
+      "usb keyboard troubleshooting"
+    ]
+  },
+  {
+    "slug": "keyboard-sticky-keys-problem",
+    "title": "Keyboard Sticky Keys Problem",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Sticky keys enabled or malfunctioning",
+    "keywords": [
+      "sticky keys problem",
+      "sticky keys fix",
+      "keyboard sticky key issue"
+    ]
+  },
+  {
+    "slug": "keyboard-randomly-stops",
+    "title": "Keyboard Randomly Stops Working",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Intermittent keyboard failure",
+    "keywords": [
+      "keyboard randomly stops working",
+      "keyboard intermittent fix",
+      "keyboard disconnects randomly"
+    ]
+  },
+  {
+    "slug": "keyboard-ghosting-issue",
+    "title": "Keyboard Ghosting Issue",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Multiple keys not registering together",
+    "keywords": [
+      "keyboard ghosting",
+      "n-key rollover fix",
+      "keys not registering simultaneously"
+    ]
+  },
+  {
+    "slug": "screen-flickering-windows-10",
+    "title": "Screen Flickering on Windows 10",
+    "deviceType": "screen",
+    "platform": "Windows 10",
+    "problem": "Display flickering or flashing",
+    "keywords": [
+      "screen flickering windows 10",
+      "windows screen flashing",
+      "windows display flicker fix"
+    ]
+  },
+  {
+    "slug": "screen-flickering-windows-11",
+    "title": "Screen Flickering on Windows 11",
+    "deviceType": "screen",
+    "platform": "Windows 11",
+    "problem": "Display flickering on latest Windows",
+    "keywords": [
+      "screen flickering windows 11",
+      "windows 11 display flicker",
+      "windows 11 flashing screen"
+    ]
+  },
+  {
+    "slug": "screen-flickering-mac",
+    "title": "Screen Flickering on Mac",
+    "deviceType": "screen",
+    "platform": "Mac",
+    "problem": "MacBook screen flickers",
+    "keywords": [
+      "screen flickering mac",
+      "macbook flicker fix",
+      "mac display flickering"
+    ]
+  },
+  {
+    "slug": "monitor-ghosting",
+    "title": "Monitor Ghosting Issues",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Trailing shadows or smearing on display",
+    "keywords": [
+      "monitor ghosting",
+      "ghosting fix monitor",
+      "display motion blur issue"
+    ]
+  },
+  {
+    "slug": "monitor-dead-pixels",
+    "title": "Monitor Dead Pixels Identification and Fix",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Dead or stuck pixels on screen",
+    "keywords": [
+      "dead pixel fix",
+      "stuck pixel repair",
+      "monitor pixel issue"
+    ]
+  },
+  {
+    "slug": "screen-not-detected-windows",
+    "title": "Monitor Not Detected on Windows",
+    "deviceType": "screen",
+    "platform": "Windows",
+    "problem": "External monitor not recognised",
+    "keywords": [
+      "monitor not detected windows",
+      "windows external display fix",
+      "windows second monitor not detected"
+    ]
+  },
+  {
+    "slug": "monitor-colour-inaccuracy",
+    "title": "Monitor Colour Inaccuracy Issues",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Incorrect or washed-out colours",
+    "keywords": [
+      "monitor colour inaccuracy",
+      "monitor colours wrong",
+      "colour calibration fix"
+    ]
+  },
+  {
+    "slug": "screen-backlight-bleed",
+    "title": "Screen Backlight Bleed Causes and Fix",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Uneven backlight visible on dark screens",
+    "keywords": [
+      "backlight bleed fix",
+      "screen uneven lighting",
+      "monitor backlight issue"
+    ]
+  },
+  {
+    "slug": "screen-brightness-not-working",
+    "title": "Screen Brightness Not Working",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Brightness controls not responding",
+    "keywords": [
+      "screen brightness not working",
+      "brightness keys fix",
+      "monitor brightness issue"
+    ]
+  },
+  {
+    "slug": "monitor-no-signal",
+    "title": "Monitor Showing No Signal",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Monitor receives no input from device",
+    "keywords": [
+      "monitor no signal",
+      "no signal fix monitor",
+      "screen says no signal"
+    ]
+  }
+]
