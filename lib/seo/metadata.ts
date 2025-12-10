@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import type { Locale } from '@/i18n/getTranslation'
-import { getLocalizedPath } from '@/i18n/getTranslation'
+import { getLocalizedPath, SUPPORTED_LOCALES } from '@/i18n/getTranslation'
+import { buildLocalizedUrl, getBasePath, shouldHaveAlternates } from './urls'
 
 const BASE_URL = 'https://devicecheck.io'
 const SITE_NAME = 'DeviceCheck.io'
@@ -34,20 +35,22 @@ export function generateMetadata(config: PageMetadata): Metadata {
   const canonical = `${BASE_URL}${config.path}`
   const ogImage = config.ogImage || `${BASE_URL}/og-image.png`
 
-  // Generate hreflang alternates for all locales
-  const basePath = locale === 'en' 
-    ? config.path 
-    : config.path.replace(`/${locale}`, '')
+  // Generate hreflang alternates only for home + 5 tools
+  let alternates: Metadata['alternates'] = {
+    canonical
+  }
   
-  const alternates: Metadata['alternates'] = {
-    canonical,
-    languages: {
-      en: `${BASE_URL}${basePath}`,
-      es: `${BASE_URL}/es${basePath}`,
-      pt: `${BASE_URL}/pt${basePath}`,
-      de: `${BASE_URL}/de${basePath}`,
-      fr: `${BASE_URL}/fr${basePath}`,
-      hi: `${BASE_URL}/hi${basePath}`
+  if (shouldHaveAlternates(config.path)) {
+    const basePath = getBasePath(config.path)
+    const languages: Record<string, string> = {}
+    
+    for (const loc of SUPPORTED_LOCALES) {
+      languages[loc] = buildLocalizedUrl(basePath, loc)
+    }
+    
+    alternates = {
+      canonical,
+      languages
     }
   }
 

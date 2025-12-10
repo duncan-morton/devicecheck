@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next'
 import * as fs from 'fs'
 import * as path from 'path'
+import { buildLocalizedUrl } from '@/lib/seo/urls'
+import { SUPPORTED_LOCALES, type Locale } from '@/i18n/getTranslation'
 
 interface IssueData {
   slug: string
@@ -20,13 +22,17 @@ function getIssuesData(): IssueData[] {
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://devicecheck.io'
   
+  // Routes with hreflang alternates (home + 5 tools)
+  const routesWithAlternates = [
+    { path: '/', priority: 1.0, changeFrequency: 'daily' as const },
+    { path: '/mic', priority: 0.9, changeFrequency: 'daily' as const },
+    { path: '/webcam', priority: 0.9, changeFrequency: 'daily' as const },
+    { path: '/keyboard', priority: 0.9, changeFrequency: 'daily' as const },
+    { path: '/screen', priority: 0.9, changeFrequency: 'daily' as const },
+    { path: '/meeting-check', priority: 0.9, changeFrequency: 'daily' as const }
+  ]
+  
   const staticRoutes = [
-    '',
-    '/webcam',
-    '/mic',
-    '/keyboard',
-    '/screen',
-    '/meeting-check',
     '/guides',
     '/issues',
     '/privacy',
@@ -93,12 +99,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const issues = getIssuesData()
   const issueRoutes = issues.map((issue) => `/issues/${issue.slug}`)
 
-  const routes = [
+  const routes: MetadataRoute.Sitemap = [
+    // Routes with hreflang alternates (home + 5 tools)
+    ...routesWithAlternates.map((route) => {
+      const languages: Record<string, string> = {}
+      for (const locale of SUPPORTED_LOCALES) {
+        languages[locale] = buildLocalizedUrl(route.path, locale)
+      }
+      
+      return {
+        url: buildLocalizedUrl(route.path, 'en'),
+        lastModified: new Date(),
+        changeFrequency: route.changeFrequency,
+        priority: route.priority,
+        alternates: {
+          languages
+        }
+      }
+    }),
+    // Other static routes (no alternates)
     ...staticRoutes.map((route) => ({
       url: `${baseUrl}${route}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
-      priority: route === '' ? 1.0 : 0.9,
+      priority: 0.8,
     })),
     ...guideRoutes.map((route) => ({
       url: `${baseUrl}${route}`,
