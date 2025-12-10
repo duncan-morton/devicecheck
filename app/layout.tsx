@@ -5,6 +5,7 @@ import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 import JsonLdScript from "@/components/JsonLdScript";
 import { generateWebSiteSchema, generateOrganizationSchema } from "@/lib/seo/jsonLd";
 import { Analytics } from "@vercel/analytics/next";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,9 +53,10 @@ export default function RootLayout({
         <JsonLdScript data={websiteSchema} />
         <JsonLdScript data={organizationSchema} />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <div className="fixed top-4 right-4 z-50">
+          <LocaleSwitcher />
+        </div>
         {children}
         <Analytics />
       </body>

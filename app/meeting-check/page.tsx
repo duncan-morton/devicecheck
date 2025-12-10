@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
 import MeetingCheckTool from '@/components/MeetingCheckTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -11,10 +12,14 @@ import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
+const locale: Locale = 'en'
+const t = getTranslation(locale)
+
 export const metadata: Metadata = genMeta({
-  title: 'Meeting Check – Test Your Setup for Video Calls',
+  title: t.meeting_check_title,
   description: 'Test your network, camera, and microphone before video calls. Check ping, jitter, and device connectivity with our free meeting check tool for Zoom, Teams, and Google Meet.',
   path: '/meeting-check',
+  locale: 'en',
   keywords: [
     'meeting check',
     'device check',
@@ -51,18 +56,22 @@ const faqs = [
 ]
 
 export default function MeetingCheckPage() {
+  const locale: Locale = 'en'
+  const t = getTranslation(locale)
+  
   const webAppSchema = generateWebApplicationSchema(
-    'Meeting Check - Video Call Setup Test',
+    t.meeting_check_title,
     'Test your network, camera, and microphone before video calls.',
-    '/meeting-check'
+    '/meeting-check',
+    locale
   )
 
   const breadcrumbs = generateBreadcrumbListSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Meeting Check', path: '/meeting-check' }
-  ])
+    { name: t.breadcrumb_home, path: '/' },
+    { name: t.meeting_check, path: '/meeting-check' }
+  ], locale)
 
-  const faqSchema = generateFAQPageSchema(faqs)
+  const faqSchema = generateFAQPageSchema(faqs, locale)
 
   return (
     <>
@@ -72,11 +81,11 @@ export default function MeetingCheckPage() {
       
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
-          <Breadcrumbs items={[{ name: 'Meeting Check', path: '/meeting-check' }]} />
+          <Breadcrumbs items={[{ name: t.meeting_check, path: '/meeting-check' }]} locale={locale} />
           
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Meeting Check – Test Your Setup for Video Calls
+              {t.meeting_check_title}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl">
               Test your network connectivity, camera, and microphone before important video calls. Ensure everything works perfectly for Zoom, Teams, Google Meet, and other video conferencing platforms.
@@ -96,7 +105,7 @@ export default function MeetingCheckPage() {
             <MeetingCheckTool />
           </div>
 
-          <RelatedTools currentPath="/meeting-check" />
+          <RelatedTools currentPath="/meeting-check" locale={locale} />
 
           {/* Comprehensive SEO Content */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
@@ -232,7 +241,7 @@ export default function MeetingCheckPage() {
               <li><strong>Have Backup Plan:</strong> Know how to join via phone if internet fails</li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Frequently Asked Questions</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.frequently_asked_questions}</h3>
             <div className="space-y-6 mt-6">
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-gray-200 pb-6 last:border-0">
@@ -250,7 +259,7 @@ export default function MeetingCheckPage() {
           <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName="Meeting Check" toolHref="/meeting-check" />
+      <StickyActionBar toolName={t.meeting_check} toolHref="/meeting-check" />
     </>
   )
 }

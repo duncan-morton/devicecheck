@@ -26,6 +26,7 @@ export interface WebApplicationSchema {
   name: string
   url: string
   description: string
+  inLanguage?: string
   applicationCategory: string
   operatingSystem: string
   browserRequirements?: string
@@ -112,7 +113,8 @@ export function generateOrganizationSchema(): OrganizationSchema {
 export function generateWebApplicationSchema(
   name: string,
   description: string,
-  path: string
+  path: string,
+  locale?: string
 ): WebApplicationSchema {
   return {
     '@context': 'https://schema.org',
@@ -120,6 +122,7 @@ export function generateWebApplicationSchema(
     name,
     url: `${BASE_URL}${path}`,
     description,
+    inLanguage: locale || 'en',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Any',
     browserRequirements: 'Requires JavaScript. Requires HTML5.',
@@ -132,7 +135,8 @@ export function generateWebApplicationSchema(
 }
 
 export function generateBreadcrumbListSchema(
-  items: Array<{ name: string; path: string }>
+  items: Array<{ name: string; path: string }>,
+  _locale?: string
 ): BreadcrumbListSchema {
   return {
     '@context': 'https://schema.org',
@@ -147,7 +151,8 @@ export function generateBreadcrumbListSchema(
 }
 
 export function generateFAQPageSchema(
-  faqs: Array<{ question: string; answer: string }>
+  faqs: Array<{ question: string; answer: string }>,
+  _locale?: string
 ): FAQPageSchema {
   return {
     '@context': 'https://schema.org',
@@ -168,13 +173,15 @@ export function generateArticleSchema(
   description: string,
   path: string,
   datePublished?: string,
-  dateModified?: string
+  dateModified?: string,
+  locale?: string
 ): ArticleSchema {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline,
     description,
+    inLanguage: locale || 'en',
     author: {
       '@type': 'Person',
       name: 'DeviceCheck.io'

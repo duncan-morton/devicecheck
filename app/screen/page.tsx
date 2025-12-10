@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
 import ScreenTool from '@/components/ScreenTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -11,10 +12,14 @@ import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
+const locale: Locale = 'en'
+const t = getTranslation(locale)
+
 export const metadata: Metadata = genMeta({
-  title: 'Dead Pixel Test – Online Screen Test Tool',
+  title: t.screen_test_title,
   description: 'Test your screen for dead pixels, stuck pixels, and color accuracy with our free online screen test tool. Check monitor quality instantly in your browser.',
   path: '/screen',
+  locale: 'en',
   keywords: [
     'dead pixel test',
     'screen test',
@@ -51,18 +56,22 @@ const faqs = [
 ]
 
 export default function ScreenTestPage() {
+  const locale: Locale = 'en'
+  const t = getTranslation(locale)
+  
   const webAppSchema = generateWebApplicationSchema(
-    'Dead Pixel Test - Online Screen Test',
+    t.screen_test_title,
     'Test your screen for dead pixels, stuck pixels, and color accuracy.',
-    '/screen'
+    '/screen',
+    locale
   )
 
   const breadcrumbs = generateBreadcrumbListSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Screen Test', path: '/screen' }
-  ])
+    { name: t.breadcrumb_home, path: '/' },
+    { name: t.screen_test, path: '/screen' }
+  ], locale)
 
-  const faqSchema = generateFAQPageSchema(faqs)
+  const faqSchema = generateFAQPageSchema(faqs, locale)
 
   return (
     <>
@@ -72,11 +81,11 @@ export default function ScreenTestPage() {
       
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
-          <Breadcrumbs items={[{ name: 'Screen Test', path: '/screen' }]} />
+          <Breadcrumbs items={[{ name: t.screen_test, path: '/screen' }]} locale={locale} />
           
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Dead Pixel Test – Online Screen Test Tool
+              {t.screen_test_title}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl">
               Test your screen for dead pixels, stuck pixels, color accuracy, and backlight issues with our free online screen test tool. Perfect for checking monitor quality before purchase or troubleshooting display issues.
@@ -88,7 +97,7 @@ export default function ScreenTestPage() {
               href="#test"
               className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
             >
-              Run Screen Test →
+              {t.run_screen_test} →
             </Link>
           </div>
 
@@ -96,7 +105,7 @@ export default function ScreenTestPage() {
             <ScreenTool />
           </div>
 
-          <RelatedTools currentPath="/screen" />
+          <RelatedTools currentPath="/screen" locale={locale} />
 
           {/* Comprehensive SEO Content */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
@@ -224,7 +233,7 @@ export default function ScreenTestPage() {
               <li><Link href="/guides/colour-calibration-basics" className="text-blue-600 hover:text-blue-800">Colour calibration basics</Link></li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Frequently Asked Questions</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.frequently_asked_questions}</h3>
             <div className="space-y-6 mt-6">
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-gray-200 pb-6 last:border-0">
@@ -252,7 +261,7 @@ export default function ScreenTestPage() {
           <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName="Screen Test" toolHref="/screen" />
+      <StickyActionBar toolName={t.screen_test} toolHref="/screen" />
     </>
   )
 }

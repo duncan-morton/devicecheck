@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
 import KeyboardTool from '@/components/KeyboardTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -11,10 +12,14 @@ import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
+const locale: Locale = 'en'
+const t = getTranslation(locale)
+
 export const metadata: Metadata = genMeta({
-  title: 'Online Keyboard Test – Test All Keys Instantly',
-  description: 'Test your keyboard online instantly. Check if all keys work, detect stuck keys, test ghosting, and verify keyboard functionality with our free browser-based keyboard test tool.',
+  title: t.keyboard_meta_title,
+  description: t.keyboard_meta_description,
   path: '/keyboard',
+  locale: 'en',
   keywords: [
     'online keyboard test',
     'keyboard test',
@@ -27,42 +32,31 @@ export const metadata: Metadata = genMeta({
   ]
 })
 
-const faqs = [
-  {
-    question: 'How do I test my keyboard online?',
-    answer: 'Simply press any key on your keyboard. Keys will light up green when pressed and turn blue after being tested. The tool tracks which keys you\'ve tested and shows your progress.'
-  },
-  {
-    question: 'What is keyboard ghosting?',
-    answer: 'Keyboard ghosting occurs when pressing multiple keys simultaneously causes some key presses to not register. This happens when keyboards don\'t support N-key rollover. Test by pressing multiple keys at once.'
-  },
-  {
-    question: 'How do I fix stuck keys?',
-    answer: 'Stuck keys can be caused by debris, spills, or mechanical issues. Try cleaning with compressed air, gently removing the keycap and cleaning underneath, or replacing the keyboard if cleaning doesn\'t help.'
-  },
-  {
-    question: 'Why are some keys not working?',
-    answer: 'Keys may not work due to physical damage, debris under keys, driver issues, or hardware failure. Test each key individually, clean the keyboard, update drivers, and try the keyboard on another computer to isolate the issue.'
-  },
-  {
-    question: 'Can I test laptop keyboards?',
-    answer: 'Yes! Our keyboard test works with all keyboards including laptop keyboards, mechanical keyboards, membrane keyboards, and wireless keyboards. Just press keys and watch them light up.'
-  }
+const faqs = (t: ReturnType<typeof getTranslation>) => [
+  { question: t.keyboard_faq_1_q, answer: t.keyboard_faq_1_a },
+  { question: t.keyboard_faq_2_q, answer: t.keyboard_faq_2_a },
+  { question: t.keyboard_faq_3_q, answer: t.keyboard_faq_3_a },
+  { question: t.keyboard_faq_4_q, answer: t.keyboard_faq_4_a },
+  { question: t.keyboard_faq_5_q, answer: t.keyboard_faq_5_a }
 ]
 
 export default function KeyboardTestPage() {
+  const locale: Locale = 'en'
+  const t = getTranslation(locale)
+  
   const webAppSchema = generateWebApplicationSchema(
-    'Online Keyboard Test',
-    'Test your keyboard online instantly. Check if all keys work, detect stuck keys, and test ghosting.',
-    '/keyboard'
+    t.keyboard_meta_title,
+    t.keyboard_meta_description,
+    getLocalizedPath('/keyboard', locale),
+    locale
   )
 
   const breadcrumbs = generateBreadcrumbListSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Keyboard Test', path: '/keyboard' }
-  ])
+    { name: t.breadcrumb_home, path: getLocalizedPath('/', locale) },
+    { name: t.keyboard_test, path: getLocalizedPath('/keyboard', locale) }
+  ], locale)
 
-  const faqSchema = generateFAQPageSchema(faqs)
+  const faqSchema = generateFAQPageSchema(faqs(t), locale)
 
   return (
     <>
@@ -72,14 +66,14 @@ export default function KeyboardTestPage() {
       
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
-          <Breadcrumbs items={[{ name: 'Keyboard Test', path: '/keyboard' }]} />
+          <Breadcrumbs items={[{ name: t.keyboard_test, path: getLocalizedPath('/keyboard', locale) }]} locale={locale} />
           
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Online Keyboard Test – Test All Keys Instantly
+              {t.keyboard_test_title}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl">
-              Test your keyboard instantly with our free online tool. Check if all keys work properly, detect stuck or non-responsive keys, test for ghosting, and verify your keyboard functionality.
+              {t.keyboard_intro}
             </p>
           </div>
 
@@ -88,7 +82,7 @@ export default function KeyboardTestPage() {
               href="#test"
               className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
             >
-              Run Keyboard Test →
+              {t.run_keyboard_test} →
             </Link>
           </div>
 
@@ -96,183 +90,147 @@ export default function KeyboardTestPage() {
             <KeyboardTool />
           </div>
 
-          <RelatedTools currentPath="/keyboard" />
+          <RelatedTools currentPath={getLocalizedPath('/keyboard', locale)} locale={locale} />
 
           {/* Comprehensive SEO Content */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">How to Test Your Keyboard Online</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">{t.keyboard_how_title}</h2>
             
             <p className="text-lg text-gray-700 mb-6">
-              Testing your keyboard is essential for ensuring all keys work correctly, especially before important work or gaming sessions. Our <strong>free online keyboard test</strong> provides instant visual feedback on every key press, helping you identify stuck keys, non-responsive keys, and keyboard ghosting issues—all without installing any software.
+              {t.keyboard_how_intro}
             </p>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why Test Your Keyboard?</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_why_title}</h3>
             <p className="text-gray-700 mb-4">
-              Keyboard issues can disrupt productivity and gaming. By testing your keyboard, you can:
+              {t.keyboard_why_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Verify all keys register correctly</li>
-              <li>Identify stuck or sticky keys</li>
-              <li>Test for keyboard ghosting (multiple key presses)</li>
-              <li>Check modifier keys (Shift, Ctrl, Alt) functionality</li>
-              <li>Verify special keys (Function keys, arrow keys, etc.)</li>
-              <li>Test keyboard before important work or gaming</li>
+              <li>{t.keyboard_why_1}</li>
+              <li>{t.keyboard_why_2}</li>
+              <li>{t.keyboard_why_3}</li>
+              <li>{t.keyboard_why_4}</li>
+              <li>{t.keyboard_why_5}</li>
+              <li>{t.keyboard_why_6}</li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Step-by-Step Keyboard Testing Guide</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_steps_title}</h3>
             <ol className="list-decimal pl-6 space-y-3 text-gray-700 mb-6">
-              <li>
-                <strong>Start Testing:</strong> Click "Run Keyboard Test" or simply start pressing keys. Each key will light up green when pressed and turn blue after being tested.
-              </li>
-              <li>
-                <strong>Test All Keys:</strong> Systematically press every key on your keyboard, including letters, numbers, symbols, function keys, and modifier keys (Shift, Ctrl, Alt, etc.).
-              </li>
-              <li>
-                <strong>Check Progress:</strong> Watch the progress bar to see how many keys you've tested. Aim to test all 87+ keys on a standard keyboard.
-              </li>
-              <li>
-                <strong>Test Multiple Keys:</strong> Press multiple keys simultaneously to test for keyboard ghosting. If some keys don't register when pressed together, you may have a ghosting issue.
-              </li>
-              <li>
-                <strong>Review Results:</strong> Check the "Recent Key Presses" section to see which keys you've pressed. If a key doesn't appear, it may not be working correctly.
-              </li>
+              <li><strong>{t.keyboard_step_1_title}:</strong> {t.keyboard_step_1_text}</li>
+              <li><strong>{t.keyboard_step_2_title}:</strong> {t.keyboard_step_2_text}</li>
+              <li><strong>{t.keyboard_step_3_title}:</strong> {t.keyboard_step_3_text}</li>
+              <li><strong>{t.keyboard_step_4_title}:</strong> {t.keyboard_step_4_text}</li>
+              <li><strong>{t.keyboard_step_5_title}:</strong> {t.keyboard_step_5_text}</li>
             </ol>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Keyboard Problems and Solutions</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_common_title}</h3>
 
-            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">Stuck Keys or Keys That Don't Release</h4>
+            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.keyboard_stuck_title}</h4>
             <p className="text-gray-700 mb-4">
-              If a key stays pressed or doesn't release:
+              {t.keyboard_stuck_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>
-                <strong>Physical Debris:</strong> Food crumbs, dust, or liquid can cause keys to stick. Use compressed air to blow debris out from under keys.
-              </li>
-              <li>
-                <strong>Liquid Spills:</strong> If liquid was spilled, immediately unplug the keyboard, turn it upside down, and let it dry completely (24-48 hours). For mechanical keyboards, you may need to remove keycaps and clean switches.
-              </li>
-              <li>
-                <strong>Keycap Removal:</strong> Gently remove the stuck keycap (if removable) and clean underneath. Be careful not to break the mechanism.
-              </li>
-              <li>
-                <strong>Mechanical Issues:</strong> For mechanical keyboards, the switch may be damaged. Consider replacing the switch or the entire keyboard if multiple keys are affected.
-              </li>
+              <li>{t.keyboard_stuck_1}</li>
+              <li>{t.keyboard_stuck_2}</li>
+              <li>{t.keyboard_stuck_3}</li>
+              <li>{t.keyboard_stuck_4}</li>
             </ul>
 
-            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">Keys Not Working or Not Registering</h4>
+            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.keyboard_not_working_title}</h4>
             <p className="text-gray-700 mb-4">
-              If keys don't register when pressed:
+              {t.keyboard_not_working_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>
-                <strong>Connection Issues:</strong> For USB keyboards, unplug and replug the cable. For wireless keyboards, check battery level and reconnect.
-              </li>
-              <li>
-                <strong>Driver Problems:</strong> Update keyboard drivers in Windows Device Manager or Mac System Preferences. Sometimes reinstalling drivers fixes issues.
-              </li>
-              <li>
-                <strong>Test on Another Computer:</strong> If the keyboard works on another computer, the issue is software-related. If it doesn't work anywhere, it's hardware failure.
-              </li>
-              <li>
-                <strong>Check for Physical Damage:</strong> Inspect the keyboard for visible damage, broken switches, or loose connections.
-              </li>
-              <li>
-                <strong>Software Conflicts:</strong> Close any keyboard remapping software or macros that might interfere with key detection.
-              </li>
+              <li>{t.keyboard_not_working_1}</li>
+              <li>{t.keyboard_not_working_2}</li>
+              <li>{t.keyboard_not_working_3}</li>
+              <li>{t.keyboard_not_working_4}</li>
+              <li>{t.keyboard_not_working_5}</li>
             </ul>
 
-            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">Keyboard Ghosting</h4>
+            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.keyboard_ghosting_title}</h4>
             <p className="text-gray-700 mb-4">
-              Keyboard ghosting occurs when pressing multiple keys simultaneously causes some key presses to not register. This is common in cheaper keyboards:
+              {t.keyboard_ghosting_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>
-                <strong>What Causes Ghosting:</strong> Keyboards use a matrix circuit. Cheaper keyboards don't support N-key rollover (NKRO), meaning they can't detect all key combinations.
-              </li>
-              <li>
-                <strong>How to Test:</strong> Press multiple keys at once (especially gaming combinations like WASD + Shift + Space). If some keys don't register, you have ghosting.
-              </li>
-              <li>
-                <strong>Solutions:</strong> Upgrade to a keyboard with NKRO (N-key rollover) or 6KRO (6-key rollover). Mechanical keyboards often support NKRO via USB or PS/2 connection.
-              </li>
-              <li>
-                <strong>Gaming Impact:</strong> Ghosting is problematic for gamers who need to press multiple keys simultaneously. Test your keyboard with common gaming key combinations.
-              </li>
+              <li>{t.keyboard_ghosting_1}</li>
+              <li>{t.keyboard_ghosting_2}</li>
+              <li>{t.keyboard_ghosting_3}</li>
+              <li>{t.keyboard_ghosting_4}</li>
             </ul>
 
-            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">Wrong Characters Appearing</h4>
+            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.keyboard_wrong_title}</h4>
             <p className="text-gray-700 mb-4">
-              If pressing one key produces a different character:
+              {t.keyboard_wrong_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Check your keyboard layout settings (QWERTY vs AZERTY vs QWERTZ)</li>
-              <li>Verify language/region settings in your operating system</li>
-              <li>Check for stuck modifier keys (Shift, Alt, Ctrl)</li>
-              <li>Restart your computer to reset keyboard state</li>
-              <li>Test with an on-screen keyboard to verify software vs hardware issue</li>
+              <li>{t.keyboard_wrong_1}</li>
+              <li>{t.keyboard_wrong_2}</li>
+              <li>{t.keyboard_wrong_3}</li>
+              <li>{t.keyboard_wrong_4}</li>
+              <li>{t.keyboard_wrong_5}</li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Understanding Keyboard Types</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_types_title}</h3>
 
-            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">Mechanical Keyboards</h4>
+            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.keyboard_mech_title}</h4>
             <p className="text-gray-700 mb-4">
-              Mechanical keyboards use individual switches under each key. They offer:
+              {t.keyboard_mech_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Better tactile feedback and key feel</li>
-              <li>Longer lifespan (50-100 million keystrokes per switch)</li>
-              <li>Often support N-key rollover (NKRO)</li>
-              <li>Customizable keycaps and switches</li>
-              <li>Generally more expensive than membrane keyboards</li>
+              <li>{t.keyboard_mech_1}</li>
+              <li>{t.keyboard_mech_2}</li>
+              <li>{t.keyboard_mech_3}</li>
+              <li>{t.keyboard_mech_4}</li>
+              <li>{t.keyboard_mech_5}</li>
             </ul>
 
-            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">Membrane Keyboards</h4>
+            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.keyboard_mem_title}</h4>
             <p className="text-gray-700 mb-4">
-              Membrane keyboards use a rubber dome under keys. They offer:
+              {t.keyboard_mem_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Quieter operation</li>
-              <li>Lower cost</li>
-              <li>Thinner profile</li>
-              <li>May have ghosting issues with multiple key presses</li>
-              <li>Shorter lifespan than mechanical keyboards</li>
+              <li>{t.keyboard_mem_1}</li>
+              <li>{t.keyboard_mem_2}</li>
+              <li>{t.keyboard_mem_3}</li>
+              <li>{t.keyboard_mem_4}</li>
+              <li>{t.keyboard_mem_5}</li>
             </ul>
 
-            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">Laptop Keyboards</h4>
+            <h4 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.keyboard_laptop_title}</h4>
             <p className="text-gray-700 mb-4">
-              Laptop keyboards are typically membrane-based and integrated:
+              {t.keyboard_laptop_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Compact design with function key combinations</li>
-              <li>May have limited key travel</li>
-              <li>Difficult to repair or replace individual keys</li>
-              <li>Often have specific layouts (smaller Enter key, different arrow keys)</li>
+              <li>{t.keyboard_laptop_1}</li>
+              <li>{t.keyboard_laptop_2}</li>
+              <li>{t.keyboard_laptop_3}</li>
+              <li>{t.keyboard_laptop_4}</li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Keyboard Maintenance Tips</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_maint_title}</h3>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li><strong>Regular Cleaning:</strong> Use compressed air monthly to remove dust and debris from under keys</li>
-              <li><strong>Avoid Eating Over Keyboard:</strong> Crumbs and spills are the leading cause of keyboard failure</li>
-              <li><strong>Clean Keycaps:</strong> Remove keycaps (if possible) and clean with mild soap and water. Let dry completely before reattaching</li>
-              <li><strong>Update Drivers:</strong> Keep keyboard drivers updated for best compatibility</li>
-              <li><strong>Protect from Spills:</strong> Consider a keyboard cover or keep drinks away from your keyboard</li>
-              <li><strong>Test Regularly:</strong> Use our keyboard test tool monthly to catch issues early</li>
+              <li>{t.keyboard_maint_1}</li>
+              <li>{t.keyboard_maint_2}</li>
+              <li>{t.keyboard_maint_3}</li>
+              <li>{t.keyboard_maint_4}</li>
+              <li>{t.keyboard_maint_5}</li>
+              <li>{t.keyboard_maint_6}</li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Troubleshooting Guides</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_troubleshooting_title}</h3>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li><Link href="/guides/keyboard-not-working" className="text-blue-600 hover:text-blue-800">Keyboard not working</Link></li>
-              <li><Link href="/guides/keys-not-registering" className="text-blue-600 hover:text-blue-800">Keys not registering</Link></li>
-              <li><Link href="/guides/sticky-repeating-keys" className="text-blue-600 hover:text-blue-800">Sticky or repeating keys</Link></li>
-              <li><Link href="/guides/keyboard-ghosting-explained" className="text-blue-600 hover:text-blue-800">Keyboard ghosting explained</Link></li>
-              <li><Link href="/guides/mechanical-keyboard-switch-test" className="text-blue-600 hover:text-blue-800">Mechanical keyboard switch test</Link></li>
-              <li><Link href="/guides/how-to-test-keyboard-windows" className="text-blue-600 hover:text-blue-800">Test keyboard on Windows</Link></li>
-              <li><Link href="/guides/how-to-test-keyboard-mac" className="text-blue-600 hover:text-blue-800">Test keyboard on Mac</Link></li>
+              <li><Link href={getLocalizedPath("/guides/keyboard-not-working", locale)} className="text-blue-600 hover:text-blue-800">Keyboard not working</Link></li>
+              <li><Link href={getLocalizedPath("/guides/keys-not-registering", locale)} className="text-blue-600 hover:text-blue-800">Keys not registering</Link></li>
+              <li><Link href={getLocalizedPath("/guides/sticky-repeating-keys", locale)} className="text-blue-600 hover:text-blue-800">Sticky or repeating keys</Link></li>
+              <li><Link href={getLocalizedPath("/guides/keyboard-ghosting-explained", locale)} className="text-blue-600 hover:text-blue-800">Keyboard ghosting explained</Link></li>
+              <li><Link href={getLocalizedPath("/guides/mechanical-keyboard-switch-test", locale)} className="text-blue-600 hover:text-blue-800">Mechanical keyboard switch test</Link></li>
+              <li><Link href={getLocalizedPath("/guides/how-to-test-keyboard-windows", locale)} className="text-blue-600 hover:text-blue-800">Test keyboard on Windows</Link></li>
+              <li><Link href={getLocalizedPath("/guides/how-to-test-keyboard-mac", locale)} className="text-blue-600 hover:text-blue-800">Test keyboard on Mac</Link></li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Frequently Asked Questions</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.frequently_asked_questions}</h3>
             <div className="space-y-6 mt-6">
-              {faqs.map((faq, index) => (
+              {faqs(t).map((faq, index) => (
                 <div key={index} className="border-b border-gray-200 pb-6 last:border-0">
                   <h4 className="text-lg font-bold text-gray-900 mb-2">{faq.question}</h4>
                   <p className="text-gray-700">{faq.answer}</p>
@@ -280,28 +238,31 @@ export default function KeyboardTestPage() {
               ))}
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Testing for Gaming</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_tips_gaming_title}</h3>
             <p className="text-gray-700 mb-4">
-              Gamers need keyboards that can handle rapid, simultaneous key presses. When testing for gaming:
+              {t.keyboard_tips_gaming_intro}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Test common gaming combinations (WASD + Shift + Space + Ctrl)</li>
-              <li>Verify all movement keys work correctly</li>
-              <li>Check modifier keys used in games (Shift for run, Ctrl for crouch, etc.)</li>
-              <li>Test for ghosting with multiple simultaneous presses</li>
-              <li>Ensure keys register quickly without delay</li>
-              <li>Consider keyboards with anti-ghosting or NKRO for competitive gaming</li>
+              <li>{t.keyboard_tips_gaming_1}</li>
+              <li>{t.keyboard_tips_gaming_2}</li>
+              <li>{t.keyboard_tips_gaming_3}</li>
+              <li>{t.keyboard_tips_gaming_4}</li>
+              <li>{t.keyboard_tips_gaming_5}</li>
+              <li>{t.keyboard_tips_gaming_6}</li>
             </ul>
 
             <p className="text-lg text-gray-700 mt-8">
-              Ready to test your keyboard? <Link href="#test" className="text-blue-600 hover:text-blue-800 font-semibold">Scroll up and click "Run Keyboard Test"</Link> to verify all your keys are working perfectly. The test takes just minutes and helps ensure your keyboard is ready for work, gaming, or any task.
+              {t.keyboard_ready_text}{' '}
+              <Link href="#test" className="text-blue-600 hover:text-blue-800 font-semibold">
+                {t.keyboard_ready_link}
+              </Link>
             </p>
           </article>
 
           <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName="Keyboard Test" toolHref="/keyboard" />
+      <StickyActionBar toolName={t.keyboard_test} toolHref={getLocalizedPath('/keyboard', locale)} />
     </>
   )
 }

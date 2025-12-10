@@ -2,15 +2,20 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebSiteSchema, generateOrganizationSchema } from '@/lib/seo/jsonLd'
+import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
 import Link from 'next/link'
 import { Camera, Mic, Keyboard, Monitor, Video, CheckCircle2 } from 'lucide-react'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
+const locale: Locale = 'en' // Root page is English
+const t = getTranslation(locale)
+
 export const metadata: Metadata = genMeta({
-  title: 'DeviceCheck.io - Free Online Device Testing Tools',
-  description: 'Test your webcam, microphone, keyboard, screen, and more with our free online device testing tools. Instant browser-based diagnostics for Zoom, Teams, and Google Meet.',
+  title: t.home_title,
+  description: t.home_description,
   path: '/',
+  locale: 'en',
   keywords: [
     'online webcam test',
     'online microphone test',
@@ -27,54 +32,57 @@ export const metadata: Metadata = genMeta({
   ]
 })
 
-const tools = [
-  {
-    name: 'Webcam Test',
-    path: '/webcam',
-    description: 'Test your camera resolution, frame rate, and framing. Perfect for Zoom, Teams, and Google Meet.',
-    icon: <Camera size={32} />,
-    color: 'blue'
-  },
-  {
-    name: 'Microphone Test',
-    path: '/mic',
-    description: 'Check mic input levels, audio quality, and record playback. Verify your microphone works perfectly.',
-    icon: <Mic size={32} />,
-    color: 'green'
-  },
-  {
-    name: 'Keyboard Test',
-    path: '/keyboard',
-    description: 'Test all keys, detect stuck keys, and check for keyboard ghosting. Essential for gaming and work.',
-    icon: <Keyboard size={32} />,
-    color: 'purple'
-  },
-  {
-    name: 'Screen Test',
-    path: '/screen',
-    description: 'Check for dead pixels, stuck pixels, and color accuracy. Test monitor quality instantly.',
-    icon: <Monitor size={32} />,
-    color: 'orange'
-  },
-  {
-    name: 'Meeting Check',
-    path: '/meeting-check',
-    description: 'Test network connectivity, camera, and microphone before video calls. Ensure everything works.',
-    icon: <Video size={32} />,
-    color: 'red'
-  }
-]
-
-const features = [
-  '100% Free - No signup required',
-  'Works in any modern browser',
-  'All tests run locally - complete privacy',
-  'Instant results - no waiting',
-  'No software installation needed',
-  'Mobile-friendly testing tools'
-]
-
 export default function Home() {
+  const locale: Locale = 'en'
+  const t = getTranslation(locale)
+  
+  const tools = [
+    {
+      name: t.webcam_test,
+      path: getLocalizedPath('/webcam', locale),
+      description: 'Test your camera resolution, frame rate, and framing. Perfect for Zoom, Teams, and Google Meet.',
+      icon: <Camera size={32} />,
+      color: 'blue'
+    },
+    {
+      name: t.microphone_test,
+      path: getLocalizedPath('/mic', locale),
+      description: 'Check mic input levels, audio quality, and record playback. Verify your microphone works perfectly.',
+      icon: <Mic size={32} />,
+      color: 'green'
+    },
+    {
+      name: t.keyboard_test,
+      path: getLocalizedPath('/keyboard', locale),
+      description: 'Test all keys, detect stuck keys, and check for keyboard ghosting. Essential for gaming and work.',
+      icon: <Keyboard size={32} />,
+      color: 'purple'
+    },
+    {
+      name: t.screen_test,
+      path: getLocalizedPath('/screen', locale),
+      description: 'Check for dead pixels, stuck pixels, and color accuracy. Test monitor quality instantly.',
+      icon: <Monitor size={32} />,
+      color: 'orange'
+    },
+    {
+      name: t.meeting_check,
+      path: getLocalizedPath('/meeting-check', locale),
+      description: 'Test network connectivity, camera, and microphone before video calls. Ensure everything works.',
+      icon: <Video size={32} />,
+      color: 'red'
+    }
+  ]
+
+  const features = [
+    '100% Free - No signup required',
+    'Works in any modern browser',
+    'All tests run locally - complete privacy',
+    'Instant results - no waiting',
+    'No software installation needed',
+    'Mobile-friendly testing tools'
+  ]
+
   const websiteSchema = generateWebSiteSchema()
   const organizationSchema = generateOrganizationSchema()
 
@@ -142,7 +150,7 @@ export default function Home() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Online Webcam Test</h3>
             <p className="text-gray-700 mb-4">
-              Our <Link href="/webcam" className="text-blue-600 hover:text-blue-800 font-semibold">online webcam test</Link> helps you verify your camera works correctly before video calls on Zoom, Microsoft Teams, Google Meet, or any video conferencing platform. The tool automatically detects your camera's resolution, provides a live preview with optional grid overlay for better framing, and includes mirror toggle functionality. Test your webcam instantly to avoid embarrassing moments during important calls.
+              Our <Link href={getLocalizedPath("/webcam", locale)} className="text-blue-600 hover:text-blue-800 font-semibold">online webcam test</Link> helps you verify your camera works correctly before video calls on Zoom, Microsoft Teams, Google Meet, or any video conferencing platform. The tool automatically detects your camera's resolution, provides a live preview with optional grid overlay for better framing, and includes mirror toggle functionality. Test your webcam instantly to avoid embarrassing moments during important calls.
             </p>
             <p className="text-gray-700 mb-6">
               Common webcam issues include black screens (usually permission-related), low resolution, poor lighting, and incorrect framing. Our webcam test helps identify these issues quickly, with step-by-step troubleshooting guides for fixing camera problems. All testing happens locally in your browser—no video data is sent to our servers or stored.
@@ -150,7 +158,7 @@ export default function Home() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Online Microphone Test</h3>
             <p className="text-gray-700 mb-4">
-              Test your microphone instantly with our <Link href="/mic" className="text-blue-600 hover:text-blue-800 font-semibold">free online microphone test</Link>. The tool provides real-time volume level visualization, allows you to record and play back a 5-second test clip, and includes speaker/headset testing functionality. Perfect for verifying your microphone works before important calls, podcast recordings, or live streams.
+              Test your microphone instantly with our <Link href={getLocalizedPath("/mic", locale)} className="text-blue-600 hover:text-blue-800 font-semibold">free online microphone test</Link>. The tool provides real-time volume level visualization, allows you to record and play back a 5-second test clip, and includes speaker/headset testing functionality. Perfect for verifying your microphone works before important calls, podcast recordings, or live streams.
             </p>
             <p className="text-gray-700 mb-6">
               Microphone problems often include no sound (permission or mute issues), low volume, echo or feedback, and wrong input device selection. Our microphone test helps identify these issues with clear visual feedback and comprehensive troubleshooting guides. All audio processing happens locally—your voice is never sent to our servers.
@@ -158,7 +166,7 @@ export default function Home() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Online Keyboard Test</h3>
             <p className="text-gray-700 mb-4">
-              Our <Link href="/keyboard" className="text-blue-600 hover:text-blue-800 font-semibold">keyboard test tool</Link> helps you verify all keys work correctly, detect stuck or non-responsive keys, and test for keyboard ghosting (when multiple simultaneous key presses don't register). Essential for gamers, typists, and anyone who relies on their keyboard for work or play.
+              Our <Link href={getLocalizedPath("/keyboard", locale)} className="text-blue-600 hover:text-blue-800 font-semibold">keyboard test tool</Link> helps you verify all keys work correctly, detect stuck or non-responsive keys, and test for keyboard ghosting (when multiple simultaneous key presses don't register). Essential for gamers, typists, and anyone who relies on their keyboard for work or play.
             </p>
             <p className="text-gray-700 mb-6">
               Keyboard issues include stuck keys (often caused by debris or spills), non-responsive keys (hardware or driver problems), keyboard ghosting (common in cheaper keyboards), and wrong characters appearing (layout or modifier key issues). Our keyboard test provides instant visual feedback for every key press, making it easy to identify problems.
@@ -166,7 +174,7 @@ export default function Home() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Dead Pixel Test & Screen Test</h3>
             <p className="text-gray-700 mb-4">
-              Test your screen for dead pixels, stuck pixels, and color accuracy with our <Link href="/screen" className="text-blue-600 hover:text-blue-800 font-semibold">free screen test tool</Link>. The tool includes fullscreen mode for accurate testing, multiple test modes (solid colors, gradients, grid, pixel check), and auto-cycling through colors. Perfect for checking monitor quality before purchase or troubleshooting display issues.
+              Test your screen for dead pixels, stuck pixels, and color accuracy with our <Link href={getLocalizedPath("/screen", locale)} className="text-blue-600 hover:text-blue-800 font-semibold">free screen test tool</Link>. The tool includes fullscreen mode for accurate testing, multiple test modes (solid colors, gradients, grid, pixel check), and auto-cycling through colors. Perfect for checking monitor quality before purchase or troubleshooting display issues.
             </p>
             <p className="text-gray-700 mb-6">
               Screen issues include dead pixels (permanently black), stuck pixels (permanently lit in one color), backlight bleeding, color uniformity problems, and color accuracy issues. Our screen test helps identify these problems with comprehensive testing modes and clear instructions for documenting issues for warranty claims.
@@ -174,7 +182,7 @@ export default function Home() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Meeting Check - Video Call Preparation</h3>
             <p className="text-gray-700 mb-4">
-              Our <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800 font-semibold">meeting check tool</Link> tests your entire setup before video calls. It checks network connectivity (ping and jitter), camera access, and microphone functionality—everything you need for successful video calls on Zoom, Teams, Google Meet, and other platforms.
+              Our <Link href={getLocalizedPath("/meeting-check", locale)} className="text-blue-600 hover:text-blue-800 font-semibold">meeting check tool</Link> tests your entire setup before video calls. It checks network connectivity (ping and jitter), camera access, and microphone functionality—everything you need for successful video calls on Zoom, Teams, Google Meet, and other platforms.
             </p>
             <p className="text-gray-700 mb-6">
               Network issues can ruin video calls. High ping causes delay, high jitter causes choppy video and audio, and camera/microphone permission problems prevent participation. Our meeting check identifies these issues before you join calls, with clear guidance on fixing problems and optimizing your setup.
