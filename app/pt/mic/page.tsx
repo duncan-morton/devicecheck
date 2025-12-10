@@ -33,27 +33,12 @@ export const metadata: Metadata = genMeta({
   ]
 })
 
-const faqs = [
-  {
-    question: 'How do I test my microphone online?',
-    answer: 'Click "Allow" when prompted for microphone access. Speak into your mic and watch the volume meter respond. You can record a 5-second test clip and play it back to verify audio quality.'
-  },
-  {
-    question: 'Why is my microphone not working?',
-    answer: 'Common causes include denied browser permissions, physical mute switches, wrong input device selected, or driver issues. Check browser permissions first, then verify system settings and ensure no other apps are using the microphone.'
-  },
-  {
-    question: 'Can I test my microphone for Zoom or Teams?',
-    answer: 'Yes! If our microphone test works, your mic will work in Zoom, Microsoft Teams, Google Meet, and other video conferencing platforms. Test here first to avoid issues during important calls.'
-  },
-  {
-    question: 'Is my microphone data secure?',
-    answer: 'Absolutely. All audio processing happens locally in your browser. No audio data is sent to our servers, recorded, stored, or shared with anyone. Your privacy is completely protected.'
-  },
-  {
-    question: 'What should the volume meter show?',
-    answer: 'The meter should show green/yellow bars when you speak normally. If it stays red or shows no activity, check your mic volume settings, ensure you\'re not muted, and verify the correct input device is selected.'
-  }
+const faqs = (t: ReturnType<typeof getTranslation>) => [
+  { question: t.mic_faq_1_q, answer: t.mic_faq_1_a },
+  { question: t.mic_faq_2_q, answer: t.mic_faq_2_a },
+  { question: t.mic_faq_3_q, answer: t.mic_faq_3_a },
+  { question: t.mic_faq_4_q, answer: t.mic_faq_4_a },
+  { question: t.mic_faq_5_q, answer: t.mic_faq_5_a }
 ]
 
 export default function MicTestPage() {
@@ -72,7 +57,7 @@ export default function MicTestPage() {
     { name: t.microphone_test, path: '/pt/mic' }
   ], locale)
 
-  const faqSchema = generateFAQPageSchema(faqs, locale)
+  const faqSchema = generateFAQPageSchema(faqs(t), locale)
 
   return (
     <>
@@ -265,7 +250,7 @@ export default function MicTestPage() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.frequently_asked_questions}</h3>
             <div className="space-y-6 mt-6">
-              {faqs.map((faq, index) => (
+              {faqs(t).map((faq, index) => (
                 <div key={index} className="border-b border-gray-200 pb-6 last:border-0">
                   <h4 className="text-lg font-bold text-gray-900 mb-2">{faq.question}</h4>
                   <p className="text-gray-700">{faq.answer}</p>
