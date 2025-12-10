@@ -688,5 +688,245 @@
       "no signal fix monitor",
       "screen says no signal"
     ]
+  },
+  {
+    "slug": "microphone-keeps-cutting-out",
+    "title": "Microphone Keeps Cutting Out",
+    "deviceType": "mic",
+    "platform": "All",
+    "problem": "Intermittent microphone drop-outs or unstable audio",
+    "keywords": [
+      "microphone cutting out",
+      "mic keeps disconnecting",
+      "voice dropping intermittently"
+    ]
+  },
+  {
+    "slug": "microphone-muted-windows-11",
+    "title": "Microphone Muted on Windows 11",
+    "deviceType": "mic",
+    "platform": "Windows 11",
+    "problem": "Windows 11 microphone stuck on mute or zero volume",
+    "keywords": [
+      "microphone muted windows 11",
+      "windows 11 mic mute fix",
+      "mic volume locked at zero"
+    ]
+  },
+  {
+    "slug": "chrome-microphone-permission-blocked",
+    "title": "Chrome Microphone Permission Blocked",
+    "deviceType": "mic",
+    "platform": "Chrome",
+    "problem": "Chrome blocking microphone access",
+    "keywords": [
+      "chrome microphone blocked",
+      "chrome mic permission denied",
+      "chrome allow microphone"
+    ]
+  },
+  {
+    "slug": "discord-microphone-robotic-sound",
+    "title": "Discord Microphone Sounds Robotic",
+    "deviceType": "mic",
+    "platform": "Discord",
+    "problem": "Robotic or distorted voice in Discord",
+    "keywords": [
+      "discord robotic voice",
+      "discord mic distortion",
+      "discord filtered mic audio"
+    ]
+  },
+  {
+    "slug": "zoom-audio-delay-microphone",
+    "title": "Zoom Microphone Delay or Lag",
+    "deviceType": "mic",
+    "platform": "Zoom",
+    "problem": "Delay or lag in Zoom audio input",
+    "keywords": [
+      "zoom microphone delay",
+      "zoom audio lag",
+      "zoom mic latency"
+    ]
+  },
+  {
+    "slug": "teams-microphone-echo",
+    "title": "Teams Microphone Echo Problem",
+    "deviceType": "mic",
+    "platform": "Teams",
+    "problem": "Echo or feedback during Teams calls",
+    "keywords": [
+      "teams mic echo",
+      "teams audio feedback",
+      "microsoft teams echo fix"
+    ]
+  },
+  {
+    "slug": "webcam-black-screen-windows-11",
+    "title": "Webcam Shows Black Screen on Windows 11",
+    "deviceType": "webcam",
+    "platform": "Windows 11",
+    "problem": "Webcam turns on but only shows a black screen",
+    "keywords": [
+      "webcam black screen windows 11",
+      "windows 11 camera black",
+      "camera not showing image windows 11"
+    ]
+  },
+  {
+    "slug": "webcam-lagging-or-choppy",
+    "title": "Webcam Lagging or Choppy Video",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Slow, laggy, or low-FPS webcam performance",
+    "keywords": [
+      "webcam lagging",
+      "webcam low fps",
+      "camera choppy video"
+    ]
+  },
+  {
+    "slug": "webcam-microphone-not-syncing",
+    "title": "Webcam and Microphone Not Syncing",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Audio out of sync with video",
+    "keywords": [
+      "audio video out of sync",
+      "webcam and mic lag",
+      "av sync issue webcam"
+    ]
+  },
+  {
+    "slug": "webcam-not-working-firefox",
+    "title": "Webcam Not Working in Firefox",
+    "deviceType": "webcam",
+    "platform": "Firefox",
+    "problem": "Firefox blocking or not detecting webcam",
+    "keywords": [
+      "webcam not working firefox",
+      "firefox camera blocked",
+      "firefox webcam permission"
+    ]
+  },
+  {
+    "slug": "webcam-keeps-disconnecting-usb",
+    "title": "USB Webcam Keeps Disconnecting",
+    "deviceType": "webcam",
+    "platform": "USB",
+    "problem": "Webcam randomly disconnects or resets",
+    "keywords": [
+      "usb webcam disconnecting",
+      "webcam resets randomly",
+      "camera disconnect fix"
+    ]
+  },
+  {
+    "slug": "keyboard-delay-windows-11",
+    "title": "Keyboard Input Delay on Windows 11",
+    "deviceType": "keyboard",
+    "platform": "Windows 11",
+    "problem": "Typing feels delayed or sluggish",
+    "keywords": [
+      "keyboard delay windows 11",
+      "typing lag windows",
+      "slow keyboard response windows 11"
+    ]
+  },
+  {
+    "slug": "keyboard-double-typing-keys",
+    "title": "Keyboard Double Typing Keys",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Keys repeating or double-registering",
+    "keywords": [
+      "keyboard double typing",
+      "keys repeating fix",
+      "keyboard types twice"
+    ]
+  },
+  {
+    "slug": "keyboard-random-characters-appearing",
+    "title": "Keyboard Typing Random Characters",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Unexpected characters appear while typing",
+    "keywords": [
+      "keyboard random characters",
+      "keyboard typing nonsense",
+      "keys producing wrong output"
+    ]
+  },
+  {
+    "slug": "keyboard-backlight-not-working",
+    "title": "Keyboard Backlight Not Working",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Keyboard illumination fails or does not respond",
+    "keywords": [
+      "keyboard backlight not working",
+      "keyboard light fix",
+      "keyboard illumination problem"
+    ]
+  },
+  {
+    "slug": "screen-flickers-only-when-moving-mouse",
+    "title": "Screen Flickers When Moving Mouse",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Display flickers only during mouse movement",
+    "keywords": [
+      "screen flickers moving mouse",
+      "mouse flicker screen issue",
+      "display mouse movement flicker"
+    ]
+  },
+  {
+    "slug": "screen-dims-randomly",
+    "title": "Screen Dims Randomly",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Screen brightness drops randomly",
+    "keywords": [
+      "screen dims randomly",
+      "random brightness change",
+      "monitor dimming issue"
+    ]
+  },
+  {
+    "slug": "monitor-refresh-rate-wrong",
+    "title": "Monitor Refresh Rate Wrong",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Refresh rate stuck at wrong value",
+    "keywords": [
+      "monitor refresh rate wrong",
+      "refresh rate stuck",
+      "monitor hz incorrect"
+    ]
+  },
+  {
+    "slug": "monitor-overdrive-ghosting",
+    "title": "Monitor Overdrive Causing Ghosting",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Overdrive settings causing motion trails",
+    "keywords": [
+      "monitor overdrive ghosting",
+      "overdrive artifact",
+      "monitor motion blur fix"
+    ]
+  },
+  {
+    "slug": "screen-saturated-colors",
+    "title": "Screen Colors Too Saturated",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Overly saturated or unrealistic colors",
+    "keywords": [
+      "screen colors oversaturated",
+      "monitor color too strong",
+      "color saturation fix monitor"
+    ]
   }
 ]

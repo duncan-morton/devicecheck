@@ -8,6 +8,7 @@ import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
+import QuickAnswerBox from '@/components/QuickAnswerBox'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -84,6 +85,12 @@ export default function IssuePage() {
             <p className="text-lg text-gray-700 mb-4">
               Microphone not detected on Windows 11 on Windows 11 prevents normal use of your microphone. This guide covers all solutions for microphone not working on windows 11, from permissions to driver updates.
             </p>
+            
+            <QuickAnswerBox 
+              problem="Microphone not detected on Windows 11"
+              platform="Windows 11"
+              deviceType="mic"
+            />
             
             <p className="text-gray-700 mb-8">
               You can use the <Link href="/mic" className="text-blue-600 hover:text-blue-800">online microphone test</Link> to confirm whether your device is working.

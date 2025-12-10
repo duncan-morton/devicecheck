@@ -8,6 +8,7 @@ import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
+import QuickAnswerBox from '@/components/QuickAnswerBox'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -80,6 +81,12 @@ export default function IssuePage() {
             <p className="text-lg text-gray-700 mb-4">
               Camera not showing or detected in Microsoft Teams on Microsoft Teams prevents normal use of your camera. This guide covers all solutions for camera not detected in teams, from permissions to driver updates.
             </p>
+            
+            <QuickAnswerBox 
+              problem="Camera not showing or detected in Microsoft Teams"
+              platform="Microsoft Teams"
+              deviceType="webcam"
+            />
             
             <p className="text-gray-700 mb-8">
               You can use the <Link href="/webcam" className="text-blue-600 hover:text-blue-800">online webcam test</Link> to confirm whether your device is working.

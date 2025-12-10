@@ -8,6 +8,7 @@ import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
+import QuickAnswerBox from '@/components/QuickAnswerBox'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -80,6 +81,12 @@ export default function IssuePage() {
             <p className="text-lg text-gray-700 mb-4">
               Webcam not showing or detected in Zoom on Zoom prevents normal use of your camera. This guide covers all solutions for webcam not working in zoom, from permissions to driver updates.
             </p>
+            
+            <QuickAnswerBox 
+              problem="Webcam not showing or detected in Zoom"
+              platform="Zoom"
+              deviceType="webcam"
+            />
             
             <p className="text-gray-700 mb-8">
               You can use the <Link href="/webcam" className="text-blue-600 hover:text-blue-800">online webcam test</Link> to confirm whether your device is working.

@@ -8,21 +8,22 @@ import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
+import QuickAnswerBox from '@/components/QuickAnswerBox'
 import Link from 'next/link'
 
 export const revalidate = 86400
 
 export const metadata: Metadata = genMeta({
   title: 'Webcam Not Working in Firefox - Complete Fix Guide',
-  description: 'Fix webcam not working in firefox. Step-by-step troubleshooting guide covering Firefox settings, permissions, drivers, and solutions for webcam not detected or not working in firefox browser.',
+  description: 'Fix webcam not working in firefox. Step-by-step troubleshooting guide covering Firefox settings, permissions, drivers, and solutions for firefox blocking or not detecting webcam.',
   path: '/issues/webcam-not-working-firefox',
-  keywords: ["webcam not working firefox","firefox camera fix","firefox webcam permission","camera not detected firefox","firefox webcam not showing"]
+  keywords: ["webcam not working firefox","firefox camera blocked","firefox webcam permission"]
 })
 
 const faqs = [
   {
     "question": "Why is webcam not working in firefox?",
-    "answer": "Webcam not detected or not working in Firefox browser. This usually happens due to permission settings, driver issues, or conflicts with other applications. Start by checking system permissions and ensuring the correct device is selected."
+    "answer": "Firefox blocking or not detecting webcam. This usually happens due to permission settings, driver issues, or conflicts with other applications. Start by checking system permissions and ensuring the correct device is selected."
   },
   {
     "question": "How do I fix webcam not working in firefox?",
@@ -82,8 +83,14 @@ export default function IssuePage() {
             <h1 className="text-4xl font-bold text-gray-900 mb-6">Webcam Not Working in Firefox</h1>
             
             <p className="text-lg text-gray-700 mb-4">
-              Webcam not detected or not working in Firefox browser on Firefox prevents normal use of your camera. This guide covers all solutions for webcam not working in firefox, from permissions to driver updates.
+              Firefox blocking or not detecting webcam on Firefox prevents normal use of your camera. This guide covers all solutions for webcam not working in firefox, from permissions to driver updates.
             </p>
+            
+            <QuickAnswerBox 
+              problem="Firefox blocking or not detecting webcam"
+              platform="Firefox"
+              deviceType="webcam"
+            />
             
             <p className="text-gray-700 mb-8">
               You can use the <Link href="/webcam" className="text-blue-600 hover:text-blue-800">online webcam test</Link> to confirm whether your device is working.

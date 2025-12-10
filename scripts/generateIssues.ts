@@ -401,6 +401,7 @@ import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
+import QuickAnswerBox from '@/components/QuickAnswerBox'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -452,6 +453,12 @@ export default function IssuePage() {
             <p className="text-lg text-gray-700 mb-4">
               ${issue.problem.charAt(0).toUpperCase() + issue.problem.slice(1)} on ${issue.platform} prevents normal use of your ${deviceName}. This guide covers all solutions for ${issue.title.toLowerCase()}, from permissions to driver updates.
             </p>
+            
+            <QuickAnswerBox 
+              problem="${issue.problem}"
+              platform="${issue.platform}"
+              deviceType="${issue.deviceType}"
+            />
             
             <p className="text-gray-700 mb-8">
               You can use the <Link href="${hub.href}" className="text-blue-600 hover:text-blue-800">online ${hub.name.toLowerCase()}</Link> to confirm whether your device is working.
