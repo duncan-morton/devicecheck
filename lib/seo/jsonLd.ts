@@ -66,6 +66,7 @@ export interface ArticleSchema {
   '@type': string
   headline: string
   description: string
+  inLanguage?: string
   author: {
     '@type': string
     name: string
