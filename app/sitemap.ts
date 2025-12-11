@@ -37,7 +37,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/issues',
     '/privacy',
     '/terms',
-    '/contact'
+    '/contact',
+    '/hubs/windows-device-issues',
+    '/hubs/mac-device-issues',
+    '/hubs/chrome-permissions-issues',
+    '/hubs/zoom-issues',
+    '/hubs/teams-issues',
+    '/hubs/discord-issues',
+    '/hubs/laptop-device-troubleshooting'
   ]
 
   const guideRoutes = [

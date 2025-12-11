@@ -1,0 +1,196 @@
+import JsonLdScript from '@/components/JsonLdScript'
+import TOC from '@/components/TOC'
+import HelpfulWidget from '@/components/HelpfulWidget'
+import RelatedGuides from '@/components/RelatedGuides'
+import DeviceNavigation from '@/components/DeviceNavigation'
+import StickyActionBar from '@/components/StickyActionBar'
+import QuickAnswerBox from '@/components/QuickAnswerBox'
+import Link from 'next/link'
+import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { groupIssues, hubFilters, guideSets, toolSets, type IssueGroup } from '@/lib/hubs'
+import { getLocalizedPath } from '@/i18n/getTranslation'
+
+export type HubKey = 'windows' | 'mac' | 'chrome' | 'zoom' | 'teams' | 'discord' | 'laptop'
+
+export interface HubPageConfig {
+  title: string
+  description: string
+  path: string
+  hubKey: HubKey
+  intro: string
+  quickAnswer: { problem: string; platform: string; deviceType: 'mic' | 'webcam' | 'keyboard' | 'screen' }
+  quickSummary: string[]
+  why: string[]
+  steps: string[]
+  permissions: string[]
+  advanced: string[]
+  prevention: string[]
+  faqs: Array<{ question: string; answer: string }>
+}
+
+const DEVICE_LABELS: Record<'mic' | 'webcam' | 'keyboard' | 'screen', string> = {
+  mic: 'Microphone',
+  webcam: 'Webcam',
+  keyboard: 'Keyboard',
+  screen: 'Screen'
+}
+
+const DEVICE_ORDER: Array<'mic' | 'webcam' | 'keyboard' | 'screen'> = ['mic', 'webcam', 'keyboard', 'screen']
+
+function renderIssueGroups(group: IssueGroup) {
+  return DEVICE_ORDER.map(device => {
+    const list = group[device]
+    if (!list.length) return null
+    return (
+      <div key={device} className="mb-6">
+        <h4 className="text-lg font-semibold text-gray-900 mb-2">{DEVICE_LABELS[device]} issues</h4>
+        <ul className="list-disc pl-5 space-y-1 text-gray-700">
+          {list.map(item => (
+            <li key={item.slug}>
+              <Link href={getLocalizedPath(`/issues/${item.slug}`, 'en')} className="text-blue-600 hover:text-blue-800">
+                {item.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  })
+}
+
+export default function HubPage({
+  config
+}: {
+  config: HubPageConfig
+}) {
+  const issues = groupIssues(hubFilters[config.hubKey])
+  const guides = guideSets[config.hubKey] || []
+  const tools = toolSets[config.hubKey] || []
+
+  const articleSchema = generateArticleSchema(
+    `${config.title}`,
+    config.description,
+    config.path,
+    new Date().toISOString(),
+    new Date().toISOString(),
+    'en'
+  )
+
+  const breadcrumbs = generateBreadcrumbListSchema(
+    [
+      { name: 'Home', path: '/' },
+      { name: 'Hubs', path: '/hubs' },
+      { name: config.title, path: config.path }
+    ],
+    'en'
+  )
+
+  const faqSchema = generateFAQPageSchema(config.faqs, 'en')
+
+  return (
+    <>
+      <JsonLdScript data={articleSchema} />
+      <JsonLdScript data={breadcrumbs} />
+      <JsonLdScript data={faqSchema} />
+
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{config.title}</h1>
+            <p className="text-xl text-gray-600 max-w-4xl">{config.intro}</p>
+          </div>
+
+          <div className="mb-6">
+            <TOC contentId="hub-content" />
+          </div>
+
+          <article id="hub-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+            <QuickAnswerBox
+              problem={config.quickAnswer.problem}
+              platform={config.quickAnswer.platform}
+              deviceType={config.quickAnswer.deviceType}
+            />
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-2 mb-3">Quick Diagnosis Summary</h2>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
+              {config.quickSummary.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Why These Issues Happen</h2>
+            {config.why.map((p, idx) => (
+              <p key={idx} className="text-gray-700 mb-4">
+                {p}
+              </p>
+            ))}
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Step-by-Step Fix Checklist</h2>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700 mb-6">
+              {config.steps.map((step, idx) => (
+                <li key={idx}>{step}</li>
+              ))}
+            </ol>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Common Issues On This Hub</h2>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">{renderIssueGroups(issues)}</div>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Browser/OS Permission Fixes</h2>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
+              {config.permissions.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Advanced Troubleshooting</h2>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
+              {config.advanced.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Prevention Tips</h2>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
+              {config.prevention.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Common Issues On This Platform/App</h2>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">{renderIssueGroups(issues)}</div>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Cross-Tool Checks</h2>
+            <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              {tools.map(tool => (
+                <Link
+                  key={tool.href}
+                  href={getLocalizedPath(tool.href, 'en')}
+                  className="block border border-gray-200 rounded-lg p-4 hover:border-blue-500 hover:shadow-sm transition-colors"
+                >
+                  <p className="font-semibold text-gray-900">{tool.title}</p>
+                  <p className="text-sm text-blue-600 mt-1">Run test</p>
+                </Link>
+              ))}
+            </div>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">FAQs</h2>
+            <div className="space-y-5 mb-6">
+              {config.faqs.map((faq, idx) => (
+                <div key={idx} className="border-b border-gray-200 pb-4 last:border-0">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{faq.question}</h3>
+                  <p className="text-gray-700">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <HelpfulWidget />
+          <RelatedGuides guides={guides} />
+          <DeviceNavigation />
+        </div>
+      </div>
+      <StickyActionBar toolName={tools[0]?.title || 'Device Test'} toolHref={tools[0]?.href || '/'} />
+    </>
+  )
+}
+
