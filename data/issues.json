@@ -928,5 +928,245 @@
       "monitor color too strong",
       "color saturation fix monitor"
     ]
+  },
+  {
+    "slug": "microphone-not-working-chromebook",
+    "title": "Microphone Not Working on Chromebook",
+    "deviceType": "mic",
+    "platform": "Chromebook",
+    "problem": "Chromebook microphone not detected or silent",
+    "keywords": ["microphone not working chromebook", "chromebook mic fix", "chromeos microphone issue"]
+  },
+  {
+    "slug": "microphone-not-working-iphone-browser",
+    "title": "Microphone Not Working in iPhone Browser",
+    "deviceType": "mic",
+    "platform": "iPhone",
+    "problem": "iPhone browser blocking microphone access",
+    "keywords": ["microphone not working iphone browser", "iphone allow microphone safari", "ios mic permission web"]
+  },
+  {
+    "slug": "microphone-not-working-android-browser",
+    "title": "Microphone Not Working in Android Browser",
+    "deviceType": "mic",
+    "platform": "Android",
+    "problem": "Android browser failing to use microphone",
+    "keywords": ["android microphone not working browser", "chrome android mic fix", "android mic permission web"]
+  },
+  {
+    "slug": "microphone-works-in-some-apps-not-others",
+    "title": "Microphone Works in Some Apps but Not Others",
+    "deviceType": "mic",
+    "platform": "All",
+    "problem": "Microphone detected inconsistently across apps",
+    "keywords": ["microphone works in some apps", "mic inconsistent fix", "mic not working in all apps"]
+  },
+  {
+    "slug": "microphone-keeps-switching-input",
+    "title": "Microphone Keeps Switching Input",
+    "deviceType": "mic",
+    "platform": "All",
+    "problem": "System randomly switching microphone devices",
+    "keywords": ["microphone switching input", "mic keeps changing device", "mic auto switching"]
+  },
+  {
+    "slug": "microphone-feedback-loop-problem",
+    "title": "Microphone Feedback Loop Problem",
+    "deviceType": "mic",
+    "platform": "All",
+    "problem": "Loud feedback loop from speakers",
+    "keywords": ["microphone feedback loop", "mic loud feedback", "speaker mic loop fix"]
+  },
+  {
+    "slug": "microphone-too-loud-clipping",
+    "title": "Microphone Too Loud or Clipping",
+    "deviceType": "mic",
+    "platform": "All",
+    "problem": "Microphone volume distorting at high levels",
+    "keywords": ["microphone too loud", "mic clipping fix", "mic distortion loud"]
+  },
+  {
+    "slug": "microphone-not-working-obs-studio",
+    "title": "Microphone Not Working in OBS Studio",
+    "deviceType": "mic",
+    "platform": "OBS",
+    "problem": "OBS not capturing microphone audio",
+    "keywords": ["microphone not working obs", "obs mic not detected", "obs audio input fix"]
+  },
+  {
+    "slug": "bluetooth-microphone-not-working",
+    "title": "Bluetooth Microphone Not Working",
+    "deviceType": "mic",
+    "platform": "Bluetooth",
+    "problem": "Bluetooth microphone pairing or input issues",
+    "keywords": ["bluetooth microphone not working", "bluetooth mic pairing fix", "wireless mic not detected"]
+  },
+  {
+    "slug": "microphone-background-noise-cancellation-issues",
+    "title": "Microphone Noise Cancellation Issues",
+    "deviceType": "mic",
+    "platform": "All",
+    "problem": "Noise suppression causing muffled voice",
+    "keywords": ["microphone noise cancellation issue", "mic muffled voice noise suppression", "noise reduction mic problem"]
+  },
+  {
+    "slug": "webcam-not-working-chromebook",
+    "title": "Webcam Not Working on Chromebook",
+    "deviceType": "webcam",
+    "platform": "Chromebook",
+    "problem": "Chromebook camera blocked or not detected",
+    "keywords": ["webcam not working chromebook", "chromebook camera blocked", "chromeos webcam fix"]
+  },
+  {
+    "slug": "webcam-not-working-iphone-browser",
+    "title": "Webcam Not Working in iPhone Browser",
+    "deviceType": "webcam",
+    "platform": "iPhone",
+    "problem": "Safari/iOS browser not allowing camera access",
+    "keywords": ["iphone browser camera not working", "ios safari camera permission", "iphone webcam fix browser"]
+  },
+  {
+    "slug": "webcam-not-working-android-browser",
+    "title": "Webcam Not Working in Android Browser",
+    "deviceType": "webcam",
+    "platform": "Android",
+    "problem": "Android browser blocking camera access",
+    "keywords": ["android browser camera not working", "chrome android webcam fix", "android camera permission web"]
+  },
+  {
+    "slug": "webcam-keeps-zooming-in",
+    "title": "Webcam Keeps Zooming In",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Auto-zoom or auto-crop enabled unexpectedly",
+    "keywords": ["webcam zooming in", "auto zoom webcam fix", "camera crops face automatically"]
+  },
+  {
+    "slug": "webcam-too-bright-overexposed",
+    "title": "Webcam Too Bright or Overexposed",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Webcam image appears too bright or washed out",
+    "keywords": ["webcam too bright", "camera overexposed fix", "webcam washed out image"]
+  },
+  {
+    "slug": "webcam-fuzzy-blurry-image",
+    "title": "Webcam Fuzzy or Blurry Image",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Image appears unfocused or low quality",
+    "keywords": ["webcam blurry image", "fuzzy webcam fix", "webcam not focused"]
+  },
+  {
+    "slug": "webcam-not-available-other-apps",
+    "title": "Webcam Not Available to Other Apps",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Webcam locked by a background process",
+    "keywords": ["webcam not available", "camera in use background", "app using webcam secretly"]
+  },
+  {
+    "slug": "webcam-freezing-after-few-seconds",
+    "title": "Webcam Freezes After a Few Seconds",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Webcam works briefly then freezes",
+    "keywords": ["webcam freezing", "camera stops after seconds", "webcam freeze fix"]
+  },
+  {
+    "slug": "webcam-low-light-performance-bad",
+    "title": "Webcam Performs Poorly in Low Light",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Grainy or noisy webcam image in dim environments",
+    "keywords": ["webcam low light", "grainy webcam image", "low light webcam fix"]
+  },
+  {
+    "slug": "webcam-green-screen-tint",
+    "title": "Webcam Showing Green Screen or Tint",
+    "deviceType": "webcam",
+    "platform": "All",
+    "problem": "Green tint or corrupted webcam colors",
+    "keywords": ["webcam green screen", "webcam green tint fix", "camera green image"]
+  },
+  {
+    "slug": "keyboard-not-working-chromebook",
+    "title": "Keyboard Not Working on Chromebook",
+    "deviceType": "keyboard",
+    "platform": "Chromebook",
+    "problem": "Chromebook keyboard unresponsive or missing input",
+    "keywords": ["keyboard not working chromebook", "chromebook keys not responding", "chromeos keyboard fix"]
+  },
+  {
+    "slug": "keyboard-shortcuts-not-working",
+    "title": "Keyboard Shortcuts Not Working",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Hotkeys or shortcuts no longer respond",
+    "keywords": ["keyboard shortcuts not working", "hotkeys broken fix", "keyboard shortcut problem"]
+  },
+  {
+    "slug": "keyboard-function-keys-not-working-windows",
+    "title": "Function Keys Not Working on Windows",
+    "deviceType": "keyboard",
+    "platform": "Windows",
+    "problem": "F1–F12 keys inactive or reversed",
+    "keywords": ["function keys not working windows", "f keys not responding", "fn key windows problem"]
+  },
+  {
+    "slug": "keyboard-slow-to-respond",
+    "title": "Keyboard Slow to Respond",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Keyboard lag or delayed input",
+    "keywords": ["keyboard slow to respond", "keyboard lag fix", "typing delay keyboard"]
+  },
+  {
+    "slug": "keyboard-not-registering-spacebar",
+    "title": "Spacebar Not Registering",
+    "deviceType": "keyboard",
+    "platform": "All",
+    "problem": "Spacebar occasionally or fully fails",
+    "keywords": ["spacebar not working", "space key fix", "keyboard space bar problem"]
+  },
+  {
+    "slug": "screen-turns-off-randomly",
+    "title": "Screen Turns Off Randomly",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Monitor power or connection drops intermittently",
+    "keywords": ["screen turns off randomly", "monitor power drop", "display turning off"]
+  },
+  {
+    "slug": "monitor-artifacts-on-screen",
+    "title": "Monitor Showing Artifacts",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Visual artifacts, lines, or corruption",
+    "keywords": ["monitor artifacts", "screen artifacts fix", "gpu artifact display"]
+  },
+  {
+    "slug": "screen-flashes-white",
+    "title": "Screen Flashes White",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Brief white flashes on display",
+    "keywords": ["screen flashes white", "monitor white flash", "display white blink"]
+  },
+  {
+    "slug": "monitor-keeps-going-to-sleep",
+    "title": "Monitor Keeps Going to Sleep",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Screen enters sleep mode repeatedly",
+    "keywords": ["monitor sleep mode issue", "screen keeps sleeping", "monitor sleep problem"]
+  },
+  {
+    "slug": "screen-not-scaling-correctly",
+    "title": "Screen Scaling Not Working",
+    "deviceType": "screen",
+    "platform": "All",
+    "problem": "Resolution or scaling settings ignored",
+    "keywords": ["screen scaling not working", "windows scaling issue", "monitor scaling problem"]
   }
 ]
