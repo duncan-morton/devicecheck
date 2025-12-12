@@ -119,7 +119,7 @@ export default function MeetingCheckPage() {
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           <Breadcrumbs items={[{ name: t.meeting_check, path: '/meeting-check' }]} locale={locale} />
           
-          <div className="mb-8">
+          <div className="mb-6">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               {t.meeting_check_title}
             </h1>
@@ -128,9 +128,7 @@ export default function MeetingCheckPage() {
             </p>
           </div>
 
-          <StepsBlock title="Steps to fix this" steps={steps} />
-
-          <div className="mb-8">
+          <div className="mb-5">
             <Link 
               href="#test"
               className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
@@ -138,6 +136,8 @@ export default function MeetingCheckPage() {
               Run Meeting Check →
             </Link>
           </div>
+
+          <StepsBlock steps={steps} />
 
           <div id="test" className="scroll-mt-8">
             <MeetingCheckTool />

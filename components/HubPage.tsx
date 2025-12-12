@@ -118,7 +118,7 @@ export default function HubPage({
               platform={config.quickAnswer.platform}
               deviceType={config.quickAnswer.deviceType}
             />
-            <StepsBlock title="Steps to fix this" steps={config.steps.map(step => ({ title: step, description: step }))} />
+            <StepsBlock steps={config.steps.map(step => ({ title: step, description: step }))} />
 
             <h2 className="text-2xl font-bold text-gray-900 mt-2 mb-3">Quick Diagnosis Summary</h2>
             <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">

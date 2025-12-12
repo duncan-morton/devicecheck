@@ -315,7 +315,7 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
                 {issue.problem.charAt(0).toUpperCase() + issue.problem.slice(1)} on {issue.platform} prevents normal use of your {issue.deviceType === 'mic' ? 'microphone' : issue.deviceType === 'webcam' ? 'camera' : issue.deviceType}. This guide covers all solutions for {issue.title.toLowerCase()}, from permissions to driver updates.
               </p>
 
-              <StepsBlock title="Steps to fix this" steps={steps} />
+              <StepsBlock steps={steps} />
 
               <p className="text-gray-700 mb-8">
                 You can use the <Link href={hub.href} className="text-blue-600 hover:text-blue-800">online {hub.name.toLowerCase()}</Link> to confirm whether your device is working.
