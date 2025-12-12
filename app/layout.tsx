@@ -6,6 +6,7 @@ import JsonLdScript from "@/components/JsonLdScript";
 import { generateWebSiteSchema, generateOrganizationSchema } from "@/lib/seo/jsonLd";
 import { Analytics } from "@vercel/analytics/next";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import ToolSwitcher from "@/components/ToolSwitcher";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +58,7 @@ export default function RootLayout({
         <div className="fixed top-4 right-4 z-50">
           <LocaleSwitcher />
         </div>
+        <ToolSwitcher />
         {children}
         <Analytics />
       </body>

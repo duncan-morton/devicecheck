@@ -69,6 +69,13 @@ export default function WebcamTestPage() {
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           <Breadcrumbs items={[{ name: t.webcam_test, path: getLocalizedPath('/webcam', locale) }]} locale={locale} />
           
+          <Link 
+            href={getLocalizedPath('/', locale)}
+            className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
+          >
+            ← All tools
+          </Link>
+          
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               {t.webcam_test_title}

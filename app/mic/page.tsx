@@ -120,6 +120,13 @@ export default function MicTestPage() {
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           <Breadcrumbs items={[{ name: t.microphone_test, path: '/mic' }]} locale={locale} />
           
+          <Link 
+            href={getLocalizedPath('/', locale)}
+            className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
+          >
+            ← All tools
+          </Link>
+          
           <div className="mb-6">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               {t.mic_test_title}
