@@ -4,7 +4,14 @@ import Link from 'next/link'
 import { Mic, Video, Keyboard } from 'lucide-react'
 import { useState } from 'react'
 
-const EMBED_CODE_BASE = 'https://devicecheck.io/embed'
+const EMBED_BASE_URL = 'https://www.devicecheck.io'
+
+function buildEmbedPath(widgetPath: string): string {
+  const clean = widgetPath.startsWith('/') ? widgetPath : `/${widgetPath}`
+  // Remove any existing /embed prefix to prevent doubling
+  const withoutEmbed = clean.replace(/^\/embed/, '')
+  return `/embed${withoutEmbed}`
+}
 
 const widgets = [
   {
@@ -12,7 +19,7 @@ const widgets = [
     title: 'Microphone Test',
     description: 'Test microphone input levels and audio quality',
     icon: Mic,
-    href: '/embed/mic',
+    widgetPath: '/mic',
     defaultWidth: 700,
     defaultHeight: 520
   },
@@ -21,7 +28,7 @@ const widgets = [
     title: 'Webcam Test',
     description: 'Test webcam resolution, preview, and functionality',
     icon: Video,
-    href: '/embed/webcam',
+    widgetPath: '/webcam',
     defaultWidth: 700,
     defaultHeight: 520
   },
@@ -30,7 +37,7 @@ const widgets = [
     title: 'Keyboard Test',
     description: 'Test keyboard keys, layout, and ghosting',
     icon: Keyboard,
-    href: '/embed/keyboard',
+    widgetPath: '/keyboard',
     defaultWidth: 700,
     defaultHeight: 520
   }
@@ -54,8 +61,10 @@ export default function EmbedLandingClient() {
         <div className="space-y-12 mb-12">
           {widgets.map((widget) => {
             const Icon = widget.icon
+            const embedPath = buildEmbedPath(widget.widgetPath)
+            const embedUrl = `${EMBED_BASE_URL}${embedPath}`
             const iframeCode = `<iframe
-  src="${EMBED_CODE_BASE}${widget.href}"
+  src="${embedUrl}"
   width="${widget.defaultWidth}"
   height="${widget.defaultHeight}"
   style="border:1px solid #e5e7eb;border-radius:16px;overflow:hidden"
@@ -80,7 +89,7 @@ export default function EmbedLandingClient() {
                     <h3 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Live Preview</h3>
                     <div className="border border-gray-200 rounded-xl overflow-hidden bg-slate-50" style={{ aspectRatio: `${widget.defaultWidth}/${widget.defaultHeight}` }}>
                       <iframe
-                        src={`${EMBED_CODE_BASE}${widget.href}`}
+                        src={embedUrl}
                         className="w-full h-full"
                         style={{ border: 'none' }}
                         title={`${widget.title} Preview`}
@@ -111,7 +120,7 @@ export default function EmbedLandingClient() {
                 <div className="pt-6 border-t border-gray-200">
                   <p className="text-sm text-gray-500 mb-2">No tracking. Runs locally in the visitor's browser.</p>
                   <Link
-                    href={widget.href.replace('/embed', '')}
+                    href={widget.widgetPath}
                     className="text-sm text-blue-600 hover:text-blue-800 font-medium"
                   >
                     Open full {widget.title.toLowerCase()} →
