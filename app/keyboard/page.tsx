@@ -130,6 +130,19 @@ export default function KeyboardTestPage() {
 
           <RelatedTools currentPath={getLocalizedPath('/keyboard', locale)} locale={locale} />
 
+          {/* Embed Link */}
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-12">
+            <p className="text-gray-700 mb-2">
+              <strong>For IT teams and site owners:</strong> Embed this test on your help pages.
+            </p>
+            <Link
+              href="/embed"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              Get embed code →
+            </Link>
+          </div>
+
           {/* Comprehensive SEO Content */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">{t.keyboard_how_title}</h2>

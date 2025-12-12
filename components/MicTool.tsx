@@ -6,7 +6,11 @@ import { playLeft, playRight, playStereoSweep } from '@/lib/audioGenerator'
 import VolumeMeter from '@/components/VolumeMeter'
 import { Mic, Square, Play, RefreshCw, AlertTriangle, CheckCircle2, ArrowLeft, ArrowRight, MoveHorizontal } from 'lucide-react'
 
-export default function MicTool() {
+interface MicToolProps {
+  variant?: 'full' | 'embed'
+}
+
+export default function MicTool({ variant = 'full' }: MicToolProps) {
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [error, setError] = useState<string>('')
   const [isRecording, setIsRecording] = useState(false)
@@ -89,6 +93,85 @@ export default function MicTool() {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
       mediaRecorderRef.current.stop()
     }
+  }
+
+  if (variant === 'embed') {
+    return (
+      <div className="space-y-4">
+        {error ? (
+          <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg text-sm">
+            {error}
+          </div>
+        ) : (
+          <>
+            <div className="mb-4">
+              <VolumeMeter stream={stream} isActive={true} />
+            </div>
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <p className="text-xs text-gray-500 mb-3 font-medium">Test Recording (Max 5s)</p>
+              {!playbackUrl ? (
+                <div className="flex flex-col items-center gap-2">
+                  <button 
+                    onClick={isRecording ? stopRecording : startRecording}
+                    className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-blue-600 hover:bg-blue-700'}`}
+                  >
+                    {isRecording ? <Square size={24} className="text-white fill-current" /> : <Mic size={24} className="text-white" />}
+                  </button>
+                  <span className="text-xs font-medium text-gray-600">
+                    {isRecording ? 'Recording...' : 'Tap to record'}
+                  </span>
+                </div>
+              ) : (
+                <div className="w-full">
+                  <div className="flex items-center gap-2 bg-white p-3 rounded-lg border border-gray-200">
+                    <button 
+                      onClick={() => {
+                        const audio = document.querySelector('audio')
+                        audio?.play()
+                      }}
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200"
+                    >
+                      <Play size={16} fill="currentColor" className="ml-0.5"/>
+                    </button>
+                    <audio src={playbackUrl} controls className="flex-1 h-8" />
+                    <button 
+                      onClick={() => { 
+                        setPlaybackUrl(null)
+                        chunksRef.current = []
+                      }} 
+                      className="p-1.5 text-gray-400 hover:text-gray-600"
+                      title="Record Again"
+                    >
+                      <RefreshCw size={16} />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <button 
+                onClick={() => playLeft()}
+                className="p-3 rounded-lg bg-gray-50 hover:bg-blue-50 hover:text-blue-600 transition-all border border-gray-100 text-xs font-medium"
+              >
+                Left
+              </button>
+              <button 
+                onClick={() => playRight()}
+                className="p-3 rounded-lg bg-gray-50 hover:bg-blue-50 hover:text-blue-600 transition-all border border-gray-100 text-xs font-medium"
+              >
+                Right
+              </button>
+              <button 
+                onClick={() => playStereoSweep()}
+                className="p-3 rounded-lg bg-gray-50 hover:bg-blue-50 hover:text-blue-600 transition-all border border-gray-100 text-xs font-medium"
+              >
+                Sweep
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    )
   }
 
   return (

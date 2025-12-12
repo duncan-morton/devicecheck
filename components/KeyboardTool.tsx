@@ -98,7 +98,11 @@ const layouts: Record<LanguageLayout, Record<string, string>> = {
   }
 }
 
-export default function KeyboardTool() {
+interface KeyboardToolProps {
+  variant?: 'full' | 'embed'
+}
+
+export default function KeyboardTool({ variant = 'full' }: KeyboardToolProps) {
   const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set())
   const [testedKeys, setTestedKeys] = useState<Set<string>>(new Set())
   const [keyHistory, setKeyHistory] = useState<string[]>([])
@@ -255,6 +259,66 @@ export default function KeyboardTool() {
   const totalKeys = 87
   const testedCount = testedKeys.size
   const progress = Math.min(100, Math.round((testedCount / totalKeys) * 100))
+
+  if (variant === 'embed') {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between text-sm">
+          <span className="font-medium text-gray-700">Keys Tested: {testedCount} ({progress}%)</span>
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs font-medium transition-colors"
+          >
+            <Settings size={14} className="inline mr-1" />
+            Layout
+          </button>
+        </div>
+        {showSettings && (
+          <div className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <select
+              value={languageLayout}
+              onChange={(e) => setLanguageLayout(e.target.value as LanguageLayout)}
+              className="w-full px-2 py-1 border border-gray-300 rounded text-xs font-medium bg-white"
+            >
+              <option value="US">US (QWERTY)</option>
+              <option value="UK">UK (QWERTY)</option>
+              <option value="DE">German (QWERTZ)</option>
+              <option value="FR">French (AZERTY)</option>
+              <option value="ES">Spanish (QWERTY)</option>
+              <option value="IT">Italian (QWERTY)</option>
+            </select>
+          </div>
+        )}
+        <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
+          <div
+            className="bg-blue-500 h-full transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <div className="bg-gray-800 rounded-lg p-3 border border-gray-700">
+          <div className="space-y-1 max-w-2xl mx-auto">
+            {keyboardRows.slice(1, 5).map((row, rowIndex) => (
+              <div key={rowIndex} className="flex gap-1 justify-center">
+                {row.map((key) => (
+                  <Key
+                    key={key.code}
+                    code={key.code}
+                    label={key.label}
+                    width={key.width}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+        {keyHistory.length > 0 && (
+          <div className="text-xs text-gray-600">
+            Recent: {keyHistory.slice(0, 5).map(k => k === ' ' ? 'Space' : k).join(', ')}
+          </div>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className="mb-12">
