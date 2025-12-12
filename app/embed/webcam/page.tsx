@@ -14,7 +14,13 @@ export const metadata: Metadata = {
   }
 }
 
-export default function EmbedWebcamPage() {
+export default function EmbedWebcamPage({
+  searchParams,
+}: {
+  searchParams: { ref?: string }
+}) {
+  const refParam = searchParams?.ref ? `?ref=${searchParams.ref}` : '?ref=embed'
+  
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="w-full max-w-[900px] bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -40,7 +46,7 @@ export default function EmbedWebcamPage() {
             Powered by <span className="font-semibold">DeviceCheck.io</span>
           </Link>
           <Link
-            href="/webcam"
+            href={`/webcam${refParam}`}
             className="text-sm text-blue-600 hover:text-blue-800 font-medium"
           >
             Open full test →

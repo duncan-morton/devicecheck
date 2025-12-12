@@ -317,6 +317,16 @@ export default function KeyboardTestPage() {
             </p>
           </article>
 
+          <div className="mt-8 mb-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
+            <p className="text-sm text-gray-600">
+              Run a help desk or documentation site?{' '}
+              <Link href="/embed" className="text-blue-600 hover:text-blue-800 font-medium">
+                You can embed this test on your pages
+              </Link>
+              .
+            </p>
+          </div>
+
           <DeviceNavigation />
         </div>
       </div>

@@ -114,13 +114,83 @@ export default function EmbedLandingClient() {
                     >
                       {copiedId === widget.id ? 'Copied!' : 'Copy Embed Code'}
                     </button>
+                    
+                    {/* Optional Attribution */}
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      <p className="text-xs text-gray-600 mb-2">
+                        <strong>Optional attribution</strong> (recommended):
+                      </p>
+                      <textarea
+                        readOnly
+                        value={`<a href="https://www.devicecheck.io${widget.widgetPath}">${widget.title} by DeviceCheck.io</a>`}
+                        className="w-full h-16 p-2 font-mono text-xs border border-gray-300 rounded bg-gray-50 resize-none"
+                        onClick={(e) => e.currentTarget.select()}
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        You can edit this link text. Attribution helps others discover these tools.
+                      </p>
+                    </div>
                   </div>
+                </div>
+
+                {/* Why embed this? */}
+                <div className="mb-6 pt-6 border-t border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Why embed this test on your site?</h3>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>Runs entirely in the user's browser (no data sent to servers)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>No ads, no tracking, no cookies</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>Reduces support tickets by letting users self-diagnose</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>Works on Chrome, Edge, Firefox, Safari</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>Free to embed (no account required)</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Common use cases */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Common use cases</h3>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>IT help desks and internal knowledge bases</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>SaaS support documentation</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>Schools and remote learning portals</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>HR onboarding pages</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-gray-400 mr-2">•</span>
+                      <span>Video conferencing setup guides</span>
+                    </li>
+                  </ul>
                 </div>
 
                 <div className="pt-6 border-t border-gray-200">
                   <p className="text-sm text-gray-500 mb-2">No tracking. Runs locally in the visitor's browser.</p>
                   <Link
-                    href={widget.widgetPath}
+                    href={`${widget.widgetPath}?ref=embed`}
                     className="text-sm text-blue-600 hover:text-blue-800 font-medium"
                   >
                     Open full {widget.title.toLowerCase()} →
