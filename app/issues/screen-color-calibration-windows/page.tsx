@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import TOC from '@/components/TOC'
 import RelatedGuides from '@/components/RelatedGuides'
@@ -9,6 +9,7 @@ import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
+import StepsBlock from '@/components/StepsBlock'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -59,38 +60,55 @@ export default function IssuePage() {
   ])
 
   const faqSchema = generateFAQPageSchema(faqs)
+  const howToSchema = generateHowToSchema({
+    url: 'https://devicecheck.io/issues/screen-color-calibration-windows',
+    name: 'Screen Color Calibration on Windows',
+    description: 'Fix screen color calibration on windows with clear steps for Windows covering permissions, device selection, and drivers.',
+    steps: [{"title":"Update graphics drivers","description":"Update graphics drivers"},{"title":"Check display settings","description":"Check display settings"},{"title":"Adjust color calibration","description":"Adjust color calibration"},{"title":"Run display troubleshooter","description":"Run display troubleshooter"},{"title":"Check for Windows updates","description":"Check for Windows updates"}]
+  })
+
+  const steps = [{"title":"Update graphics drivers","description":"Update graphics drivers"},{"title":"Check display settings","description":"Check display settings"},{"title":"Adjust color calibration","description":"Adjust color calibration"},{"title":"Run display troubleshooter","description":"Run display troubleshooter"},{"title":"Check for Windows updates","description":"Check for Windows updates"}]
 
   return (
     <>
       <JsonLdScript data={articleSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
+      <JsonLdScript data={howToSchema} />
       
       <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
           <Breadcrumbs items={[
             { name: 'Issues', path: '/issues' },
             { name: 'Screen Color Calibration on Windows', path: '/issues/screen-color-calibration-windows' }
           ]} />
           
+          <div className="mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Screen Color Calibration on Windows</h1>
+            <p className="text-xl text-gray-600 max-w-3xl">
+              Screen colors look incorrect or need calibration on Windows. This guide covers all solutions, from permissions to driver updates.
+            </p>
+          </div>
+
+          <div className="mb-5">
+            <Link 
+              href="/screen"
+              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+            >
+              Run the Screen Test →
+            </Link>
+          </div>
+
+          <StepsBlock steps={steps} />
+          
           <TOC contentId="article-content" />
           
-          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">Screen Color Calibration on Windows</h1>
-            
-            <p className="text-lg text-gray-700 mb-4">
-              Screen colors look incorrect or need calibration on Windows on Windows prevents normal use of your screen. This guide covers all solutions for screen color calibration on windows, from permissions to driver updates.
-            </p>
-            
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mt-8">
             <QuickAnswerBox 
               problem="Screen colors look incorrect or need calibration on Windows"
               platform="Windows"
               deviceType="screen"
             />
-            
-            <p className="text-gray-700 mb-8">
-              You can use the <Link href="/screen" className="text-blue-600 hover:text-blue-800">online screen test</Link> to confirm whether your device is working.
-            </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">

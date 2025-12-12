@@ -87,12 +87,9 @@ export default function QuickAnswerBox({ problem, platform, deviceType }: QuickA
   return (
     <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8 rounded-r-lg">
       <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Answer</h2>
-      <ul className="space-y-2 text-gray-700">
+      <ul className="list-disc pl-5 space-y-2 text-gray-700">
         {answers.map((answer, index) => (
-          <li key={index} className="flex items-start">
-            <span className="text-blue-600 mr-2 font-bold">•</span>
-            <span>{answer}</span>
-          </li>
+          <li key={index}>{answer}</li>
         ))}
       </ul>
     </div>

@@ -9,6 +9,7 @@ import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import StepsBlock from '@/components/StepsBlock'
+import QuickAnswerBox from '@/components/QuickAnswerBox'
 import Link from 'next/link'
 
 export interface IssueData {
@@ -258,10 +259,49 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
   const hub = DEVICE_HUBS[issue.deviceType]
   const quickFixes = generateQuickFixes(issue.deviceType, issue.platform)
   const faqs = generateFAQs(issue)
-  const steps = quickFixes.slice(0, 6).map((fix, idx) => ({
-    title: `Step ${idx + 1}: ${fix}`,
-    description: fix
-  }))
+  const steps = quickFixes.slice(0, 6).map((fix) => {
+    // Extract title and description from fix text
+    const colonIndex = fix.indexOf(':')
+    if (colonIndex > 0) {
+      return {
+        title: fix.substring(0, colonIndex).trim(),
+        description: fix.substring(colonIndex + 1).trim()
+      }
+    }
+    // If no colon, use first few words as title
+    const words = fix.split(' ')
+    if (words.length > 4) {
+      return {
+        title: words.slice(0, 4).join(' '),
+        description: fix
+      }
+    }
+    return {
+      title: fix,
+      description: fix
+    }
+  })
+  
+  // Generate clean intro without duplicate platform/device text
+  const deviceName = issue.deviceType === 'mic' ? 'microphone' : issue.deviceType === 'webcam' ? 'camera' : issue.deviceType
+  const problemLower = issue.problem.toLowerCase()
+  const platformLower = issue.platform.toLowerCase()
+  
+  // Build intro sentence 1 - avoid duplicating platform if already in problem
+  let introSentence1 = issue.problem.charAt(0).toUpperCase() + issue.problem.slice(1)
+  
+  // Check if platform is already mentioned in the problem
+  const platformWords = issue.platform.split(' ')
+  const hasPlatformInProblem = platformWords.some(word => 
+    problemLower.includes(word.toLowerCase())
+  )
+  
+  // Only add platform if not already mentioned
+  if (!hasPlatformInProblem) {
+    introSentence1 += ` on ${issue.platform}`
+  }
+  
+  const introSentence2 = `This guide covers all solutions, from permissions to driver updates.`
   
   const articleSchema = generateArticleSchema(
     `${issue.title} - Complete Fix Guide`,
@@ -278,17 +318,26 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
   ])
 
   const faqSchema = generateFAQPageSchema(faqs)
-  const howToSchema = generateHowToSchema({
+  
+  // Only generate HowTo schema if we have at least 3 steps
+  const howToSchema = steps.length >= 3 ? generateHowToSchema({
     url: `https://devicecheck.io/issues/${issue.slug}`,
     name: issue.title,
     description: `Fix ${issue.title.toLowerCase()} with clear steps for ${issue.platform} covering permissions, device selection, and drivers.`,
     steps: steps.map(s => ({ title: s.title, description: s.description }))
-  })
+  }) : null
 
   const relatedGuides = siblingIssues.slice(0, 3).map(sibling => ({
     title: sibling.title,
     href: `/issues/${sibling.slug}`
   }))
+
+  const testButtonLabels: Record<string, string> = {
+    mic: 'Run the Microphone Test',
+    webcam: 'Run the Webcam Test',
+    keyboard: 'Run the Keyboard Test',
+    screen: 'Run the Screen Test'
+  }
 
   return {
     metadata: generateIssueMetadata(issue),
@@ -297,29 +346,41 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
         <JsonLdScript data={articleSchema} />
         <JsonLdScript data={breadcrumbs} />
         <JsonLdScript data={faqSchema} />
-        <JsonLdScript data={howToSchema} />
+        {howToSchema && <JsonLdScript data={howToSchema} />}
         
         <div className="min-h-screen bg-gray-50">
-          <div className="container mx-auto px-4 py-8 max-w-4xl">
+          <div className="container mx-auto px-4 py-8 max-w-6xl">
             <Breadcrumbs items={[
               { name: 'Issues', path: '/issues' },
               { name: issue.title, path: `/issues/${issue.slug}` }
             ]} />
             
+            <div className="mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{issue.title}</h1>
+              <p className="text-xl text-gray-600 max-w-3xl">
+                {introSentence1}. {introSentence2}
+              </p>
+            </div>
+
+            <div className="mb-5">
+              <Link 
+                href={hub.href}
+                className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+              >
+                {testButtonLabels[issue.deviceType]} →
+              </Link>
+            </div>
+
+            <StepsBlock steps={steps} />
+            
             <TOC contentId="article-content" />
             
-            <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
-              <h1 className="text-4xl font-bold text-gray-900 mb-6">{issue.title}</h1>
-              
-              <p className="text-lg text-gray-700 mb-4">
-                {issue.problem.charAt(0).toUpperCase() + issue.problem.slice(1)} on {issue.platform} prevents normal use of your {issue.deviceType === 'mic' ? 'microphone' : issue.deviceType === 'webcam' ? 'camera' : issue.deviceType}. This guide covers all solutions for {issue.title.toLowerCase()}, from permissions to driver updates.
-              </p>
-
-              <StepsBlock steps={steps} />
-
-              <p className="text-gray-700 mb-8">
-                You can use the <Link href={hub.href} className="text-blue-600 hover:text-blue-800">online {hub.name.toLowerCase()}</Link> to confirm whether your device is working.
-              </p>
+            <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mt-8">
+              <QuickAnswerBox
+                problem={issue.problem}
+                platform={issue.platform}
+                deviceType={issue.deviceType}
+              />
 
               <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
               <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">

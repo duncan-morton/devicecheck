@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import TOC from '@/components/TOC'
 import RelatedGuides from '@/components/RelatedGuides'
@@ -9,6 +9,7 @@ import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
+import StepsBlock from '@/components/StepsBlock'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -63,38 +64,55 @@ export default function IssuePage() {
   ])
 
   const faqSchema = generateFAQPageSchema(faqs)
+  const howToSchema = generateHowToSchema({
+    url: 'https://devicecheck.io/issues/microphone-not-working-windows-11',
+    name: 'Microphone Not Working on Windows 11',
+    description: 'Fix microphone not working on windows 11 with clear steps for Windows 11 covering permissions, device selection, and drivers.',
+    steps: [{"title":"Enable microphone in Windows","description":"Enable microphone in Windows 11 Privacy settings"},{"title":"Check that the correct","description":"Check that the correct microphone is selected"},{"title":"Update audio drivers through","description":"Update audio drivers through Device Manager"},{"title":"Close other applications using","description":"Close other applications using the microphone"},{"title":"Restart your computer after","description":"Restart your computer after changing settings"}]
+  })
+
+  const steps = [{"title":"Enable microphone in Windows","description":"Enable microphone in Windows 11 Privacy settings"},{"title":"Check that the correct","description":"Check that the correct microphone is selected"},{"title":"Update audio drivers through","description":"Update audio drivers through Device Manager"},{"title":"Close other applications using","description":"Close other applications using the microphone"},{"title":"Restart your computer after","description":"Restart your computer after changing settings"}]
 
   return (
     <>
       <JsonLdScript data={articleSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
+      <JsonLdScript data={howToSchema} />
       
       <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
           <Breadcrumbs items={[
             { name: 'Issues', path: '/issues' },
             { name: 'Microphone Not Working on Windows 11', path: '/issues/microphone-not-working-windows-11' }
           ]} />
           
+          <div className="mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Microphone Not Working on Windows 11</h1>
+            <p className="text-xl text-gray-600 max-w-3xl">
+              Microphone not detected on Windows 11. This guide covers all solutions, from permissions to driver updates.
+            </p>
+          </div>
+
+          <div className="mb-5">
+            <Link 
+              href="/mic"
+              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+            >
+              Run the Microphone Test →
+            </Link>
+          </div>
+
+          <StepsBlock steps={steps} />
+          
           <TOC contentId="article-content" />
           
-          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">Microphone Not Working on Windows 11</h1>
-            
-            <p className="text-lg text-gray-700 mb-4">
-              Microphone not detected on Windows 11 on Windows 11 prevents normal use of your microphone. This guide covers all solutions for microphone not working on windows 11, from permissions to driver updates.
-            </p>
-            
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mt-8">
             <QuickAnswerBox 
               problem="Microphone not detected on Windows 11"
               platform="Windows 11"
               deviceType="mic"
             />
-            
-            <p className="text-gray-700 mb-8">
-              You can use the <Link href="/mic" className="text-blue-600 hover:text-blue-800">online microphone test</Link> to confirm whether your device is working.
-            </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">

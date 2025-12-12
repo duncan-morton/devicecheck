@@ -391,10 +391,63 @@ function generatePageContent(issue: IssueData, siblingIssues: IssueData[]): stri
     href: `/issues/${sibling.slug}`
   }))
 
+  // Generate clean intro without duplicate platform text
+  const problemLower = issue.problem.toLowerCase()
+  const platformWords = issue.platform.split(' ')
+  const hasPlatformInProblem = platformWords.some(word => 
+    problemLower.includes(word.toLowerCase())
+  )
+  
+  let introSentence1 = issue.problem.charAt(0).toUpperCase() + issue.problem.slice(1)
+  if (!hasPlatformInProblem) {
+    introSentence1 += ` on ${issue.platform}`
+  }
+  const introSentence2 = `This guide covers all solutions, from permissions to driver updates.`
+  
+  // Generate steps for StepsBlock
+  const steps = quickFixes.slice(0, 6).map((fix) => {
+    const colonIndex = fix.indexOf(':')
+    if (colonIndex > 0) {
+      return {
+        title: fix.substring(0, colonIndex).trim(),
+        description: fix.substring(colonIndex + 1).trim()
+      }
+    }
+    const words = fix.split(' ')
+    if (words.length > 4) {
+      return {
+        title: words.slice(0, 4).join(' '),
+        description: fix
+      }
+    }
+    return {
+      title: fix,
+      description: fix
+    }
+  })
+  
+  // Generate HowTo schema if we have at least 3 steps
+  const hasHowTo = steps.length >= 3
+  const howToSchemaCode = hasHowTo ? `  const howToSchema = generateHowToSchema({
+    url: 'https://devicecheck.io/issues/${issue.slug}',
+    name: '${issue.title}',
+    description: 'Fix ${issue.title.toLowerCase()} with clear steps for ${issue.platform} covering permissions, device selection, and drivers.',
+    steps: ${JSON.stringify(steps)}
+  })` : ''
+  
+  const howToScript = hasHowTo ? `      <JsonLdScript data={howToSchema} />` : ''
+  
+  const testButtonLabels: Record<string, string> = {
+    mic: 'Run the Microphone Test',
+    webcam: 'Run the Webcam Test',
+    keyboard: 'Run the Keyboard Test',
+    screen: 'Run the Screen Test'
+  }
+
   return `import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import TOC from '@/components/TOC'
 import RelatedGuides from '@/components/RelatedGuides'
@@ -402,6 +455,7 @@ import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
+import StepsBlock from '@/components/StepsBlock'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -431,38 +485,50 @@ export default function IssuePage() {
   ])
 
   const faqSchema = generateFAQPageSchema(faqs)
+${howToSchemaCode}
+
+  const steps = ${JSON.stringify(steps)}
 
   return (
     <>
       <JsonLdScript data={articleSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
+${howToScript}
       
       <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
           <Breadcrumbs items={[
             { name: 'Issues', path: '/issues' },
             { name: '${issue.title}', path: '/issues/${issue.slug}' }
           ]} />
           
+          <div className="mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">${issue.title}</h1>
+            <p className="text-xl text-gray-600 max-w-3xl">
+              ${introSentence1}. ${introSentence2}
+            </p>
+          </div>
+
+          <div className="mb-5">
+            <Link 
+              href="${hub.href}"
+              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+            >
+              ${testButtonLabels[issue.deviceType]} →
+            </Link>
+          </div>
+
+          <StepsBlock steps={steps} />
+          
           <TOC contentId="article-content" />
           
-          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">${issue.title}</h1>
-            
-            <p className="text-lg text-gray-700 mb-4">
-              ${issue.problem.charAt(0).toUpperCase() + issue.problem.slice(1)} on ${issue.platform} prevents normal use of your ${deviceName}. This guide covers all solutions for ${issue.title.toLowerCase()}, from permissions to driver updates.
-            </p>
-            
+          <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mt-8">
             <QuickAnswerBox 
               problem="${issue.problem}"
               platform="${issue.platform}"
               deviceType="${issue.deviceType}"
             />
-            
-            <p className="text-gray-700 mb-8">
-              You can use the <Link href="${hub.href}" className="text-blue-600 hover:text-blue-800">online ${hub.name.toLowerCase()}</Link> to confirm whether your device is working.
-            </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
