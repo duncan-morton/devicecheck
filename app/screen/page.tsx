@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { getTranslation, type Locale } from '@/i18n/getTranslation'
 import ScreenTool from '@/components/ScreenTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -9,6 +9,7 @@ import RelatedTools from '@/components/RelatedTools'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
+import StepsBlock from '@/components/StepsBlock'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
@@ -55,6 +56,40 @@ const faqs = [
   }
 ]
 
+const steps = [
+  {
+    title: 'Open the screen test',
+    description: 'Run the online screen test and enter fullscreen for best accuracy.'
+  },
+  {
+    title: 'Check solid colors',
+    description: 'Cycle black, white, red, green, and blue. Look for dead (black) or stuck (colored) pixels.'
+  },
+  {
+    title: 'Inspect for flicker or bleed',
+    description: 'Use dark screens to spot backlight bleed or flicker; note any uneven glow.'
+  },
+  {
+    title: 'Verify resolution and scaling',
+    description: 'Ensure the display is set to native resolution and correct scaling in system settings.'
+  },
+  {
+    title: 'Check cables and ports',
+    description: 'Reseat display cables, try another port, and ensure a stable connection.'
+  },
+  {
+    title: 'Update graphics drivers',
+    description: 'Update GPU drivers to fix color, refresh-rate, or flicker problems.'
+  }
+]
+
+const howToSchema = generateHowToSchema({
+  url: 'https://devicecheck.io/screen',
+  name: 'How to test your screen for dead pixels and quality',
+  description: 'Step-by-step instructions to test a monitor for dead pixels, stuck pixels, flicker, and color accuracy.',
+  steps
+})
+
 export default function ScreenTestPage() {
   const locale: Locale = 'en'
   const t = getTranslation(locale)
@@ -75,6 +110,7 @@ export default function ScreenTestPage() {
 
   return (
     <>
+      <JsonLdScript data={howToSchema} />
       <JsonLdScript data={webAppSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
@@ -91,6 +127,8 @@ export default function ScreenTestPage() {
               Test your screen for dead pixels, stuck pixels, color accuracy, and backlight issues with our free online screen test tool. Perfect for checking monitor quality before purchase or troubleshooting display issues.
             </p>
           </div>
+
+          <StepsBlock title="Steps to fix this" steps={steps} />
 
           <div className="mb-8">
             <Link 

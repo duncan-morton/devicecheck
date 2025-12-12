@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { getTranslation, type Locale } from '@/i18n/getTranslation'
 import MeetingCheckTool from '@/components/MeetingCheckTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -9,6 +9,7 @@ import RelatedTools from '@/components/RelatedTools'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
+import StepsBlock from '@/components/StepsBlock'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
@@ -55,6 +56,40 @@ const faqs = [
   }
 ]
 
+const steps = [
+  {
+    title: 'Test network first',
+    description: 'Click Test Network to measure ping and jitter. Aim for ping <150ms and low jitter.'
+  },
+  {
+    title: 'Allow camera and mic',
+    description: 'Use the browser lock icon and system privacy settings to allow camera and microphone.'
+  },
+  {
+    title: 'Select correct devices',
+    description: 'In your OS and conferencing app, pick the correct microphone and camera, then retest.'
+  },
+  {
+    title: 'Close other video apps',
+    description: 'Quit Zoom, Teams, Discord, or tabs holding the camera or mic before retesting.'
+  },
+  {
+    title: 'Update drivers and restart',
+    description: 'Update audio/camera drivers (Windows) or keep macOS updated; restart to clear locks.'
+  },
+  {
+    title: 'Retest before joining',
+    description: 'Re-run meeting check to confirm all tests show Pass before your call.'
+  }
+]
+
+const howToSchema = generateHowToSchema({
+  url: 'https://devicecheck.io/meeting-check',
+  name: 'How to run a meeting check for calls',
+  description: 'Step-by-step instructions to test network, camera, and microphone before video calls.',
+  steps
+})
+
 export default function MeetingCheckPage() {
   const locale: Locale = 'en'
   const t = getTranslation(locale)
@@ -75,6 +110,7 @@ export default function MeetingCheckPage() {
 
   return (
     <>
+      <JsonLdScript data={howToSchema} />
       <JsonLdScript data={webAppSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
@@ -91,6 +127,8 @@ export default function MeetingCheckPage() {
               Test your network connectivity, camera, and microphone before important video calls. Ensure everything works perfectly for Zoom, Teams, Google Meet, and other video conferencing platforms.
             </p>
           </div>
+
+          <StepsBlock title="Steps to fix this" steps={steps} />
 
           <div className="mb-8">
             <Link 

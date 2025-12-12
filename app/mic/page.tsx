@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
 import MicTool from '@/components/MicTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -9,6 +9,7 @@ import RelatedTools from '@/components/RelatedTools'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
+import StepsBlock from '@/components/StepsBlock'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
@@ -56,6 +57,40 @@ const faqs = [
   }
 ]
 
+const steps = [
+  {
+    title: 'Enable microphone permissions',
+    description: 'Click the browser lock icon or open system Privacy settings and allow microphone access.'
+  },
+  {
+    title: 'Select the correct input',
+    description: 'In system Sound settings and in your app, choose the microphone you are using and test levels.'
+  },
+  {
+    title: 'Close other apps using the mic',
+    description: 'Quit Zoom, Teams, Discord, or recording tools that might be holding the microphone.'
+  },
+  {
+    title: 'Check physical connections',
+    description: 'Reconnect the mic, try another USB port, and check for hardware mute switches.'
+  },
+  {
+    title: 'Update audio drivers',
+    description: 'Update drivers in Device Manager (Windows) or keep macOS updated to refresh audio support.'
+  },
+  {
+    title: 'Retest in the browser tool',
+    description: 'Run the online microphone test and confirm the meter moves when you speak.'
+  }
+]
+
+const howToSchema = generateHowToSchema({
+  url: 'https://devicecheck.io/mic',
+  name: 'How to fix microphone issues online',
+  description: 'Step-by-step instructions to fix microphone not working: permissions, device selection, drivers, and retesting.',
+  steps
+})
+
 export default function MicTestPage() {
   const locale: Locale = 'en'
   const t = getTranslation(locale)
@@ -76,6 +111,7 @@ export default function MicTestPage() {
 
   return (
     <>
+      <JsonLdScript data={howToSchema} />
       <JsonLdScript data={webAppSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
@@ -92,6 +128,8 @@ export default function MicTestPage() {
               {t.mic_intro}
             </p>
           </div>
+
+          <StepsBlock title="Steps to fix this" steps={steps} />
 
           <div className="mb-8">
             <Link 

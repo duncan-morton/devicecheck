@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
 import KeyboardTool from '@/components/KeyboardTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -9,6 +9,7 @@ import RelatedTools from '@/components/RelatedTools'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
+import StepsBlock from '@/components/StepsBlock'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
@@ -40,6 +41,40 @@ const faqs = (t: ReturnType<typeof getTranslation>) => [
   { question: t.keyboard_faq_5_q, answer: t.keyboard_faq_5_a }
 ]
 
+const steps = [
+  {
+    title: 'Check keyboard connections',
+    description: 'Reconnect the keyboard, try a different USB port, or ensure Bluetooth keyboards are paired.'
+  },
+  {
+    title: 'Verify layout and language',
+    description: 'Open system keyboard settings and confirm the correct layout and language are selected.'
+  },
+  {
+    title: 'Test all keys',
+    description: 'Use the online keyboard test to press every key and see if they register correctly.'
+  },
+  {
+    title: 'Close conflicting apps',
+    description: 'Quit macros, remapping tools, or games that might capture input exclusively.'
+  },
+  {
+    title: 'Update keyboard drivers',
+    description: 'Update drivers via Device Manager (Windows) or keep macOS updated for keyboard support.'
+  },
+  {
+    title: 'Retry after restart',
+    description: 'Restart the system to release locks and retest in the keyboard tool.'
+  }
+]
+
+const howToSchema = generateHowToSchema({
+  url: 'https://devicecheck.io/keyboard',
+  name: 'How to fix keyboard issues online',
+  description: 'Step-by-step instructions to fix keyboard not working: connections, layout, conflicts, drivers, and retesting.',
+  steps
+})
+
 export default function KeyboardTestPage() {
   const locale: Locale = 'en'
   const t = getTranslation(locale)
@@ -60,6 +95,7 @@ export default function KeyboardTestPage() {
 
   return (
     <>
+      <JsonLdScript data={howToSchema} />
       <JsonLdScript data={webAppSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
@@ -76,6 +112,8 @@ export default function KeyboardTestPage() {
               {t.keyboard_intro}
             </p>
           </div>
+
+          <StepsBlock title="Steps to fix this" steps={steps} />
 
           <div className="mb-8">
             <Link 

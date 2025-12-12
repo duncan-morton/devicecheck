@@ -1,13 +1,14 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import TOC from '@/components/TOC'
 import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
+import StepsBlock from '@/components/StepsBlock'
 import Link from 'next/link'
 
 export interface IssueData {
@@ -257,6 +258,10 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
   const hub = DEVICE_HUBS[issue.deviceType]
   const quickFixes = generateQuickFixes(issue.deviceType, issue.platform)
   const faqs = generateFAQs(issue)
+  const steps = quickFixes.slice(0, 6).map((fix, idx) => ({
+    title: `Step ${idx + 1}: ${fix}`,
+    description: fix
+  }))
   
   const articleSchema = generateArticleSchema(
     `${issue.title} - Complete Fix Guide`,
@@ -273,6 +278,12 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
   ])
 
   const faqSchema = generateFAQPageSchema(faqs)
+  const howToSchema = generateHowToSchema({
+    url: `https://devicecheck.io/issues/${issue.slug}`,
+    name: issue.title,
+    description: `Fix ${issue.title.toLowerCase()} with clear steps for ${issue.platform} covering permissions, device selection, and drivers.`,
+    steps: steps.map(s => ({ title: s.title, description: s.description }))
+  })
 
   const relatedGuides = siblingIssues.slice(0, 3).map(sibling => ({
     title: sibling.title,
@@ -286,6 +297,7 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
         <JsonLdScript data={articleSchema} />
         <JsonLdScript data={breadcrumbs} />
         <JsonLdScript data={faqSchema} />
+        <JsonLdScript data={howToSchema} />
         
         <div className="min-h-screen bg-gray-50">
           <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -302,7 +314,9 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
               <p className="text-lg text-gray-700 mb-4">
                 {issue.problem.charAt(0).toUpperCase() + issue.problem.slice(1)} on {issue.platform} prevents normal use of your {issue.deviceType === 'mic' ? 'microphone' : issue.deviceType === 'webcam' ? 'camera' : issue.deviceType}. This guide covers all solutions for {issue.title.toLowerCase()}, from permissions to driver updates.
               </p>
-              
+
+              <StepsBlock title="Steps to fix this" steps={steps} />
+
               <p className="text-gray-700 mb-8">
                 You can use the <Link href={hub.href} className="text-blue-600 hover:text-blue-800">online {hub.name.toLowerCase()}</Link> to confirm whether your device is working.
               </p>

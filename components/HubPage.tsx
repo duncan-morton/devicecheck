@@ -5,8 +5,9 @@ import RelatedGuides from '@/components/RelatedGuides'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
+import StepsBlock from '@/components/StepsBlock'
 import Link from 'next/link'
-import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { groupIssues, hubFilters, guideSets, toolSets, type IssueGroup } from '@/lib/hubs'
 import { getLocalizedPath } from '@/i18n/getTranslation'
 
@@ -86,12 +87,19 @@ export default function HubPage({
   )
 
   const faqSchema = generateFAQPageSchema(config.faqs, 'en')
+  const howToSchema = generateHowToSchema({
+    url: `https://devicecheck.io${config.path}`,
+    name: config.title,
+    description: config.description,
+    steps: config.steps.map(step => ({ title: step, description: step }))
+  })
 
   return (
     <>
       <JsonLdScript data={articleSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
+      <JsonLdScript data={howToSchema} />
 
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -110,6 +118,7 @@ export default function HubPage({
               platform={config.quickAnswer.platform}
               deviceType={config.quickAnswer.deviceType}
             />
+            <StepsBlock title="Steps to fix this" steps={config.steps.map(step => ({ title: step, description: step }))} />
 
             <h2 className="text-2xl font-bold text-gray-900 mt-2 mb-3">Quick Diagnosis Summary</h2>
             <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">

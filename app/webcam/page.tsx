@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
-import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
+import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
 import WebcamTool from '@/components/WebcamTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -9,6 +9,7 @@ import RelatedTools from '@/components/RelatedTools'
 import DeviceNavigation from '@/components/DeviceNavigation'
 import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
+import StepsBlock from '@/components/StepsBlock'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
@@ -41,6 +42,40 @@ const faqs = (t: ReturnType<typeof getTranslation>) => [
   { question: t.webcam_faq_5_q, answer: t.webcam_faq_5_a }
 ]
 
+const steps = [
+  {
+    title: 'Allow camera in your browser',
+    description: 'Click the lock icon in the address bar and set Camera to Allow for this site.'
+  },
+  {
+    title: 'Select the correct camera',
+    description: 'In browser/device settings, pick the camera you want and confirm a live preview appears.'
+  },
+  {
+    title: 'Close other apps using the camera',
+    description: 'Quit Zoom, Teams, Discord, or tabs that may be holding the camera, then retry.'
+  },
+  {
+    title: 'Check physical and privacy covers',
+    description: 'Open any camera privacy cover and ensure no hardware switches are blocking the lens.'
+  },
+  {
+    title: 'Update camera drivers',
+    description: 'Update drivers (Windows) or keep macOS updated so the camera is recognized correctly.'
+  },
+  {
+    title: 'Retest with the online tool',
+    description: 'Run the webcam test and verify the preview, resolution badge, and grid overlay work.'
+  }
+]
+
+const howToSchema = generateHowToSchema({
+  url: 'https://devicecheck.io/webcam',
+  name: 'How to fix webcam issues online',
+  description: 'Step-by-step instructions to fix webcam not working: permissions, device selection, drivers, and retesting.',
+  steps
+})
+
 export default function WebcamTestPage() {
   const locale: Locale = 'en'
   const t = getTranslation(locale)
@@ -61,6 +96,7 @@ export default function WebcamTestPage() {
 
   return (
     <>
+      <JsonLdScript data={howToSchema} />
       <JsonLdScript data={webAppSchema} />
       <JsonLdScript data={breadcrumbs} />
       <JsonLdScript data={faqSchema} />
@@ -77,6 +113,8 @@ export default function WebcamTestPage() {
               {t.webcam_intro}
             </p>
           </div>
+
+          <StepsBlock title="Steps to fix this" steps={steps} />
 
           <div className="mb-8">
             <Link 

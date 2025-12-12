@@ -61,6 +61,23 @@ export interface FAQPageSchema {
   }>
 }
 
+export interface HowToSchema {
+  '@context': string
+  '@type': string
+  name: string
+  description: string
+  step: Array<{
+    '@type': string
+    position: number
+    name: string
+    itemListElement: Array<{
+      '@type': string
+      text: string
+    }>
+  }>
+  mainEntityOfPage: string
+}
+
 export interface ArticleSchema {
   '@context': string
   '@type': string
@@ -166,6 +183,32 @@ export function generateFAQPageSchema(
         text: faq.answer
       }
     }))
+  }
+}
+
+export function generateHowToSchema(params: {
+  url: string
+  name: string
+  description: string
+  steps: { title: string; description: string }[]
+}): HowToSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: params.name,
+    description: params.description,
+    step: params.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.title,
+      itemListElement: [
+        {
+          '@type': 'HowToDirection',
+          text: step.description
+        }
+      ]
+    })),
+    mainEntityOfPage: params.url
   }
 }
 
