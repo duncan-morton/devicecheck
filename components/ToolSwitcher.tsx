@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { getLocaleFromPath, getLocalizedPath, getPathWithoutLocale, type Locale } from '@/i18n/getTranslation'
 import { CheckCircle2, Camera, Mic, Keyboard, Monitor, Video, AlertCircle } from 'lucide-react'
+import AdBanner from '@/components/AdBanner'
 
 const tools = [
   { path: '/meeting-check', label: 'Full Check', icon: CheckCircle2 },
@@ -97,6 +98,9 @@ export default function ToolSwitcher() {
               <AlertCircle size={16} className="sm:hidden" />
             </Link>
           </div>
+        </div>
+        <div className="pb-4 pt-1">
+          <AdBanner placement="header" />
         </div>
       </div>
     </nav>

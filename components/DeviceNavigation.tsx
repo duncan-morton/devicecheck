@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Camera, Mic, Keyboard, Monitor, Video } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { getLocaleFromPath, getLocalizedPath, getTranslation, type Locale } from '@/i18n/getTranslation'
+import AdBanner from '@/components/AdBanner'
 
 const tools = [
   {
@@ -44,6 +45,7 @@ export default function DeviceNavigation() {
   const t = getTranslation(locale)
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8 my-12">
+      <AdBanner placement="footer" className="mb-6" />
       <h2 className="text-2xl font-bold text-gray-900 mb-6">{t.test_another_device}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {tools.map((tool) => {

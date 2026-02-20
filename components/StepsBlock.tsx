@@ -1,4 +1,5 @@
 import { Wrench } from 'lucide-react'
+import AdBanner from '@/components/AdBanner'
 
 interface Step {
   title: string
@@ -25,7 +26,9 @@ export default function StepsBlock({
   const useTwoColumns = steps.length >= 6
 
   return (
-    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 md:p-5 mb-6">
+    <div className="mb-6 space-y-4">
+      <AdBanner placement="tool" />
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 md:p-5">
       <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
         <Wrench size={18} className="text-slate-500" />
         {title}
@@ -66,6 +69,7 @@ export default function StepsBlock({
           </li>
         )}
       </ol>
+      </div>
     </div>
   )
 }

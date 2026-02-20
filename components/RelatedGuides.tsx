@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import AdBanner from '@/components/AdBanner'
 
 interface RelatedGuide {
   title: string
@@ -17,6 +18,7 @@ export default function RelatedGuides({ guides }: RelatedGuidesProps) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 my-8">
+      <AdBanner placement="guide" className="mb-6" />
       <h3 className="text-xl font-semibold text-gray-900 mb-4">Related Fixes</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {guides.map((guide) => (
