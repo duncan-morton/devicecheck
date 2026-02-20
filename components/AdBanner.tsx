@@ -24,7 +24,7 @@ interface AdBannerProps {
 }
 
 export default function AdBanner({ placement, className = '' }: AdBannerProps) {
-  const adRef = useRef<HTMLElement | null>(null)
+  const adRef = useRef<HTMLModElement | null>(null)
   const pathname = usePathname()
 
   const isEmbedRoute = /^\/([a-z]{2}\/)?embed(\/|$)/.test(pathname)
