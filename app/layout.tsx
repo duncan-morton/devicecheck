@@ -53,6 +53,11 @@ export default function RootLayout({
       <head>
         <JsonLdScript data={websiteSchema} />
         <JsonLdScript data={organizationSchema} />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1784695246771462"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="fixed top-4 right-4 z-50">
