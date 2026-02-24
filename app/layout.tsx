@@ -7,6 +7,7 @@ import { generateWebSiteSchema, generateOrganizationSchema } from "@/lib/seo/jso
 import { Analytics } from "@vercel/analytics/next";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import ToolSwitcher from "@/components/ToolSwitcher";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,6 +67,7 @@ export default function RootLayout({
         </div>
         <ToolSwitcher />
         {children}
+        <Footer />
         <Analytics />
       </body>
     </html>
