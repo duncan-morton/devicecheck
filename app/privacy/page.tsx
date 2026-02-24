@@ -40,6 +40,26 @@ export default function PrivacyPage() {
             <li>Share your data with third parties</li>
           </ul>
 
+          <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Advertising and Analytics</h2>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Advertising (Google AdSense)</h3>
+          <p className="text-gray-700 mb-4">
+            We may display advertisements served by Google (AdSense). Google and its partners may use cookies or similar technologies to serve ads and measure their performance. This may include showing ads based on your visits to this and other websites.
+          </p>
+          <p className="text-gray-700 mb-6">
+            You can manage or opt out of personalised advertising through your Google Ads settings.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Analytics (Vercel Analytics)</h3>
+          <p className="text-gray-700 mb-6">
+            We use Vercel Analytics to understand general usage patterns, such as which pages are visited and how users navigate the site. Vercel Analytics is designed to be privacy-friendly and does not collect personally identifiable information.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Device Testing and Local Processing</h3>
+          <p className="text-gray-700 mb-6">
+            All microphone, webcam, keyboard, and screen tests run locally in your browser. No audio, video, or device data is uploaded to or stored on our servers.
+          </p>
+
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Browser Permissions</h2>
           <p className="text-gray-700 mb-6">
             Our tools request camera and microphone permissions to enable device testing. These permissions are handled entirely by your browser. We never access your devices without your explicit permission, and you can revoke permissions at any time through your browser settings.
