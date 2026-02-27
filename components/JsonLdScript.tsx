@@ -7,6 +7,7 @@ export default function JsonLdScript({ data }: JsonLdScriptProps) {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      suppressHydrationWarning
     />
   )
 }

@@ -19,6 +19,12 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [errorName, setErrorName] = useState<string>('')
   const [isVideoActive, setIsVideoActive] = useState(false)
+  const streamRef = useRef<MediaStream | null>(null)
+
+  // Keep ref in sync so cleanup can stop stream without effect re-running when stream changes
+  useEffect(() => {
+    streamRef.current = stream
+  }, [stream])
 
   const stopWebcam = useCallback(() => {
     if (stream) {
@@ -29,13 +35,20 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
   }, [stream])
 
   const startWebcam = useCallback(async () => {
-    stopWebcam()
+    // Stop any existing stream (use ref so we don't depend on stream in deps)
+    const existing = streamRef.current
+    if (existing) {
+      existing.getTracks().forEach(track => track.stop())
+    }
+    setStream(null)
+    setIsVideoActive(false)
     setError('')
     setErrorName('')
     setResolution(null)
 
     try {
       const s = await getMediaStream(true, false)
+      streamRef.current = s
       setStream(s)
 
       const track = s.getVideoTracks()[0]
@@ -60,15 +73,17 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
         setError('Failed to access camera. Please check permissions and try again.')
       }
     }
-  }, [stopWebcam])
+  }, [])
 
   useEffect(() => {
-    // Auto-start when the tool mounts
+    // Auto-start once on mount; cleanup stops current stream via ref
     startWebcam()
     return () => {
-      stopWebcam()
+      const s = streamRef.current
+      if (s) s.getTracks().forEach(track => track.stop())
+      streamRef.current = null
     }
-  }, [startWebcam, stopWebcam])
+  }, [startWebcam])
 
   useEffect(() => {
     if (!videoRef.current || !stream) return

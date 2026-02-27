@@ -1,11 +1,7 @@
 export const getMediaStream = async (video: boolean, audio: boolean): Promise<MediaStream> => {
-    try {
-      return await navigator.mediaDevices.getUserMedia({ video, audio });
-    } catch (err) {
-      throw new Error(`Failed to access ${video ? 'camera' : 'microphone'}`);
-    }
-  };
-  
+  return navigator.mediaDevices.getUserMedia({ video, audio })
+};
+
   export enum TestStatus {
     SUCCESS = 'success',
     WARNING = 'warning',
