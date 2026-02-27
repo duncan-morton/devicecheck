@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { getMediaStream } from '@/lib/diagnostics'
 import { Grid, AlertCircle, FlipHorizontal } from 'lucide-react'
+import { deriveWebcamDiagnostic } from '@/lib/deviceStatus/webcamStatus'
+import WebcamResultGuidance from '@/components/WebcamResultGuidance'
 
 interface WebcamToolProps {
   variant?: 'full' | 'embed'
@@ -13,57 +15,113 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
   const [error, setError] = useState<string>('')
   const [showGrid, setShowGrid] = useState(false)
   const [isMirrored, setIsMirrored] = useState(true)
-  const [resolution, setResolution] = useState<{w: number, h: number} | null>(null)
+  const [resolution, setResolution] = useState<{ w: number; h: number } | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [errorName, setErrorName] = useState<string>('')
+  const [isVideoActive, setIsVideoActive] = useState(false)
+
+  const stopWebcam = useCallback(() => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop())
+    }
+    setStream(null)
+    setIsVideoActive(false)
+  }, [stream])
+
+  const startWebcam = useCallback(async () => {
+    stopWebcam()
+    setError('')
+    setErrorName('')
+    setResolution(null)
+
+    try {
+      const s = await getMediaStream(true, false)
+      setStream(s)
+
+      const track = s.getVideoTracks()[0]
+      if (track) {
+        const settings = track.getSettings()
+        if (settings.width && settings.height) {
+          setResolution({ w: settings.width, h: settings.height })
+        }
+      }
+    } catch (e: any) {
+      console.error('Camera error:', e)
+      const name = e?.name ?? ''
+      setErrorName(name)
+
+      if (name === 'NotAllowedError' || name === 'PermissionDeniedError') {
+        setError('Camera access denied. Please check browser permissions and allow camera access.')
+      } else if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+        setError('No camera found. Please connect a camera and try again.')
+      } else if (name === 'NotReadableError' || name === 'TrackStartError') {
+        setError('Camera is already in use by another application. Please close other apps using the camera.')
+      } else {
+        setError('Failed to access camera. Please check permissions and try again.')
+      }
+    }
+  }, [stopWebcam])
 
   useEffect(() => {
-    let currentStream: MediaStream | null = null
+    // Auto-start when the tool mounts
+    startWebcam()
+    return () => {
+      stopWebcam()
+    }
+  }, [startWebcam, stopWebcam])
 
-    getMediaStream(true, false)
-      .then(s => {
-        currentStream = s
-        setStream(s)
-        const track = s.getVideoTracks()[0]
-        if (track) {
-          const settings = track.getSettings()
-          if (settings.width && settings.height) {
-            setResolution({ w: settings.width, h: settings.height })
-          }
-        }
+  useEffect(() => {
+    if (!videoRef.current || !stream) return
+
+    const video = videoRef.current
+    video.srcObject = stream
+
+    const handlePlaying = () => setIsVideoActive(true)
+    const handlePause = () => setIsVideoActive(false)
+    const handleError = () => setIsVideoActive(false)
+    const handleLoadedMetadata = async () => {
+      if (!videoRef.current) return
+      setResolution({
+        w: videoRef.current.videoWidth,
+        h: videoRef.current.videoHeight,
       })
-      .catch(e => {
-        console.error('Camera error:', e)
-        if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError') {
-          setError('Camera access denied. Please check browser permissions and allow camera access.')
-        } else if (e.name === 'NotFoundError' || e.name === 'DevicesNotFoundError') {
-          setError('No camera found. Please connect a camera and try again.')
-        } else if (e.name === 'NotReadableError' || e.name === 'TrackStartError') {
-          setError('Camera is already in use by another application. Please close other apps using the camera.')
-        } else {
-          setError('Failed to access camera. Please check permissions and try again.')
-        }
-      })
+      try {
+        await videoRef.current.play()
+        setIsVideoActive(true)
+      } catch {
+        // ignore play errors (autoplay restrictions, etc.)
+      }
+    }
+
+    video.onplaying = handlePlaying
+    video.onpause = handlePause
+    video.onerror = handleError
+    video.onloadedmetadata = handleLoadedMetadata
 
     return () => {
-      if (currentStream) {
-        currentStream.getTracks().forEach(t => t.stop())
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream
-      videoRef.current.onloadedmetadata = () => {
-        if (videoRef.current) {
-          setResolution({ 
-            w: videoRef.current.videoWidth, 
-            h: videoRef.current.videoHeight 
-          })
-        }
-      }
+      video.onplaying = null
+      video.onpause = null
+      video.onerror = null
+      video.onloadedmetadata = null
     }
   }, [stream])
+
+  const baseDiagnostic = useMemo(
+    () =>
+      deriveWebcamDiagnostic({
+        error: errorName || error || null,
+        stream,
+        resolution,
+      }),
+    [errorName, error, stream, resolution],
+  )
+
+  const diagnostic = useMemo(() => {
+    if (baseDiagnostic.status === 'ok' && !isVideoActive) {
+      return { ...baseDiagnostic, status: 'unknown_error' as const }
+    }
+    return baseDiagnostic
+  }, [baseDiagnostic, isVideoActive])
 
   if (variant === 'embed') {
     return (
@@ -88,22 +146,22 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
                   <div></div>
                 </div>
               )}
-              <video 
+              <video
                 ref={videoRef}
-                autoPlay 
-                playsInline 
+                autoPlay
+                playsInline
                 muted
                 className={`w-full h-full object-cover ${isMirrored ? 'scale-x-[-1]' : 'scale-x-100'}`}
               />
               <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2 bg-black/60 backdrop-blur-md p-1.5 rounded-full z-20">
-                <button 
+                <button
                   onClick={() => setShowGrid(!showGrid)}
                   className={`p-1.5 rounded-full transition-colors ${showGrid ? 'bg-blue-500 text-white' : 'text-white hover:bg-white/20'}`}
                   title="Toggle Grid"
                 >
                   <Grid size={16} />
                 </button>
-                <button 
+                <button
                   onClick={() => setIsMirrored(!isMirrored)}
                   className={`p-1.5 rounded-full transition-colors ${!isMirrored ? 'bg-blue-500 text-white' : 'text-white hover:bg-white/20'}`}
                   title="Mirror Video"
@@ -196,6 +254,8 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
               </dl>
             </div>
           </div>
+
+          <WebcamResultGuidance diagnostic={diagnostic} onRetry={startWebcam} />
         </div>
       )}
     </div>

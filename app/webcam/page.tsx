@@ -130,11 +130,11 @@ export default function WebcamTestPage() {
             </Link>
           </div>
 
-          <StepsBlock steps={steps} />
-
           <div id="test" className="scroll-mt-8">
             <WebcamTool />
           </div>
+
+          <StepsBlock steps={steps} />
 
           <RelatedTools currentPath={getLocalizedPath('/webcam', locale)} locale={locale} />
 
