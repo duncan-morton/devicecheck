@@ -5,9 +5,11 @@ import { useEffect, useRef, useState } from 'react'
 interface VolumeMeterProps {
   stream: MediaStream | null
   isActive: boolean
+  /** Called with normalized level 0–1 on each frame (e.g. for diagnostics) */
+  onLevelChange?: (level: number) => void
 }
 
-export default function VolumeMeter({ stream, isActive }: VolumeMeterProps) {
+export default function VolumeMeter({ stream, isActive, onLevelChange }: VolumeMeterProps) {
   const [volume, setVolume] = useState(0)
   const audioContextRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
@@ -37,7 +39,8 @@ export default function VolumeMeter({ stream, isActive }: VolumeMeterProps) {
 
       const average = dataArray.reduce((a, b) => a + b) / dataArray.length
       const normalizedVolume = Math.min(100, (average / 255) * 100 * 2)
-      
+      const level0to1 = Math.min(1, average / 255)
+      onLevelChange?.(level0to1)
       setVolume(normalizedVolume)
       animationFrameRef.current = requestAnimationFrame(updateVolume)
     }

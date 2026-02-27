@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { getMediaStream } from '@/lib/diagnostics'
 import { playLeft, playRight, playStereoSweep } from '@/lib/audioGenerator'
 import VolumeMeter from '@/components/VolumeMeter'
+import { deriveMicDiagnostic } from '@/lib/deviceStatus/micStatus'
+import MicResultGuidance from '@/components/MicResultGuidance'
 import { Mic, Square, Play, RefreshCw, AlertTriangle, CheckCircle2, ArrowLeft, ArrowRight, MoveHorizontal } from 'lucide-react'
 
 interface MicToolProps {
@@ -13,26 +15,92 @@ interface MicToolProps {
 export default function MicTool({ variant = 'full' }: MicToolProps) {
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [error, setError] = useState<string>('')
+  const [errorName, setErrorName] = useState<string>('')
+  const [audioLevel, setAudioLevel] = useState(0)
+  const [trackEnabled, setTrackEnabled] = useState(true)
   const [isRecording, setIsRecording] = useState(false)
   const [playbackUrl, setPlaybackUrl] = useState<string | null>(null)
-  
+
+  const streamRef = useRef<MediaStream | null>(null)
+  const playbackUrlRef = useRef<string | null>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const chunksRef = useRef<Blob[]>([])
 
   useEffect(() => {
-    getMediaStream(false, true)
-      .then(s => setStream(s))
-      .catch(e => setError('Microphone access denied. Please check your browser permissions.'))
+    streamRef.current = stream
+  }, [stream])
 
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach(t => t.stop())
-      }
-      if (playbackUrl) {
-        URL.revokeObjectURL(playbackUrl)
+  const stopMic = useCallback(() => {
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop())
+    }
+    setStream(null)
+  }, [stream])
+
+  const startMic = useCallback(async () => {
+    const existing = streamRef.current
+    if (existing) {
+      existing.getTracks().forEach(t => t.stop())
+    }
+    setStream(null)
+    setError('')
+    setErrorName('')
+
+    try {
+      const s = await getMediaStream(false, true)
+      streamRef.current = s
+      setStream(s)
+      const track = s.getAudioTracks()[0]
+      setTrackEnabled(track?.enabled ?? true)
+    } catch (e: unknown) {
+      const err = e as { name?: string }
+      const name = err?.name ?? ''
+      setErrorName(name)
+      if (name === 'NotAllowedError' || name === 'PermissionDeniedError') {
+        setError('Microphone access denied. Please check your browser permissions.')
+      } else if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+        setError('No microphone found. Please connect a microphone and try again.')
+      } else if (name === 'NotReadableError' || name === 'TrackStartError') {
+        setError('Microphone is in use by another application. Close other apps and try again.')
+      } else {
+        setError('Failed to access microphone. Please check permissions and try again.')
       }
     }
   }, [])
+
+  useEffect(() => {
+    playbackUrlRef.current = playbackUrl
+  }, [playbackUrl])
+
+  useEffect(() => {
+    startMic()
+    return () => {
+      const s = streamRef.current
+      if (s) s.getTracks().forEach(t => t.stop())
+      streamRef.current = null
+      const url = playbackUrlRef.current
+      if (url) URL.revokeObjectURL(url)
+    }
+  }, [startMic])
+
+  const diagnostic = useMemo(
+    () =>
+      deriveMicDiagnostic({
+        error: errorName || error || null,
+        stream,
+        audioLevel,
+        trackEnabled,
+      }),
+    [errorName, error, stream, audioLevel, trackEnabled]
+  )
+
+  const handleLevelChange = useCallback((level: number) => {
+    setAudioLevel(level)
+    if (stream) {
+      const track = stream.getAudioTracks()[0]
+      if (track) setTrackEnabled(track.enabled)
+    }
+  }, [stream])
 
   const startRecording = () => {
     if (!stream) return
@@ -105,7 +173,7 @@ export default function MicTool({ variant = 'full' }: MicToolProps) {
         ) : (
           <>
             <div className="mb-4">
-              <VolumeMeter stream={stream} isActive={true} />
+              <VolumeMeter stream={stream} isActive={true} onLevelChange={handleLevelChange} />
             </div>
             <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
               <p className="text-xs text-gray-500 mb-3 font-medium">Test Recording (Max 5s)</p>
@@ -198,12 +266,11 @@ export default function MicTool({ variant = 'full' }: MicToolProps) {
                 </div>
               ) : (
                 <>
-                  <div className="mb-8">
-                    <VolumeMeter stream={stream} isActive={true} />
+                  <div className="mb-6">
+                    <VolumeMeter stream={stream} isActive={true} onLevelChange={handleLevelChange} />
                   </div>
-                  
                   <p className="text-sm text-gray-500 mb-2 font-medium">Test Recording (Max 5s)</p>
-                  <div className="bg-gray-50 rounded-xl p-6 flex flex-col items-center justify-center border border-gray-200">
+                  <div className="bg-gray-50 rounded-xl p-6 flex flex-col items-center justify-center border border-gray-200 mb-6">
                     {!playbackUrl ? (
                       <div className="flex flex-col items-center gap-3">
                         <button 
@@ -244,6 +311,7 @@ export default function MicTool({ variant = 'full' }: MicToolProps) {
                       </div>
                     )}
                   </div>
+                  <MicResultGuidance diagnostic={diagnostic} onRetry={startMic} />
                 </>
               )}
             </div>

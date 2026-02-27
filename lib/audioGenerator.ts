@@ -1,21 +1,27 @@
-export const playTone = (frequency = 440, duration = 0.3) => {
-    const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    
-    osc.frequency.value = frequency;
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-    
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + duration);
-  };
-  
-  export const playLeft = () => {
-    const ctx = new AudioContext();
+const getAudioContext = async (): Promise<AudioContext> => {
+  const ctx = new AudioContext()
+  if (ctx.state === 'suspended') await ctx.resume()
+  return ctx
+}
+
+export const playTone = async (frequency = 440, duration = 0.3) => {
+  const ctx = await getAudioContext()
+  const osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+
+  osc.connect(gain)
+  gain.connect(ctx.destination)
+
+  osc.frequency.value = frequency
+  gain.gain.setValueAtTime(0.3, ctx.currentTime)
+  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration)
+
+  osc.start(ctx.currentTime)
+  osc.stop(ctx.currentTime + duration)
+}
+
+export const playLeft = async () => {
+  const ctx = await getAudioContext()
     const osc = ctx.createOscillator();
     const merger = ctx.createChannelMerger(2);
     const leftGain = ctx.createGain();
@@ -45,8 +51,8 @@ export const playTone = (frequency = 440, duration = 0.3) => {
     osc.stop(startTime + duration);
   };
   
-  export const playRight = () => {
-    const ctx = new AudioContext();
+  export const playRight = async () => {
+    const ctx = await getAudioContext();
     const osc = ctx.createOscillator();
     const merger = ctx.createChannelMerger(2);
     const leftGain = ctx.createGain();
@@ -76,8 +82,8 @@ export const playTone = (frequency = 440, duration = 0.3) => {
     osc.stop(startTime + duration);
   };
   
-  export const playStereoSweep = () => {
-    const ctx = new AudioContext();
+  export const playStereoSweep = async () => {
+    const ctx = await getAudioContext();
     const osc = ctx.createOscillator();
     const panner = ctx.createStereoPanner();
     const gain = ctx.createGain();
@@ -108,8 +114,8 @@ export const playTone = (frequency = 440, duration = 0.3) => {
     osc.stop(startTime + duration);
   };
   
-  export const playFunSound = () => {
-    const ctx = new AudioContext();
+  export const playFunSound = async () => {
+    const ctx = await getAudioContext();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     
