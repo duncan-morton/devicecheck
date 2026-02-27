@@ -6,8 +6,6 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import TOC from '@/components/TOC'
 import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
-import DeviceNavigation from '@/components/DeviceNavigation'
-import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400
@@ -267,10 +265,8 @@ export default function IssuePage() {
           </article>
 
           <HelpfulWidget />
-          <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName="Keyboard Test" toolHref="/keyboard" />
     </>
   )
 }

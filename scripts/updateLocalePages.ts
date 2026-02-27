@@ -11,7 +11,6 @@ console.log('3. Update metadata path and locale')
 console.log('4. Update function to use locale and translations')
 console.log('5. Update breadcrumbs paths')
 console.log('6. Update all text strings to use t.*')
-console.log('7. Update StickyActionBar href')
 
 // This is just a reference - actual updates done via search_replace
 

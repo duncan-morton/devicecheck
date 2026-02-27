@@ -6,8 +6,6 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import KeyboardTool from '@/components/KeyboardTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
-import DeviceNavigation from '@/components/DeviceNavigation'
-import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 import StepsBlock from '@/components/StepsBlock'
 
@@ -316,21 +314,8 @@ export default function KeyboardTestPage() {
               </Link>
             </p>
           </article>
-
-          <div className="mt-8 mb-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
-            <p className="text-sm text-gray-600">
-              Run a help desk or documentation site?{' '}
-              <Link href="/embed" className="text-blue-600 hover:text-blue-800 font-medium">
-                You can embed this test on your pages
-              </Link>
-              .
-            </p>
-          </div>
-
-          <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName={t.keyboard_test} toolHref={getLocalizedPath('/keyboard', locale)} />
     </>
   )
 }

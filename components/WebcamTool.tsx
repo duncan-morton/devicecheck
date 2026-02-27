@@ -3,14 +3,17 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { getMediaStream } from '@/lib/diagnostics'
 import { Grid, AlertCircle, FlipHorizontal } from 'lucide-react'
-import { deriveWebcamDiagnostic } from '@/lib/deviceStatus/webcamStatus'
+import { deriveWebcamDiagnostic, type WebcamDiagnostic } from '@/lib/deviceStatus/webcamStatus'
 import WebcamResultGuidance from '@/components/WebcamResultGuidance'
+import SetupProgress from '@/components/SetupProgress'
 
 interface WebcamToolProps {
   variant?: 'full' | 'embed'
+  /** Called when diagnostic updates (e.g. for conditional layout below the tool) */
+  onDiagnosticChange?: (diagnostic: WebcamDiagnostic) => void
 }
 
-export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
+export default function WebcamTool({ variant = 'full', onDiagnosticChange }: WebcamToolProps) {
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [error, setError] = useState<string>('')
   const [showGrid, setShowGrid] = useState(false)
@@ -138,6 +141,10 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
     return baseDiagnostic
   }, [baseDiagnostic, isVideoActive])
 
+  useEffect(() => {
+    onDiagnosticChange?.(diagnostic)
+  }, [diagnostic, onDiagnosticChange])
+
   if (variant === 'embed') {
     return (
       <div className="space-y-4">
@@ -196,16 +203,19 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
     )
   }
 
+  const cardClass = 'rounded-xl border border-neutral-200 bg-white shadow-sm'
+
   return (
     <div className="mb-12">
-      {error ? (
+      {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 p-6 rounded-xl flex items-center gap-3 mb-6">
           <AlertCircle /> {error}
         </div>
-      ) : (
-        <div className="space-y-6">
-          <div className="relative bg-black rounded-xl overflow-hidden shadow-2xl aspect-video group">
-            {/* Grid Overlay */}
+      )}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+        {/* LEFT: Preview + live output */}
+        <div className="lg:col-span-3 space-y-0">
+          <div className="relative bg-black rounded-xl overflow-hidden shadow-lg border border-neutral-200 aspect-video group">
             {showGrid && (
               <div className="absolute inset-0 pointer-events-none z-10 grid grid-cols-3 grid-rows-3">
                 <div className="border-r border-b border-white/30"></div>
@@ -219,24 +229,22 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
                 <div></div>
               </div>
             )}
-
-            <video 
+            <video
               ref={videoRef}
-              autoPlay 
-              playsInline 
+              autoPlay
+              playsInline
               muted
               className={`w-full h-full object-cover transition-transform duration-300 ${isMirrored ? 'scale-x-[-1]' : 'scale-x-100'}`}
             />
-
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4 bg-black/60 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-20">
-              <button 
+              <button
                 onClick={() => setShowGrid(!showGrid)}
                 className={`p-2 rounded-full transition-colors ${showGrid ? 'bg-blue-500 text-white' : 'text-white hover:bg-white/20'}`}
                 title="Toggle Grid"
               >
                 <Grid size={20} />
               </button>
-              <button 
+              <button
                 onClick={() => setIsMirrored(!isMirrored)}
                 className={`p-2 rounded-full transition-colors ${!isMirrored ? 'bg-blue-500 text-white' : 'text-white hover:bg-white/20'}`}
                 title="Mirror Video"
@@ -245,34 +253,40 @@ export default function WebcamTool({ variant = 'full' }: WebcamToolProps) {
               </button>
             </div>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-gray-800 mb-2">Tips for better video calls</h3>
-              <ul className="space-y-2 text-sm text-gray-600 list-disc list-inside">
-                <li>Keep your light source in front of you (not behind).</li>
-                <li>Raise your camera to eye level to avoid unflattering angles.</li>
-                <li>Use the grid tool to position your eyes at the top 1/3 line.</li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-gray-800 mb-2">Detected Camera Info</h3>
-              <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                <dt className="text-gray-500">Aspect Ratio</dt>
-                <dd className="text-gray-900 font-mono">
-                  {resolution ? (resolution.w / resolution.h).toFixed(2) : '--'}
-                </dd>
-                <dt className="text-gray-500">Resolution</dt>
-                <dd className="text-gray-900 font-mono">
-                  {resolution ? `${resolution.w}x${resolution.h}` : '--'}
-                </dd>
-              </dl>
-            </div>
-          </div>
-
-          <WebcamResultGuidance diagnostic={diagnostic} onRetry={startWebcam} />
         </div>
-      )}
+
+        {/* RIGHT: Diagnostic sidebar (sticky on desktop only) */}
+        <div className="lg:col-span-2 space-y-3 lg:sticky lg:top-20">
+          <WebcamResultGuidance diagnostic={diagnostic} onRetry={startWebcam} />
+          <SetupProgress />
+          <div className={`${cardClass} p-4 md:p-5`}>
+            <h3 className="text-sm font-semibold text-gray-800 mb-2">Detected Camera Info</h3>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+              <dt className="text-gray-500">Aspect Ratio</dt>
+              <dd className="text-gray-900 font-mono">
+                {resolution ? (resolution.w / resolution.h).toFixed(2) : '--'}
+              </dd>
+              <dt className="text-gray-500">Resolution</dt>
+              <dd className="text-gray-900 font-mono">
+                {resolution ? `${resolution.w}×${resolution.h}` : '--'}
+              </dd>
+            </dl>
+          </div>
+          <div className={`${cardClass} p-4 md:p-5`}>
+            <h3 className="text-sm font-semibold text-gray-800 mb-2">Quick checks</h3>
+            <ul className="space-y-1.5 text-sm text-gray-600 list-disc list-inside">
+              <li>Light in front of you</li>
+              <li>Camera at eye level</li>
+              <li>Use grid for framing</li>
+            </ul>
+          </div>
+          <div className={`${cardClass} p-4 md:p-5`}>
+            <p className="text-sm text-neutral-600">
+              Video is processed locally. Nothing is recorded or sent to our servers.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

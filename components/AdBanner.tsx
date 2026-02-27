@@ -1,7 +1,9 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
+
+const adsEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === '1'
 
 declare global {
   interface Window {
@@ -23,34 +25,68 @@ interface AdBannerProps {
   className?: string
 }
 
+function checkFilled(el: HTMLElement | null): boolean {
+  if (!el) return false
+  const status = el.getAttribute('data-ad-status')
+  if (status === 'filled') return true
+  if (el.offsetHeight > 0) return true
+  return false
+}
+
 export default function AdBanner({ placement, className = '' }: AdBannerProps) {
-  const adRef = useRef<HTMLModElement | null>(null)
+  const insRef = useRef<HTMLModElement | null>(null)
+  const [isFilled, setIsFilled] = useState(false)
   const pathname = usePathname()
 
-  const isEmbedRoute = /^\/([a-z]{2}\/)?embed(\/|$)/.test(pathname)
+  if (!adsEnabled) {
+    return null
+  }
 
+  const isEmbedRoute = /^\/([a-z]{2}\/)?embed(\/|$)/.test(pathname)
   if (isEmbedRoute) {
     return null
   }
 
   useEffect(() => {
-    if (!adRef.current || adRef.current.dataset.loaded === 'true') {
-      return
-    }
+    const el = insRef.current
+    if (!el || el.dataset.loaded === 'true') return
 
     try {
       ;(window.adsbygoogle = window.adsbygoogle || []).push({})
-      adRef.current.dataset.loaded = 'true'
+      el.dataset.loaded = 'true'
     } catch (err) {
-      // Keep layout stable if ad blockers or delayed scripts prevent rendering.
       console.warn('Automated AdSense render skipped', err)
     }
   }, [])
 
+  useEffect(() => {
+    const timeouts: ReturnType<typeof setTimeout>[] = []
+    const delays = [300, 800, 1500]
+
+    delays.forEach((delay) => {
+      const id = setTimeout(() => {
+        if (checkFilled(insRef.current)) {
+          setIsFilled(true)
+        }
+      }, delay)
+      timeouts.push(id)
+    })
+
+    return () => {
+      timeouts.forEach((id) => clearTimeout(id))
+    }
+  }, [])
+
   return (
-    <div className={`w-full mx-auto ${CONTAINER_CLASSES[placement]} ${className}`}>
+    <div
+      className={
+        isFilled
+          ? `w-full mx-auto ${CONTAINER_CLASSES[placement]} ${className}`.trim()
+          : 'h-0 min-h-0 overflow-hidden'
+      }
+    >
       <ins
-        ref={adRef}
+        ref={insRef}
         className="adsbygoogle block w-full h-full"
         style={{ display: 'block' }}
         data-ad-client="ca-pub-1784695246771462"

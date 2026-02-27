@@ -6,7 +6,7 @@ import JsonLdScript from "@/components/JsonLdScript";
 import { generateWebSiteSchema, generateOrganizationSchema } from "@/lib/seo/jsonLd";
 import { Analytics } from "@vercel/analytics/next";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
-import ToolSwitcher from "@/components/ToolSwitcher";
+import AppChrome from "@/components/AppChrome";
 import Footer from "@/components/Footer";
 
 const geistSans = Geist({
@@ -48,25 +48,27 @@ export default function RootLayout({
 }>) {
   const websiteSchema = generateWebSiteSchema();
   const organizationSchema = generateOrganizationSchema();
+  const adsEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === '1';
 
   return (
     <html lang="en">
       <head>
         <JsonLdScript data={websiteSchema} />
         <JsonLdScript data={organizationSchema} />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1784695246771462"
-          data-ad-client="ca-pub-1784695246771462"
-          crossOrigin="anonymous"
-        />
+        {adsEnabled && (
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1784695246771462"
+            data-ad-client="ca-pub-1784695246771462"
+            crossOrigin="anonymous"
+          />
+        )}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="fixed top-4 right-4 z-50">
           <LocaleSwitcher />
         </div>
-        <ToolSwitcher />
-        {children}
+        <AppChrome>{children}</AppChrome>
         <Footer />
         <Analytics />
       </body>

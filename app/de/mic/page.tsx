@@ -6,8 +6,6 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import MicTool from '@/components/MicTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
-import DeviceNavigation from '@/components/DeviceNavigation'
-import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -294,11 +292,8 @@ export default function MicTestPage() {
               {t.mic_ready_text} <Link href="#test" className="text-blue-600 hover:text-blue-800 font-semibold">{t.mic_scroll_up_link}</Link> to verify your mic is working perfectly for your next video call or recording.
             </p>
           </article>
-
-          <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName={t.microphone_test} toolHref={getLocalizedPath("/mic", locale)} />
     </>
   )
 }

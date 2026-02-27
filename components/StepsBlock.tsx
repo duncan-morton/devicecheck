@@ -1,6 +1,8 @@
 import { Wrench } from 'lucide-react'
 import AdBanner from '@/components/AdBanner'
 
+const adsEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === '1'
+
 interface Step {
   title: string
   description: string
@@ -11,13 +13,16 @@ interface StepsBlockProps {
   steps: Step[]
   collapsedCount?: number
   summaryLabel?: string
+  /** When true, do not render the heading (e.g. when used inside a <details> summary) */
+  hideTitle?: boolean
 }
 
 export default function StepsBlock({ 
   title = "Quick checks (30 seconds)",
   steps,
   collapsedCount = 3,
-  summaryLabel = "More checks"
+  summaryLabel = "More checks",
+  hideTitle = false
 }: StepsBlockProps) {
   if (!steps.length) return null
 
@@ -26,13 +31,19 @@ export default function StepsBlock({
   const useTwoColumns = steps.length >= 6
 
   return (
-    <div className="mb-6 space-y-4">
-      <AdBanner placement="tool" />
+    <div className="space-y-0">
+      {adsEnabled && (
+        <div className="my-4">
+          <AdBanner placement="tool" />
+        </div>
+      )}
       <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 md:p-5">
+      {!hideTitle && (
       <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
         <Wrench size={18} className="text-slate-500" />
         {title}
       </h2>
+      )}
       <ol className={`space-y-2.5 ${useTwoColumns ? 'md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-2.5' : ''}`}>
         {visibleSteps.map((step, idx) => (
           <li key={idx} className="flex gap-3">

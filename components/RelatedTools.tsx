@@ -52,20 +52,20 @@ export default function RelatedTools({ currentPath, title = 'Related Tools', loc
   const relatedTools = tools.filter(tool => tool.path !== currentPath)
 
   return (
-    <section className="mb-12">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">{title}</h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <section className="mt-8 mb-8" aria-labelledby="related-tools-heading">
+      <h2 id="related-tools-heading" className="text-2xl font-bold text-gray-900 mb-4">{title}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {relatedTools.map(tool => (
           <Link
             key={tool.path}
             href={getLocalizedPath(tool.path, locale)}
-            className="group bg-white rounded-xl border border-gray-200 p-6 hover:border-blue-300 hover:shadow-lg transition-all"
+            className="group h-full flex bg-white rounded-xl border border-gray-200 p-5 hover:border-blue-300 hover:shadow-lg transition-all"
           >
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-blue-50 rounded-lg text-blue-600 group-hover:bg-blue-100 transition-colors">
+            <div className="flex items-start gap-4 w-full">
+              <div className="p-3 bg-blue-50 rounded-lg text-blue-600 group-hover:bg-blue-100 transition-colors shrink-0">
                 {tool.icon}
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
                   {tool.name}
                 </h3>

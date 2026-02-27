@@ -2,8 +2,6 @@ import JsonLdScript from '@/components/JsonLdScript'
 import TOC from '@/components/TOC'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import RelatedGuides from '@/components/RelatedGuides'
-import DeviceNavigation from '@/components/DeviceNavigation'
-import StickyActionBar from '@/components/StickyActionBar'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
 import Link from 'next/link'
@@ -195,10 +193,8 @@ export default function HubPage({
 
           <HelpfulWidget />
           <RelatedGuides guides={guides} />
-          <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName={tools[0]?.title || 'Device Test'} toolHref={tools[0]?.href || '/'} />
     </>
   )
 }

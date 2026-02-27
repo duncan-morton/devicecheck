@@ -6,8 +6,6 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import TOC from '@/components/TOC'
 import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
-import DeviceNavigation from '@/components/DeviceNavigation'
-import StickyActionBar from '@/components/StickyActionBar'
 import StepsBlock from '@/components/StepsBlock'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import Link from 'next/link'
@@ -528,10 +526,8 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
             </article>
 
             <HelpfulWidget />
-            <DeviceNavigation />
           </div>
         </div>
-        <StickyActionBar toolName={hub.testName} toolHref={hub.href} />
       </>
     )
   }

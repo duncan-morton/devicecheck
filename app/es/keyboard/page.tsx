@@ -6,8 +6,6 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import KeyboardTool from '@/components/KeyboardTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
-import DeviceNavigation from '@/components/DeviceNavigation'
-import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -265,11 +263,8 @@ export default function KeyboardTestPage() {
               </Link>
             </p>
           </article>
-
-          <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName={t.keyboard_test} toolHref={getLocalizedPath('/keyboard', locale)} />
     </>
   )
 }

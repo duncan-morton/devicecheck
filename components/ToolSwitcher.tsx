@@ -6,6 +6,8 @@ import { getLocaleFromPath, getLocalizedPath, getPathWithoutLocale, type Locale 
 import { CheckCircle2, Camera, Mic, Keyboard, Monitor, Video, AlertCircle } from 'lucide-react'
 import AdBanner from '@/components/AdBanner'
 
+const adsEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === '1'
+
 const tools = [
   { path: '/meeting-check', label: 'Full Check', icon: CheckCircle2 },
   { path: '/webcam', label: 'Webcam', icon: Camera },
@@ -45,21 +47,21 @@ export default function ToolSwitcher() {
   const homePath = getLocalizedPath('/', locale)
   
   return (
-    <nav className="border-b border-slate-200 bg-white">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <nav className="bg-transparent w-full">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Logo / Home */}
           <Link
             href={homePath}
             aria-label="DeviceCheck home"
-            className="flex items-center gap-2 px-2 py-2 text-slate-700 hover:text-slate-900 transition-colors"
+            className="flex items-center gap-2 px-2 py-2 text-slate-700 hover:text-slate-900 transition-colors rounded-md"
           >
             <CheckCircle2 size={18} className="text-blue-600" />
             <span className="text-sm font-medium">DeviceCheck.io</span>
           </Link>
           
           {/* Tool Links */}
-          <div className="flex items-center gap-1 flex-wrap justify-end">
+          <div className="flex items-center gap-1 flex-nowrap justify-end">
             {tools.map((tool) => {
               const Icon = tool.icon
               const toolPath = getLocalizedPath(tool.path, locale)
@@ -69,13 +71,12 @@ export default function ToolSwitcher() {
                 <Link
                   key={tool.path}
                   href={toolPath}
-                  className={`
-                    px-3 py-1.5 text-sm rounded-md transition-colors
-                    ${isActive 
-                      ? 'bg-slate-100 text-slate-900 font-medium' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                    }
-                  `}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={
+                    isActive
+                      ? 'px-3 py-1.5 rounded-md text-slate-900 font-medium bg-slate-100 transition-colors text-sm'
+                      : 'px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors text-sm'
+                  }
                 >
                   <span className="hidden sm:inline">{tool.label}</span>
                   <Icon size={16} className="sm:hidden" />
@@ -86,22 +87,23 @@ export default function ToolSwitcher() {
             {/* Issues link (lighter emphasis) */}
             <Link
               href={getLocalizedPath(issuesPath, locale)}
-              className={`
-                px-3 py-1.5 text-sm rounded-md transition-colors
-                ${isActiveRoute(pathname, issuesPath)
-                  ? 'bg-slate-100 text-slate-900 font-medium'
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
-                }
-              `}
+              aria-current={isActiveRoute(pathname, issuesPath) ? 'page' : undefined}
+              className={
+                isActiveRoute(pathname, issuesPath)
+                  ? 'px-3 py-1.5 rounded-md text-slate-900 font-medium bg-slate-100 transition-colors text-sm'
+                  : 'px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors text-sm'
+              }
             >
               <span className="hidden sm:inline">Issues</span>
               <AlertCircle size={16} className="sm:hidden" />
             </Link>
           </div>
         </div>
-        <div className="pb-4 pt-1">
-          <AdBanner placement="header" />
-        </div>
+        {adsEnabled && (
+          <div className="pb-4 pt-1">
+            <AdBanner placement="header" />
+          </div>
+        )}
       </div>
     </nav>
   )

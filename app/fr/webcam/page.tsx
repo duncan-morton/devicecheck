@@ -6,8 +6,6 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import WebcamTool from '@/components/WebcamTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
-import DeviceNavigation from '@/components/DeviceNavigation'
-import StickyActionBar from '@/components/StickyActionBar'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -258,11 +256,8 @@ export default function WebcamTestPage() {
               </Link>
             </p>
           </article>
-
-          <DeviceNavigation />
         </div>
       </div>
-      <StickyActionBar toolName={t.webcam_test} toolHref={getLocalizedPath('/webcam', locale)} />
     </>
   )
 }
