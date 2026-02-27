@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { CheckCircle2, AlertTriangle, XCircle, Info } from 'lucide-react'
+import { CheckCircle2, AlertCircle, XCircle, Info } from 'lucide-react'
 import type { WebcamDiagnostic } from '@/lib/deviceStatus/webcamStatus'
 
 interface WebcamResultGuidanceProps {
