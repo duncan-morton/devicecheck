@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Monitor, Maximize2, X } from 'lucide-react'
+import { Monitor, Maximize2 } from 'lucide-react'
 
 type TestMode = 'solid' | 'gradient' | 'grid' | 'pixel'
 
@@ -16,7 +16,11 @@ const colors = [
   { name: 'Magenta', value: '#FF00FF' },
 ]
 
-export default function ScreenTool() {
+interface ScreenToolProps {
+  variant?: 'full' | 'embed'
+}
+
+export default function ScreenTool({ variant = 'full' }: ScreenToolProps) {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [testMode, setTestMode] = useState<TestMode>('solid')
   const [currentColor, setCurrentColor] = useState(0)
@@ -124,6 +128,73 @@ export default function ScreenTool() {
       default:
         return { backgroundColor: '#FFFFFF' }
     }
+  }
+
+  if (variant === 'embed') {
+    return (
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {(['solid', 'gradient', 'grid', 'pixel'] as const).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setTestMode(mode)}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                testMode === mode
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {mode === 'solid' ? 'Solid' : mode === 'gradient' ? 'Gradient' : mode === 'grid' ? 'Grid' : 'Pixel'}
+            </button>
+          ))}
+        </div>
+        {testMode === 'solid' && (
+          <div className="flex flex-wrap gap-1.5">
+            {colors.map((color, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentColor(index)}
+                className={`w-8 h-8 rounded border-2 transition-all ${
+                  currentColor === index ? 'border-blue-600 ring-1 ring-blue-300' : 'border-gray-300 hover:border-gray-400'
+                }`}
+                style={{ backgroundColor: color.value }}
+                title={color.name}
+              />
+            ))}
+            <button
+              onClick={() => setIsAutoCycling(!isAutoCycling)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium ${
+                isAutoCycling ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {isAutoCycling ? 'Stop' : 'Auto'}
+            </button>
+          </div>
+        )}
+        <div
+          ref={fullscreenRef}
+          className={`${isFullscreen ? 'fixed inset-0 w-screen h-screen' : 'rounded-lg overflow-hidden aspect-video min-h-[240px]'} relative`}
+          style={getBackgroundStyle()}
+        >
+          {!isFullscreen && testMode === 'solid' && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="bg-black/50 text-white px-3 py-1.5 rounded text-sm font-medium">
+                {colors[currentColor].name}
+              </span>
+            </div>
+          )}
+        </div>
+        {!isFullscreen && (
+          <button
+            onClick={enterFullscreen}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+          >
+            <Maximize2 size={16} />
+            Fullscreen
+          </button>
+        )}
+      </div>
+    )
   }
 
   return (
