@@ -3,21 +3,30 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import TOC from '@/components/TOC'
+import TOCAccordion from '@/components/TOCAccordion'
 import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
+import IssueDiagnostic from '@/components/IssueDiagnostic'
+import IssueLinksPanel from '@/components/IssueLinksPanel'
 import Link from 'next/link'
+import issuesData from '@/data/issues.json'
 
 export const revalidate = 86400
 
-export const metadata: Metadata = genMeta({
+const baseUrl = 'https://devicecheck.io'
+const issuePath = '/issues/microphone-background-noise-cancellation-issues'
+const alternates = {
+  canonical: baseUrl + issuePath,
+  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
+}
+export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Noise Cancellation Issues - Complete Fix Guide',
   description: 'Fix microphone noise cancellation issues. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for noise suppression causing muffled voice.',
-  path: '/issues/microphone-background-noise-cancellation-issues',
+  path: issuePath,
   keywords: ["microphone noise cancellation issue","mic muffled voice noise suppression","noise reduction mic problem"]
-})
+}), alternates }
 
 const faqs = [
   {
@@ -51,11 +60,8 @@ export default function IssuePage() {
     new Date().toISOString()
   )
 
-  const breadcrumbs = generateBreadcrumbListSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Issues', path: '/issues' },
-    { name: 'Microphone Noise Cancellation Issues', path: '/issues/microphone-background-noise-cancellation-issues' }
-  ])
+  const breadcrumbItems = [{"name":"Home","path":"/"},{"name":"Issues","path":"/issues"},{"name":"Microphone Noise Cancellation Issues","path":"/issues/microphone-background-noise-cancellation-issues"}]
+  const breadcrumbs = generateBreadcrumbListSchema(breadcrumbItems)
 
   const faqSchema = generateFAQPageSchema(faqs)
   const howToSchema = generateHowToSchema({
@@ -88,25 +94,38 @@ export default function IssuePage() {
             </p>
           </div>
 
-          <div className="mb-5">
-            <Link 
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <Link
               href="/mic"
-              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               Run the Microphone Test →
             </Link>
+            <Link
+              href="/meeting-check"
+              className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-medium border border-gray-200 hover:bg-gray-200 transition-colors"
+            >
+              Run full meeting check
+            </Link>
+            <p className="text-sm text-gray-500 w-full mt-1">Runs locally in your browser.</p>
           </div>
 
-          <StepsBlock steps={steps} />
-          
-          <TOC contentId="article-content" />
-          
+          <IssueDiagnostic device="mic" mode="defer" />
+
+          <IssueLinksPanel issue={{ slug: "microphone-background-noise-cancellation-issues", deviceType: "mic", platform: "All", title: "Microphone Noise Cancellation Issues" }} allIssues={issuesData} />
+
+          <div className="text-gray-600">
+            <StepsBlock steps={steps} />
+          </div>
+
           <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mt-8">
             <QuickAnswerBox 
               problem="Noise suppression causing muffled voice"
               platform="All"
               deviceType="mic"
             />
+
+            <TOCAccordion contentId="article-content" summaryText="On this page" />
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">

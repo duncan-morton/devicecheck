@@ -6,7 +6,8 @@ export const metadata: Metadata = genMeta({
   title: 'Embed Free Device Test Tools',
   description: 'Embed microphone, webcam, and keyboard test tools on your site. Free, no tracking, runs locally in the visitor\'s browser.',
   path: '/embed',
-  keywords: ['embed microphone test', 'embed webcam test', 'embed keyboard test', 'device test widget']
+  keywords: ['embed microphone test', 'embed webcam test', 'embed keyboard test', 'device test widget'],
+  noindex: true,
 })
 
 export default function EmbedPage() {

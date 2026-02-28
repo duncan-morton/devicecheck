@@ -444,26 +444,55 @@ function generatePageContent(issue: IssueData, siblingIssues: IssueData[]): stri
     screen: 'Run the Screen Test'
   }
 
+  function getHubForPlatform(platform: string): { path: string; name: string } | null {
+    if (!platform?.trim()) return null
+    const p = platform.trim().toLowerCase()
+    if (/zoom/.test(p)) return { path: '/hubs/zoom-issues', name: 'Zoom issues' }
+    if (/teams/.test(p)) return { path: '/hubs/teams-issues', name: 'Teams issues' }
+    if (/discord/.test(p)) return { path: '/hubs/discord-issues', name: 'Discord issues' }
+    if (/chrome|permission|browser/.test(p)) return { path: '/hubs/chrome-permissions-issues', name: 'Chrome & browser permission issues' }
+    if (/windows/.test(p)) return { path: '/hubs/windows-device-issues', name: 'Windows device issues' }
+    if (/mac|macos/.test(p)) return { path: '/hubs/mac-device-issues', name: 'Mac device issues' }
+    if (/laptop/.test(p)) return { path: '/hubs/laptop-device-troubleshooting', name: 'Laptop device troubleshooting' }
+    return null
+  }
+  const hubForBreadcrumb = getHubForPlatform(issue.platform)
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Issues', path: '/issues' },
+    ...(hubForBreadcrumb ? [{ name: hubForBreadcrumb.name, path: hubForBreadcrumb.path }] : []),
+    { name: issue.title, path: `/issues/${issue.slug}` },
+  ]
+
   return `import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import TOC from '@/components/TOC'
+import TOCAccordion from '@/components/TOCAccordion'
 import RelatedGuides from '@/components/RelatedGuides'
 import HelpfulWidget from '@/components/HelpfulWidget'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
+import IssueDiagnostic from '@/components/IssueDiagnostic'
+import IssueLinksPanel from '@/components/IssueLinksPanel'
 import Link from 'next/link'
+import issuesData from '@/data/issues.json'
 
 export const revalidate = 86400
 
-export const metadata: Metadata = genMeta({
+const baseUrl = 'https://devicecheck.io'
+const issuePath = '/issues/${issue.slug}'
+const alternates = {
+  canonical: baseUrl + issuePath,
+  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
+}
+export const metadata: Metadata = { ...genMeta({
   title: '${issue.title} - Complete Fix Guide',
   description: 'Fix ${issue.title.toLowerCase()}. Step-by-step troubleshooting guide covering ${issue.platform} settings, permissions, drivers, and solutions for ${issue.problem.toLowerCase()}.',
-  path: '/issues/${issue.slug}',
+  path: issuePath,
   keywords: ${JSON.stringify(issue.keywords)}
-})
+}), alternates }
 
 const faqs = ${JSON.stringify(faqs, null, 2)}
 
@@ -476,11 +505,8 @@ export default function IssuePage() {
     new Date().toISOString()
   )
 
-  const breadcrumbs = generateBreadcrumbListSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Issues', path: '/issues' },
-    { name: '${issue.title}', path: '/issues/${issue.slug}' }
-  ])
+  const breadcrumbItems = ${JSON.stringify(breadcrumbItems)}
+  const breadcrumbs = generateBreadcrumbListSchema(breadcrumbItems)
 
   const faqSchema = generateFAQPageSchema(faqs)
 ${howToSchemaCode}
@@ -508,25 +534,38 @@ ${howToScript}
             </p>
           </div>
 
-          <div className="mb-5">
-            <Link 
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <Link
               href="${hub.href}"
-              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               ${testButtonLabels[issue.deviceType]} →
             </Link>
+            <Link
+              href="/meeting-check"
+              className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-medium border border-gray-200 hover:bg-gray-200 transition-colors"
+            >
+              Run full meeting check
+            </Link>
+            <p className="text-sm text-gray-500 w-full mt-1">Runs locally in your browser.</p>
           </div>
 
-          <StepsBlock steps={steps} />
-          
-          <TOC contentId="article-content" />
-          
+          <IssueDiagnostic device="${issue.deviceType}" mode="defer" />
+
+          <IssueLinksPanel issue={{ slug: ${JSON.stringify(issue.slug)}, deviceType: ${JSON.stringify(issue.deviceType)}, platform: ${JSON.stringify(issue.platform)}, title: ${JSON.stringify(issue.title)} }} allIssues={issuesData} />
+
+          <div className="text-gray-600">
+            <StepsBlock steps={steps} />
+          </div>
+
           <article id="article-content" className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mt-8">
             <QuickAnswerBox 
               problem="${issue.problem}"
               platform="${issue.platform}"
               deviceType="${issue.deviceType}"
             />
+
+            <TOCAccordion contentId="article-content" summaryText="On this page" />
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">

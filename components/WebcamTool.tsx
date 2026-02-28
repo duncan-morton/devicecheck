@@ -9,11 +9,13 @@ import SetupProgress from '@/components/SetupProgress'
 
 interface WebcamToolProps {
   variant?: 'full' | 'embed'
+  /** When false, do not start camera on mount; show Start webcam button in embed (default true) */
+  autoStart?: boolean
   /** Called when diagnostic updates (e.g. for conditional layout below the tool) */
   onDiagnosticChange?: (diagnostic: WebcamDiagnostic) => void
 }
 
-export default function WebcamTool({ variant = 'full', onDiagnosticChange }: WebcamToolProps) {
+export default function WebcamTool({ variant = 'full', autoStart = true, onDiagnosticChange }: WebcamToolProps) {
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [error, setError] = useState<string>('')
   const [showGrid, setShowGrid] = useState(false)
@@ -79,14 +81,20 @@ export default function WebcamTool({ variant = 'full', onDiagnosticChange }: Web
   }, [])
 
   useEffect(() => {
-    // Auto-start once on mount; cleanup stops current stream via ref
+    if (!autoStart) {
+      return () => {
+        const s = streamRef.current
+        if (s) s.getTracks().forEach(track => track.stop())
+        streamRef.current = null
+      }
+    }
     startWebcam()
     return () => {
       const s = streamRef.current
       if (s) s.getTracks().forEach(track => track.stop())
       streamRef.current = null
     }
-  }, [startWebcam])
+  }, [autoStart, startWebcam])
 
   useEffect(() => {
     if (!videoRef.current || !stream) return
@@ -146,11 +154,23 @@ export default function WebcamTool({ variant = 'full', onDiagnosticChange }: Web
   }, [diagnostic, onDiagnosticChange])
 
   if (variant === 'embed') {
+    const showStartPrompt = !autoStart && !stream && !error
     return (
       <div className="space-y-4">
         {error ? (
           <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg text-sm">
             {error}
+          </div>
+        ) : showStartPrompt ? (
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 aspect-video min-h-[200px] p-6">
+            <p className="text-sm text-gray-600 mb-4">Camera is off. Start when you’re ready.</p>
+            <button
+              type="button"
+              onClick={startWebcam}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            >
+              Start webcam
+            </button>
           </div>
         ) : (
           <>
