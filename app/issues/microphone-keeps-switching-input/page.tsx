@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-keeps-switching-input", deviceType: "mic", platform: "All", title: "Microphone Keeps Switching Input" }} allIssues={issuesData} />

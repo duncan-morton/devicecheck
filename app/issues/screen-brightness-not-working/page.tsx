@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-brightness-not-working", deviceType: "screen", platform: "All", title: "Screen Brightness Not Working" }} allIssues={issuesData} />

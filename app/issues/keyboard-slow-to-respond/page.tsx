@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="keyboard" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "keyboard-slow-to-respond", deviceType: "keyboard", platform: "All", title: "Keyboard Slow to Respond" }} allIssues={issuesData} />

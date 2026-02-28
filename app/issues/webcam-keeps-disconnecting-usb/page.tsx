@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-keeps-disconnecting-usb", deviceType: "webcam", platform: "USB", title: "USB Webcam Keeps Disconnecting" }} allIssues={issuesData} />

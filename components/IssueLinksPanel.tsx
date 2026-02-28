@@ -70,41 +70,40 @@ export default function IssueLinksPanel({ issue, allIssues }: IssueLinksPanelPro
 
   return (
     <section className="mt-4 mb-6 space-y-4" aria-label="Related links">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {hub && (
-          <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-2">
-              Related hub
-            </h3>
-            <Link
-              href={hub.path}
-              className="text-blue-600 hover:text-blue-800 font-medium text-sm"
-            >
-              See all {hub.name} →
-            </Link>
-          </div>
-        )}
-
-        <div className={`bg-white rounded-xl border border-gray-200 p-4 md:p-6 ${!hub ? 'md:col-span-2' : ''}`}>
-          <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3">
-            Common problems
+      {/* Hub link first (internal link priority) */}
+      {hub && (
+        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+          <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-2">
+            Related hub
           </h3>
-          <ul className="space-y-2">
-            {commonProblems.map((i) => (
-              <li key={i.slug}>
-                <Link
-                  href={`/issues/${i.slug}`}
-                  className="text-gray-900 hover:text-blue-600 transition-colors"
-                >
-                  {i.title || i.slug}
-                </Link>
-                {i.platform && (
-                  <p className="text-xs text-gray-500 mt-0.5">{i.platform}</p>
-                )}
-              </li>
-            ))}
-          </ul>
+          <Link
+            href={hub.path}
+            className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+          >
+            See all {hub.name} →
+          </Link>
         </div>
+      )}
+
+      <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+        <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3">
+          Common problems
+        </h3>
+        <ul className="space-y-2">
+          {commonProblems.map((i) => (
+            <li key={i.slug}>
+              <Link
+                href={`/issues/${i.slug}`}
+                className="text-gray-900 hover:text-blue-600 transition-colors"
+              >
+                {i.title || i.slug}
+              </Link>
+              {i.platform && (
+                <p className="text-xs text-gray-500 mt-0.5">{i.platform}</p>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

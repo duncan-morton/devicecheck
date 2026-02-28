@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-freezing-after-few-seconds", deviceType: "webcam", platform: "All", title: "Webcam Freezes After a Few Seconds" }} allIssues={issuesData} />

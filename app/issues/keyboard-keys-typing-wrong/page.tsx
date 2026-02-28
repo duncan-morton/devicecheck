@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="keyboard" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "keyboard-keys-typing-wrong", deviceType: "keyboard", platform: "All", title: "Keyboard Typing the Wrong Characters" }} allIssues={issuesData} />

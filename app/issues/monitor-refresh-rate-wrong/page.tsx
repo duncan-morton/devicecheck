@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-refresh-rate-wrong", deviceType: "screen", platform: "All", title: "Monitor Refresh Rate Wrong" }} allIssues={issuesData} />

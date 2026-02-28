@@ -95,6 +95,11 @@ export default function IssuePage() {
             </p>
           </div>
 
+          <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+            This is a Mac device issue. <Link href="/hubs/mac-device-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Mac device issues →</Link>
+          </div>
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-not-working-mac", deviceType: "webcam", platform: "Mac", title: "Webcam Not Working on Mac" }} allIssues={issuesData} />

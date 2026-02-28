@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-not-available-other-apps", deviceType: "webcam", platform: "All", title: "Webcam Not Available to Other Apps" }} allIssues={issuesData} />

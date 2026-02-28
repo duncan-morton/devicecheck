@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "bluetooth-microphone-not-working", deviceType: "mic", platform: "Bluetooth", title: "Bluetooth Microphone Not Working" }} allIssues={issuesData} />

@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-too-loud-clipping", deviceType: "mic", platform: "All", title: "Microphone Too Loud or Clipping" }} allIssues={issuesData} />

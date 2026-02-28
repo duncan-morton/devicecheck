@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-mirror-image-issue", deviceType: "webcam", platform: "All", title: "Webcam Appears Mirrored or Flipped" }} allIssues={issuesData} />

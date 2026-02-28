@@ -95,6 +95,11 @@ export default function IssuePage() {
             </p>
           </div>
 
+          <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+            This is a Teams device issue. <Link href="/hubs/teams-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Teams issues →</Link>
+          </div>
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-not-working-teams", deviceType: "mic", platform: "Teams", title: "Microphone Not Working in Microsoft Teams" }} allIssues={issuesData} />

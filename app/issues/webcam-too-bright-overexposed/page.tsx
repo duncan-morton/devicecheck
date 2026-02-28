@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-too-bright-overexposed", deviceType: "webcam", platform: "All", title: "Webcam Too Bright or Overexposed" }} allIssues={issuesData} />

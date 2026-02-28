@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-not-detected-usb", deviceType: "mic", platform: "USB", title: "USB Microphone Not Detected" }} allIssues={issuesData} />

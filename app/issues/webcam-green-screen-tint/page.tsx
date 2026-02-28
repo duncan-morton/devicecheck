@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-green-screen-tint", deviceType: "webcam", platform: "All", title: "Webcam Showing Green Screen or Tint" }} allIssues={issuesData} />

@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-turns-off-randomly", deviceType: "screen", platform: "All", title: "Screen Turns Off Randomly" }} allIssues={issuesData} />

@@ -99,6 +99,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-not-working-edge", deviceType: "mic", platform: "Edge", title: "Microphone Not Working in Edge" }} allIssues={issuesData} />

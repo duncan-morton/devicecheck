@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-static-noise", deviceType: "mic", platform: "All", title: "Microphone Static, Crackling, or Background Noise" }} allIssues={issuesData} />

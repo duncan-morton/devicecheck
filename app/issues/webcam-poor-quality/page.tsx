@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-poor-quality", deviceType: "webcam", platform: "All", title: "Webcam Quality Poor or Grainy" }} allIssues={issuesData} />

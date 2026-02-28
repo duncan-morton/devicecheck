@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-colour-inaccuracy", deviceType: "screen", platform: "All", title: "Monitor Colour Inaccuracy Issues" }} allIssues={issuesData} />

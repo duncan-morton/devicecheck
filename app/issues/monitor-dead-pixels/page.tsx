@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-dead-pixels", deviceType: "screen", platform: "All", title: "Monitor Dead Pixels Identification and Fix" }} allIssues={issuesData} />

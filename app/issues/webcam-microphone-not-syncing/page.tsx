@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-microphone-not-syncing", deviceType: "webcam", platform: "All", title: "Webcam and Microphone Not Syncing" }} allIssues={issuesData} />

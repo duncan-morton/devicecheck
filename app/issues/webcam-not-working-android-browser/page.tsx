@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-not-working-android-browser", deviceType: "webcam", platform: "Android", title: "Webcam Not Working in Android Browser" }} allIssues={issuesData} />

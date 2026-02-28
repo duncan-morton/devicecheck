@@ -385,6 +385,15 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
               </p>
             </div>
 
+            {hubForBreadcrumb && (
+              <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+                This is a {issue.platform} device issue.{' '}
+                <Link href={hubForBreadcrumb.path} className="text-blue-600 hover:text-blue-800 font-medium">
+                  See all {hubForBreadcrumb.name} →
+                </Link>
+              </div>
+            )}
+
             <IssueDiagnostic device={issue.deviceType} mode="defer" />
 
             <IssueLinksPanel issue={issue} allIssues={issuesData as IssueData[]} />

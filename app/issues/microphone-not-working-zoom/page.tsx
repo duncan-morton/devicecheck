@@ -95,6 +95,11 @@ export default function IssuePage() {
             </p>
           </div>
 
+          <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+            This is a Zoom device issue. <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Zoom issues →</Link>
+          </div>
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-not-working-zoom", deviceType: "mic", platform: "Zoom", title: "Microphone Not Working in Zoom" }} allIssues={issuesData} />

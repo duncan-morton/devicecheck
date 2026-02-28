@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-flashes-white", deviceType: "screen", platform: "All", title: "Screen Flashes White" }} allIssues={issuesData} />

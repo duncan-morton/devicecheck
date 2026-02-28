@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="keyboard" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "keyboard-not-detected-usb", deviceType: "keyboard", platform: "USB", title: "USB Keyboard Not Detected" }} allIssues={issuesData} />

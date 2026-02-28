@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-no-signal", deviceType: "screen", platform: "All", title: "Monitor Showing No Signal" }} allIssues={issuesData} />

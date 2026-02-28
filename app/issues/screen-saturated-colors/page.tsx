@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-saturated-colors", deviceType: "screen", platform: "All", title: "Screen Colors Too Saturated" }} allIssues={issuesData} />

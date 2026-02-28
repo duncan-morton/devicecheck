@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-keeps-cutting-out", deviceType: "mic", platform: "All", title: "Microphone Keeps Cutting Out" }} allIssues={issuesData} />

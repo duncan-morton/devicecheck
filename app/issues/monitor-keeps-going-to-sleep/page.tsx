@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-keeps-going-to-sleep", deviceType: "screen", platform: "All", title: "Monitor Keeps Going to Sleep" }} allIssues={issuesData} />

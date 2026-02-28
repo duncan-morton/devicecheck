@@ -99,6 +99,11 @@ export default function IssuePage() {
             </p>
           </div>
 
+          <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+            This is a macOS device issue. <Link href="/hubs/mac-device-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Mac device issues →</Link>
+          </div>
+
+
           <IssueDiagnostic device="keyboard" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "keyboard-not-working-mac", deviceType: "keyboard", platform: "macOS", title: "Keyboard Not Working on Mac" }} allIssues={issuesData} />

@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-fuzzy-blurry-image", deviceType: "webcam", platform: "All", title: "Webcam Fuzzy or Blurry Image" }} allIssues={issuesData} />

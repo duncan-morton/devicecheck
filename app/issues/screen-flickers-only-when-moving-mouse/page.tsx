@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-flickers-only-when-moving-mouse", deviceType: "screen", platform: "All", title: "Screen Flickers When Moving Mouse" }} allIssues={issuesData} />

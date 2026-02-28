@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-dims-randomly", deviceType: "screen", platform: "All", title: "Screen Dims Randomly" }} allIssues={issuesData} />

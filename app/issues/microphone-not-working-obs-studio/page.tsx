@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-not-working-obs-studio", deviceType: "mic", platform: "OBS", title: "Microphone Not Working in OBS Studio" }} allIssues={issuesData} />

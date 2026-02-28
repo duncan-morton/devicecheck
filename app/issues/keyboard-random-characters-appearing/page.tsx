@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="keyboard" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "keyboard-random-characters-appearing", deviceType: "keyboard", platform: "All", title: "Keyboard Typing Random Characters" }} allIssues={issuesData} />

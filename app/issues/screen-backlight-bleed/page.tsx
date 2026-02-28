@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-backlight-bleed", deviceType: "screen", platform: "All", title: "Screen Backlight Bleed Causes and Fix" }} allIssues={issuesData} />

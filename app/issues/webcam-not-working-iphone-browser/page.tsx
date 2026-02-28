@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-not-working-iphone-browser", deviceType: "webcam", platform: "iPhone", title: "Webcam Not Working in iPhone Browser" }} allIssues={issuesData} />

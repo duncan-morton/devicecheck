@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-keeps-zooming-in", deviceType: "webcam", platform: "All", title: "Webcam Keeps Zooming In" }} allIssues={issuesData} />

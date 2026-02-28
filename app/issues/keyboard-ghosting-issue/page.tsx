@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="keyboard" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "keyboard-ghosting-issue", deviceType: "keyboard", platform: "All", title: "Keyboard Ghosting Issue" }} allIssues={issuesData} />

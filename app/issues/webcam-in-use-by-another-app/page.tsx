@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-in-use-by-another-app", deviceType: "webcam", platform: "All", title: "Webcam In Use by Another Application" }} allIssues={issuesData} />

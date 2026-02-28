@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-artifacts-on-screen", deviceType: "screen", platform: "All", title: "Monitor Showing Artifacts" }} allIssues={issuesData} />

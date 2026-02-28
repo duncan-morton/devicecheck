@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-ghosting-games", deviceType: "screen", platform: "Gaming", title: "Monitor Ghosting in Games" }} allIssues={issuesData} />

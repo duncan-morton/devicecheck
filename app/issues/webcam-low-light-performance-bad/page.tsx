@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-low-light-performance-bad", deviceType: "webcam", platform: "All", title: "Webcam Performs Poorly in Low Light" }} allIssues={issuesData} />

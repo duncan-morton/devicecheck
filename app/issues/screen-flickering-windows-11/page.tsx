@@ -99,6 +99,11 @@ export default function IssuePage() {
             </p>
           </div>
 
+          <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+            This is a Windows 11 device issue. <Link href="/hubs/windows-device-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Windows device issues →</Link>
+          </div>
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-flickering-windows-11", deviceType: "screen", platform: "Windows 11", title: "Screen Flickering on Windows 11" }} allIssues={issuesData} />

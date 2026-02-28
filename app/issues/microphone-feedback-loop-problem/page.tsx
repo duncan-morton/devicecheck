@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-feedback-loop-problem", deviceType: "mic", platform: "All", title: "Microphone Feedback Loop Problem" }} allIssues={issuesData} />

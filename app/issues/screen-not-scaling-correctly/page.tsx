@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "screen-not-scaling-correctly", deviceType: "screen", platform: "All", title: "Screen Scaling Not Working" }} allIssues={issuesData} />

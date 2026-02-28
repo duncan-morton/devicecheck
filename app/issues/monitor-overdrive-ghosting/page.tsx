@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="screen" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "monitor-overdrive-ghosting", deviceType: "screen", platform: "All", title: "Monitor Overdrive Causing Ghosting" }} allIssues={issuesData} />

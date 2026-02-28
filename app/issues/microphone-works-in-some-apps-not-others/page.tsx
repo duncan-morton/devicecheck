@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-works-in-some-apps-not-others", deviceType: "mic", platform: "All", title: "Microphone Works in Some Apps but Not Others" }} allIssues={issuesData} />

@@ -99,6 +99,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-not-working-firefox", deviceType: "webcam", platform: "Firefox", title: "Webcam Not Working in Firefox" }} allIssues={issuesData} />

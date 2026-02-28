@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="webcam" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "webcam-lagging-or-choppy", deviceType: "webcam", platform: "All", title: "Webcam Lagging or Choppy Video" }} allIssues={issuesData} />

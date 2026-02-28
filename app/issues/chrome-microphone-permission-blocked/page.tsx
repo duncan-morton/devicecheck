@@ -99,6 +99,11 @@ export default function IssuePage() {
             </p>
           </div>
 
+          <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+            This is a Chrome device issue. <Link href="/hubs/chrome-permissions-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Chrome & browser permission issues →</Link>
+          </div>
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "chrome-microphone-permission-blocked", deviceType: "mic", platform: "Chrome", title: "Chrome Microphone Permission Blocked" }} allIssues={issuesData} />

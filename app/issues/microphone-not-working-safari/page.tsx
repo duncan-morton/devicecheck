@@ -99,6 +99,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-not-working-safari", deviceType: "mic", platform: "Safari", title: "Microphone Not Working in Safari" }} allIssues={issuesData} />

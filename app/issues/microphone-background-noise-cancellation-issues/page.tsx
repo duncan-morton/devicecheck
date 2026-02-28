@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-background-noise-cancellation-issues", deviceType: "mic", platform: "All", title: "Microphone Noise Cancellation Issues" }} allIssues={issuesData} />

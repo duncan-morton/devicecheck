@@ -4,7 +4,7 @@ import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebSiteSchema, generateOrganizationSchema } from '@/lib/seo/jsonLd'
 import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
 import Link from 'next/link'
-import { Camera, Mic, Keyboard, Monitor, Video } from 'lucide-react'
+import { Camera, Mic, Keyboard, Monitor, Video, ArrowRight } from 'lucide-react'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
@@ -36,6 +36,16 @@ export default function Home() {
   const locale: Locale = 'en'
   const t = getTranslation(locale)
   
+  const platformHubs = [
+    { name: 'Zoom', path: getLocalizedPath('/hubs/zoom-issues', locale), description: 'Fix Zoom mic and camera issues for meetings.' },
+    { name: 'Teams', path: getLocalizedPath('/hubs/teams-issues', locale), description: 'Fix Microsoft Teams audio and video problems.' },
+    { name: 'Windows', path: getLocalizedPath('/hubs/windows-device-issues', locale), description: 'Fix Windows 10/11 device and permission issues.' },
+    { name: 'Mac', path: getLocalizedPath('/hubs/mac-device-issues', locale), description: 'Fix macOS and MacBook device issues.' },
+    { name: 'Chrome', path: getLocalizedPath('/hubs/chrome-permissions-issues', locale), description: 'Unblock camera and mic in Chrome and browsers.' },
+    { name: 'Discord', path: getLocalizedPath('/hubs/discord-issues', locale), description: 'Fix Discord voice and video not working.' },
+    { name: 'Laptop', path: getLocalizedPath('/hubs/laptop-device-troubleshooting', locale), description: 'Laptop mic, webcam, and keyboard fixes.' },
+  ]
+
   const tools = [
     {
       name: t.webcam_test,
@@ -105,6 +115,26 @@ export default function Home() {
             <p className="mt-2 text-sm text-gray-500">
               Or <Link href="#tools" className="text-blue-600 hover:text-blue-800">test individual devices</Link>
             </p>
+          </div>
+
+          {/* Fix problems by platform — hub cards */}
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold text-gray-900 mb-3">Fix problems by platform</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {platformHubs.map((hub) => (
+                <Link
+                  key={hub.path}
+                  href={hub.path}
+                  className="group bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all flex items-start justify-between gap-3"
+                >
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">{hub.name}</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">{hub.description}</p>
+                  </div>
+                  <ArrowRight size={18} className="text-slate-400 group-hover:text-blue-600 shrink-0 mt-0.5" />
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* 3) Supporting — tool grid */}

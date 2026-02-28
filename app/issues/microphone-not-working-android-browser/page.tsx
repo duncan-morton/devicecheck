@@ -95,6 +95,8 @@ export default function IssuePage() {
             </p>
           </div>
 
+
+
           <IssueDiagnostic device="mic" mode="defer" />
 
           <IssueLinksPanel issue={{ slug: "microphone-not-working-android-browser", deviceType: "mic", platform: "Android", title: "Microphone Not Working in Android Browser" }} allIssues={issuesData} />
