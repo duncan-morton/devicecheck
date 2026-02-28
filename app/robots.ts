@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: [],
+      disallow: ['/embed', '/embed/'],
     },
     sitemap: 'https://devicecheck.io/sitemap.xml',
   }

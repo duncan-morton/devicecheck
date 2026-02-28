@@ -13,6 +13,7 @@ import QuickAnswerBox from '@/components/QuickAnswerBox'
 import IssueDiagnostic from '@/components/IssueDiagnostic'
 import IssueLinksPanel from '@/components/IssueLinksPanel'
 import { getHubForPlatform } from '@/components/IssueLinksPanel'
+import TroubleshootingMatrix from '@/components/TroubleshootingMatrix'
 import Link from 'next/link'
 import issuesData from '@/data/issues.json'
 
@@ -273,8 +274,16 @@ export function generateIssueMetadata(issue: IssueData): Metadata {
   }
 }
 
+const NEXT_CHECKS_OTHER: Record<string, { href: string; label: string }> = {
+  webcam: { href: '/mic', label: 'Microphone test' },
+  mic: { href: '/webcam', label: 'Webcam test' },
+  keyboard: { href: '/webcam', label: 'Webcam test' },
+  screen: { href: '/webcam', label: 'Webcam test' },
+}
+
 export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) {
   const hub = DEVICE_HUBS[issue.deviceType]
+  const nextChecksOtherLink = NEXT_CHECKS_OTHER[issue.deviceType]
   const quickFixes = generateQuickFixes(issue.deviceType, issue.platform)
   const faqs = generateFAQs(issue)
   const steps = quickFixes.slice(0, 6).map((fix) => {
@@ -353,13 +362,6 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
     href: `/issues/${sibling.slug}`
   }))
 
-  const testButtonLabels: Record<string, string> = {
-    mic: 'Run the Microphone Test',
-    webcam: 'Run the Webcam Test',
-    keyboard: 'Run the Keyboard Test',
-    screen: 'Run the Screen Test'
-  }
-
   return {
     metadata: generateIssueMetadata(issue),
     component: (
@@ -381,22 +383,6 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
               <p className="text-xl text-gray-600 max-w-3xl">
                 {introSentence1}. {introSentence2}
               </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <Link
-                href={hub.href}
-                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                {testButtonLabels[issue.deviceType]} →
-              </Link>
-              <Link
-                href="/meeting-check"
-                className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-medium border border-gray-200 hover:bg-gray-200 transition-colors"
-              >
-                Run full meeting check
-              </Link>
-              <p className="text-sm text-gray-500 w-full mt-1">Runs locally in your browser.</p>
             </div>
 
             <IssueDiagnostic device={issue.deviceType} mode="defer" />
@@ -423,6 +409,13 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
                 ))}
               </ul>
 
+              <p className="text-sm text-gray-500 mt-4 mb-6">
+                Next: <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">Run full meeting check</Link>
+                {nextChecksOtherLink && (
+                  <> · <Link href={nextChecksOtherLink.href} className="text-blue-600 hover:text-blue-800">{nextChecksOtherLink.label}</Link></>
+                )}
+              </p>
+
               <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why This Happens</h2>
               <p className="text-gray-700 mb-4">
                 {issue.platform} includes strict privacy controls that can block {issue.deviceType === 'mic' ? 'microphone' : issue.deviceType === 'webcam' ? 'camera' : issue.deviceType} access. The system requires explicit permission for applications to use your {issue.deviceType === 'mic' ? 'microphone' : issue.deviceType === 'webcam' ? 'camera' : issue.deviceType}, and these settings can be reset after updates or changed accidentally.
@@ -436,6 +429,8 @@ export function generateIssuePage(issue: IssueData, siblingIssues: IssueData[]) 
               <p className="text-gray-700 mb-6">
                 Hardware problems include loose connections, damaged cables, or {issue.deviceType === 'mic' ? 'microphone' : issue.deviceType === 'webcam' ? 'camera' : issue.deviceType} hardware failure. Physical issues are less common but should be checked if software solutions don't work.
               </p>
+
+              <TroubleshootingMatrix issue={{ deviceType: issue.deviceType, platform: issue.platform, slug: issue.slug }} />
 
               <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Step-by-Step Fix Guide</h2>
 

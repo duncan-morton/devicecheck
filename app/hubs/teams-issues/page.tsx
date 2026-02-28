@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import HubPage from '@/components/HubPage'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 
-const title = 'Microsoft Teams Issues – Troubleshooting Hub'
+const title = 'Teams Device Issues — Diagnose & Fix'
 const description =
   'Fix Microsoft Teams microphone and webcam problems. Step-by-step permissions and device selection guide for Teams audio and video.'
 const path = '/hubs/teams-issues'
@@ -28,6 +28,8 @@ export default function Page() {
         description,
         path,
         hubKey: 'teams',
+        primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
         intro:
           'Solve Microsoft Teams microphone and webcam issues quickly. This hub covers permissions, correct device selection, and app conflicts that keep Teams from seeing your devices.',
         quickAnswer: {

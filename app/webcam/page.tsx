@@ -109,25 +109,27 @@ export default function WebcamTestPage() {
             ← All tools
           </Link>
           
-          <div className="mb-3">
+          <div className="mb-4">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              {t.webcam_test_title}
+              {(t as Record<string, string>).webcam_problem_h1 || t.webcam_test_title}
             </h1>
             <p className="text-base md:text-lg text-neutral-600 max-w-2xl">
               {t.webcam_intro}
             </p>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-6">
             <Link 
               href="#test"
-              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-base hover:bg-blue-700 transition-colors shadow-md"
+              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-base hover:bg-blue-700 transition-colors"
             >
               {t.run_webcam_test} →
             </Link>
           </div>
 
-          <WebcamToolWithQuickChecks steps={steps} />
+          <div className="scroll-mt-8">
+            <WebcamToolWithQuickChecks steps={steps} />
+          </div>
 
           <RelatedTools currentPath={getLocalizedPath('/webcam', locale)} locale={locale} />
 
@@ -144,9 +146,9 @@ export default function WebcamTestPage() {
             </Link>
           </div>
 
-          {/* Long-form SEO content: collapsible sections */}
-          <section className="mt-12 border-t border-neutral-200 pt-8">
-            <h2 className="text-lg font-semibold text-neutral-700 mb-4">Learn more & troubleshooting</h2>
+          {/* Authority: how this diagnostic works, why problems happen */}
+          <section className="mt-8 border-t border-neutral-200 pt-8">
+            <h2 className="text-lg font-semibold text-neutral-700 mb-4">How this diagnostic works &amp; why problems happen</h2>
             <details className="group border-b border-gray-200 pb-6">
               <summary className="cursor-pointer list-none flex items-center gap-2 text-xl font-bold text-gray-900 py-2 hover:text-blue-700 [&::-webkit-details-marker]:hidden">
                 <span className="group-open:rotate-90 transition-transform">›</span>

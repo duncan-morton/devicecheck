@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import HubPage from '@/components/HubPage'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 
-const title = 'Laptop Device Troubleshooting – Complete Hub'
+const title = 'Laptop Device Troubleshooting — Diagnose & Fix'
 const description =
   'Fix laptop microphone, webcam, keyboard, and screen issues across Windows and macOS. Step-by-step checks and common problems.'
 const path = '/hubs/laptop-device-troubleshooting'
@@ -28,6 +28,8 @@ export default function Page() {
         description,
         path,
         hubKey: 'laptop',
+        primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
         intro:
           'A single hub for laptop device issues on Windows and macOS. Fix microphones, webcams, keyboards, and screens with clear steps for both platforms.',
         quickAnswer: {

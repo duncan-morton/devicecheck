@@ -124,35 +124,39 @@ export default function MeetingCheckPage() {
             ← All tools
           </Link>
           
-          <div className="mb-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {t.meeting_check_title}
+          <div className="mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              {(t as Record<string, string>).meeting_check_problem_h1 || t.meeting_check_title}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl">
-              Test your network connectivity, camera, and microphone before important video calls. Ensure everything works perfectly for Zoom, Teams, Google Meet, and other video conferencing platforms.
+              Test your network connectivity, camera, and microphone before important video calls. Ensure everything works for Zoom, Teams, Google Meet, and other platforms.
             </p>
           </div>
 
-          <div className="mb-5">
+          <div className="mb-6">
             <Link 
               href="#test"
-              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
-              Run Meeting Check →
+              Run Full Meeting Check
             </Link>
           </div>
 
-          <StepsBlock steps={steps} />
-
-          <div id="test" className="scroll-mt-8">
+          <div id="test" className="scroll-mt-8 mb-8">
             <MeetingCheckTool />
           </div>
 
           <RelatedTools currentPath="/meeting-check" locale={locale} />
 
-          {/* Comprehensive SEO Content */}
+          <div className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Quick checks</h2>
+            <StepsBlock steps={steps} />
+          </div>
+
+          {/* Authority: how this diagnostic works, why problems happen */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">How to Check Your Setup Before Video Calls</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">How this diagnostic works &amp; why problems happen</h2>
+            <h3 className="text-xl font-bold text-gray-900 mt-4 mb-3">How to Check Your Setup Before Video Calls</h3>
             
             <p className="text-lg text-gray-700 mb-6">
               Testing your setup before important video calls prevents embarrassing technical issues and ensures smooth communication. Our <strong>free meeting check tool</strong> tests your network connectivity, camera access, and microphone functionality—everything you need for successful video calls on Zoom, Microsoft Teams, Google Meet, and other platforms.

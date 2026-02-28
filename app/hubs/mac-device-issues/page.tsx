@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import HubPage from '@/components/HubPage'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 
-const title = 'Mac Device Issues – Complete Troubleshooting Hub'
+const title = 'Mac Device Issues — Diagnose & Fix'
 const description =
   'Fix microphone, webcam, keyboard, and screen issues on macOS. Step-by-step guides and common problems explained.'
 const path = '/hubs/mac-device-issues'
@@ -28,6 +28,8 @@ export default function Page() {
         description,
         path,
         hubKey: 'mac',
+        primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
         intro:
           'Resolve macOS microphone, webcam, keyboard, and screen problems in one place. Use this hub to fix permissions, drivers, and app conflicts on Mac and MacBook systems.',
         quickAnswer: {

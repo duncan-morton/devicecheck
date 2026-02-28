@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import HubPage from '@/components/HubPage'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 
-const title = 'Discord Issues – Troubleshooting Hub'
+const title = 'Discord Device Issues — Diagnose & Fix'
 const description =
   'Fix Discord microphone and webcam problems. Clear permissions, select the right devices, and stop robotic or missing audio.'
 const path = '/hubs/discord-issues'
@@ -28,6 +28,8 @@ export default function Page() {
         description,
         path,
         hubKey: 'discord',
+        primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
         intro:
           'Fix Discord mic and camera issues in one place. Use these steps to unblock permissions, stop robotic audio, and select the correct devices for Discord voice and video.',
         quickAnswer: {

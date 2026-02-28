@@ -4,7 +4,7 @@ import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebSiteSchema, generateOrganizationSchema } from '@/lib/seo/jsonLd'
 import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
 import Link from 'next/link'
-import { Camera, Mic, Keyboard, Monitor, Video, CheckCircle2 } from 'lucide-react'
+import { Camera, Mic, Keyboard, Monitor, Video } from 'lucide-react'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
 
@@ -74,15 +74,6 @@ export default function Home() {
     }
   ]
 
-  const features = [
-    '100% Free - No signup required',
-    'Works in any modern browser',
-    'All tests run locally - complete privacy',
-    'Instant results - no waiting',
-    'No software installation needed',
-    'Mobile-friendly testing tools'
-  ]
-
   const websiteSchema = generateWebSiteSchema()
   const organizationSchema = generateOrganizationSchema()
 
@@ -92,57 +83,62 @@ export default function Home() {
       <JsonLdScript data={organizationSchema} />
       
       <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-16 max-w-7xl">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              DeviceCheck.io
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          {/* 1) H1 — problem-first */}
+          <div className="mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Fix Webcam, Microphone, Keyboard &amp; Screen Issues Instantly
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Free Online Device Testing Tools - Test Your Webcam, Microphone, Keyboard, Screen & More
-            </p>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-8">
-              Instantly test your devices in your browser. No downloads, no signups, complete privacy. Perfect for preparing for video calls, troubleshooting hardware, or checking device quality.
+            <p className="text-xl text-gray-600 max-w-3xl">
+              Run free, browser-based diagnostics to find and fix device problems before your next call or session.
             </p>
           </div>
 
-          {/* Tools Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {/* 2) Primary Action Row — single dominant CTA */}
+          <div className="mb-6">
+            <Link
+              href={getLocalizedPath('/meeting-check', locale)}
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Run Full Meeting Check
+            </Link>
+            <p className="mt-2 text-sm text-gray-500">
+              Or <Link href="#tools" className="text-blue-600 hover:text-blue-800">test individual devices</Link>
+            </p>
+          </div>
+
+          {/* 3) Supporting — tool grid */}
+          <div id="tools" className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 scroll-mt-8">
             {tools.map((tool) => (
               <Link
                 key={tool.path}
                 href={tool.path}
-                className="group bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all border border-gray-200 hover:border-blue-300"
+                className="group bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all"
               >
-                <div className={`w-16 h-16 rounded-lg bg-${tool.color}-100 text-${tool.color}-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                <div className={`w-12 h-12 rounded-lg bg-${tool.color}-100 text-${tool.color}-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform`}>
                   {tool.icon}
                 </div>
-                <h2 className="text-2xl font-semibold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors">
+                <h2 className="text-lg font-semibold mb-1 text-gray-900 group-hover:text-blue-600 transition-colors">
                   {tool.name}
                 </h2>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   {tool.description}
                 </p>
               </Link>
             ))}
           </div>
 
-          {/* Features */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-12 mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Why Use DeviceCheck.io?</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle2 className="text-green-600 shrink-0 mt-1" size={24} />
-                  <p className="text-gray-700 font-medium">{feature}</p>
-                </div>
-              ))}
-            </div>
+          {/* 4) Authority Block — how/why it works */}
+          <div className="rounded-xl border border-gray-200 bg-white p-4 md:p-6 mb-8">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">How it works</h2>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              All diagnostics run in your browser using standard device APIs. No installs, no sign-up. Your camera, microphone, keyboard, and screen are tested locally—nothing is sent to our servers. If a test passes here, your device will work in Zoom, Teams, Meet, and other apps that use the same permissions.
+            </p>
           </div>
 
-          {/* Comprehensive SEO Content */}
+          {/* 5) Deep Content Section */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Free Online Device Testing Tools</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Device testing by type</h2>
             
             <p className="text-lg text-gray-700 mb-6">
               DeviceCheck.io provides comprehensive, free online tools to test your devices directly in your web browser. Whether you're preparing for an important video call, troubleshooting hardware issues, or checking device quality, our instant testing tools help ensure everything works perfectly—no software installation or account creation required.
@@ -256,8 +252,9 @@ export default function Home() {
               <li><strong>Regular Updates:</strong> Tools are continuously improved based on user feedback</li>
             </ul>
 
-            <p className="text-lg text-gray-700 mt-8">
-              Ready to test your devices? Choose a tool above to get started. Whether you need to test your webcam for a video call, check your keyboard for gaming, or verify your screen quality, DeviceCheck.io provides instant, free, and private device testing tools for all your needs.
+            {/* 6) Soft Next Step */}
+            <p className="text-gray-600 mt-8 pt-6 border-t border-gray-200">
+              Run the <Link href={getLocalizedPath('/meeting-check', locale)} className="text-blue-600 hover:text-blue-800 font-medium">full meeting check</Link> to verify your setup in one go, or pick a tool above to test a single device.
             </p>
           </article>
         </div>

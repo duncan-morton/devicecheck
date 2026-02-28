@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import HubPage from '@/components/HubPage'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 
-const title = 'Chrome Permissions Issues – Troubleshooting Hub'
+const title = 'Chrome & Browser Permission Issues — Diagnose & Fix'
 const description =
   'Fix microphone and webcam permission problems in Chrome. Step-by-step guide to unblock camera and mic for calls.'
 const path = '/hubs/chrome-permissions-issues'
@@ -28,6 +28,8 @@ export default function Page() {
         description,
         path,
         hubKey: 'chrome',
+        primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
         intro:
           'Fix Chrome microphone and camera permission problems fast. This hub shows how to unblock devices, pick the right input, and stop Chrome from denying access during calls.',
         quickAnswer: {

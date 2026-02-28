@@ -27,13 +27,6 @@ export function getHubForPlatform(platform: string | undefined): { path: string;
   return null
 }
 
-const NEXT_CHECKS: Record<string, { meeting: string; other: { href: string; label: string } }> = {
-  webcam: { meeting: 'Run full meeting check', other: { href: '/mic', label: 'Microphone test' } },
-  mic: { meeting: 'Run full meeting check', other: { href: '/webcam', label: 'Webcam test' } },
-  keyboard: { meeting: 'Run full meeting check', other: { href: '/webcam', label: 'Webcam test' } },
-  screen: { meeting: 'Run full meeting check', other: { href: '/webcam', label: 'Webcam test' } },
-}
-
 interface IssueLinksPanelProps {
   issue: IssueForLinks
   allIssues: Array<{ slug: string; deviceType: string; platform?: string; title?: string }>
@@ -45,17 +38,35 @@ export default function IssueLinksPanel({ issue, allIssues }: IssueLinksPanelPro
   const sameDevice = allIssues.filter(
     (i) => i.deviceType === issue.deviceType && i.slug !== issue.slug
   )
-  const samePlatform = sameDevice.filter(
+  const samePlatformSameDevice = sameDevice.filter(
     (i) => i.platform && issue.platform && i.platform.toLowerCase() === issue.platform.toLowerCase()
   )
-  const commonProblems = [
-    ...samePlatform,
-    ...sameDevice.filter((i) => !samePlatform.includes(i)),
-  ]
-    .slice(0, 4)
-    .sort((a, b) => (a.title || a.slug).localeCompare(b.title || b.slug))
+  const samePlatformDiffDevice = issue.platform
+    ? allIssues.filter(
+        (i) =>
+          i.slug !== issue.slug &&
+          i.platform &&
+          issue.platform &&
+          i.platform.toLowerCase() === issue.platform.toLowerCase() &&
+          i.deviceType !== issue.deviceType
+      )
+    : []
+  const sameDeviceDiffPlatform = sameDevice.filter((i) => !samePlatformSameDevice.includes(i))
 
-  const nextChecks = NEXT_CHECKS[issue.deviceType]
+  const merged: typeof allIssues = [...samePlatformSameDevice]
+  if (samePlatformDiffDevice[0] && !merged.some((m) => m.slug === samePlatformDiffDevice[0].slug)) {
+    merged.push(samePlatformDiffDevice[0])
+  }
+  if (sameDeviceDiffPlatform[0] && !merged.some((m) => m.slug === sameDeviceDiffPlatform[0].slug)) {
+    merged.push(sameDeviceDiffPlatform[0])
+  }
+  for (const i of sameDevice) {
+    if (merged.length >= 5) break
+    if (!merged.some((m) => m.slug === i.slug)) merged.push(i)
+  }
+  const commonProblems = merged
+    .slice(0, 5)
+    .sort((a, b) => (a.title || a.slug).localeCompare(b.title || b.slug))
 
   return (
     <section className="mt-4 mb-6 space-y-4" aria-label="Related links">
@@ -95,28 +106,6 @@ export default function IssueLinksPanel({ issue, allIssues }: IssueLinksPanelPro
           </ul>
         </div>
       </div>
-
-      {nextChecks && (
-        <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
-          <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3">
-            Next checks
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/meeting-check"
-              className="inline-flex items-center px-4 py-2.5 rounded-lg font-medium text-white bg-green-600 hover:bg-green-700 transition-colors text-sm"
-            >
-              {nextChecks.meeting}
-            </Link>
-            <Link
-              href={nextChecks.other.href}
-              className="inline-flex items-center px-4 py-2.5 rounded-lg font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 border border-gray-200 transition-colors text-sm"
-            >
-              Test {nextChecks.other.label.toLowerCase()}
-            </Link>
-          </div>
-        </div>
-      )}
     </section>
   )
 }

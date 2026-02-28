@@ -10,6 +10,7 @@ import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
 import IssueDiagnostic from '@/components/IssueDiagnostic'
 import IssueLinksPanel from '@/components/IssueLinksPanel'
+import TroubleshootingMatrix from '@/components/TroubleshootingMatrix'
 import Link from 'next/link'
 import issuesData from '@/data/issues.json'
 
@@ -91,27 +92,11 @@ export default function IssuePage() {
             { name: 'Microphone Not Working on Windows 11', path: '/issues/microphone-not-working-windows-11' }
           ]} />
           
-          <div className="mb-6">
+          <div className="mb-4">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Microphone Not Working on Windows 11</h1>
             <p className="text-xl text-gray-600 max-w-3xl">
               Microphone not detected on Windows 11. This guide covers all solutions, from permissions to driver updates.
             </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <Link
-              href="/mic"
-              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              Run the Microphone Test →
-            </Link>
-            <Link
-              href="/meeting-check"
-              className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-medium border border-gray-200 hover:bg-gray-200 transition-colors"
-            >
-              Run full meeting check
-            </Link>
-            <p className="text-sm text-gray-500 w-full mt-1">Runs locally in your browser.</p>
           </div>
 
           <IssueDiagnostic device="mic" mode="defer" />
@@ -140,6 +125,10 @@ export default function IssuePage() {
               <li>Restart your computer after changing settings</li>
             </ul>
 
+            <p className="text-sm text-gray-500 mt-4 mb-6">
+              Next: <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">Run full meeting check</Link> · <Link href="/webcam" className="text-blue-600 hover:text-blue-800">Webcam test</Link>
+            </p>
+
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why This Happens</h2>
             <p className="text-gray-700 mb-4">
               Windows 11 includes strict privacy controls that can block microphone access. The system requires explicit permission for applications to use your microphone, and these settings can be reset after updates or changed accidentally.
@@ -153,6 +142,8 @@ export default function IssuePage() {
             <p className="text-gray-700 mb-6">
               Hardware problems include loose connections, damaged cables, or microphone hardware failure. Physical issues are less common but should be checked if software solutions don't work.
             </p>
+
+            <TroubleshootingMatrix issue={{ deviceType: 'mic', platform: "Windows 11", slug: 'microphone-not-working-windows-11' }} />
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Step-by-Step Fix Guide</h2>
 

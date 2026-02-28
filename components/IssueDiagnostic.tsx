@@ -1,10 +1,19 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import WebcamTool from '@/components/WebcamTool'
 import MicTool from '@/components/MicTool'
 import KeyboardTool from '@/components/KeyboardTool'
 import ScreenTool from '@/components/ScreenTool'
+
+const DEVICE_LABELS: Record<string, string> = {
+  webcam: 'webcam',
+  mic: 'microphone',
+  microphone: 'microphone',
+  keyboard: 'keyboard',
+  screen: 'screen',
+}
 
 export interface IssueDiagnosticProps {
   /** Device type: webcam, mic/microphone, keyboard, or screen. Other values render nothing. */
@@ -16,6 +25,7 @@ export interface IssueDiagnosticProps {
 export default function IssueDiagnostic({ device, mode = 'auto' }: IssueDiagnosticProps) {
   const [started, setStarted] = useState(false)
   const normalized = typeof device === 'string' ? device.toLowerCase().trim() : ''
+  const deviceLabel = DEVICE_LABELS[normalized] || 'device'
 
   const isDefer = mode === 'defer'
   const showCard = isDefer && !started
@@ -40,15 +50,22 @@ export default function IssueDiagnostic({ device, mode = 'auto' }: IssueDiagnost
           <h2 id="issue-diagnostic-heading" className="text-xl font-semibold text-gray-900 mb-1">
             Run a quick diagnostic
           </h2>
-          <p className="text-sm text-gray-600 mb-4">Runs locally in your browser.</p>
+          <p className="text-sm text-gray-600 mb-4">This runs locally in your browser.</p>
           <button
             type="button"
             onClick={() => setStarted(true)}
             className="px-5 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
-            Start diagnostic
+            Start {deviceLabel} diagnostic
           </button>
-          <p className="text-xs text-gray-500 mt-3">May ask for permission.</p>
+          <p className="mt-3">
+            <Link
+              href="/meeting-check"
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              Run full meeting check →
+            </Link>
+          </p>
         </div>
       </section>
     )

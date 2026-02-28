@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import HubPage from '@/components/HubPage'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 
-const title = 'Zoom Issues – Complete Troubleshooting Hub'
+const title = 'Zoom Device Issues — Diagnose & Fix'
 const description =
   'Fix Zoom microphone and webcam issues fast. Step-by-step permissions, device selection, and quick fixes for Zoom audio and video.'
 const path = '/hubs/zoom-issues'
@@ -28,6 +28,8 @@ export default function Page() {
         description,
         path,
         hubKey: 'zoom',
+        primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
         intro:
           'A single hub for fixing Zoom microphone and webcam problems. Follow these steps to unblock devices, pick the right inputs, and stop Zoom from muting or hiding your camera.',
         quickAnswer: {

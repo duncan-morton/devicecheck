@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import HubPage from '@/components/HubPage'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 
-const title = 'Windows Device Issues – Complete Troubleshooting Hub'
+const title = 'Windows Device Issues — Diagnose & Fix'
 const description =
   'Fix microphone, webcam, keyboard, and screen issues on Windows. Step-by-step guides and common problems explained.'
 const path = '/hubs/windows-device-issues'
@@ -28,6 +28,8 @@ export default function Page() {
         description,
         path,
         hubKey: 'windows',
+        primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
         intro:
           'Resolve Windows 10 and Windows 11 microphone, webcam, keyboard, and screen problems with a single hub. Use this checklist to diagnose permissions, drivers, and hardware quickly before important calls or work.',
         quickAnswer: {

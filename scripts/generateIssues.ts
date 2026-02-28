@@ -437,12 +437,13 @@ function generatePageContent(issue: IssueData, siblingIssues: IssueData[]): stri
   
   const howToScript = hasHowTo ? `      <JsonLdScript data={howToSchema} />` : ''
   
-  const testButtonLabels: Record<string, string> = {
-    mic: 'Run the Microphone Test',
-    webcam: 'Run the Webcam Test',
-    keyboard: 'Run the Keyboard Test',
-    screen: 'Run the Screen Test'
+  const nextChecksOther: Record<string, { href: string; label: string }> = {
+    webcam: { href: '/mic', label: 'Microphone test' },
+    mic: { href: '/webcam', label: 'Webcam test' },
+    keyboard: { href: '/webcam', label: 'Webcam test' },
+    screen: { href: '/webcam', label: 'Webcam test' },
   }
+  const otherLink = nextChecksOther[issue.deviceType]
 
   function getHubForPlatform(platform: string): { path: string; name: string } | null {
     if (!platform?.trim()) return null
@@ -476,6 +477,7 @@ import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
 import IssueDiagnostic from '@/components/IssueDiagnostic'
 import IssueLinksPanel from '@/components/IssueLinksPanel'
+import TroubleshootingMatrix from '@/components/TroubleshootingMatrix'
 import Link from 'next/link'
 import issuesData from '@/data/issues.json'
 
@@ -527,27 +529,11 @@ ${howToScript}
             { name: '${issue.title}', path: '/issues/${issue.slug}' }
           ]} />
           
-          <div className="mb-6">
+          <div className="mb-4">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">${issue.title}</h1>
             <p className="text-xl text-gray-600 max-w-3xl">
               ${introSentence1}. ${introSentence2}
             </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <Link
-              href="${hub.href}"
-              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              ${testButtonLabels[issue.deviceType]} →
-            </Link>
-            <Link
-              href="/meeting-check"
-              className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-medium border border-gray-200 hover:bg-gray-200 transition-colors"
-            >
-              Run full meeting check
-            </Link>
-            <p className="text-sm text-gray-500 w-full mt-1">Runs locally in your browser.</p>
           </div>
 
           <IssueDiagnostic device="${issue.deviceType}" mode="defer" />
@@ -572,6 +558,10 @@ ${howToScript}
 ${quickFixes.map(fix => `              <li>${fix}</li>`).join('\n')}
             </ul>
 
+            <p className="text-sm text-gray-500 mt-4 mb-6">
+              Next: <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">Run full meeting check</Link>${otherLink ? ` · <Link href="${otherLink.href}" className="text-blue-600 hover:text-blue-800">${otherLink.label}</Link>` : ''}
+            </p>
+
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why This Happens</h2>
             <p className="text-gray-700 mb-4">
               ${issue.platform} includes strict privacy controls that can block ${deviceName} access. The system requires explicit permission for applications to use your ${deviceName}, and these settings can be reset after updates or changed accidentally.
@@ -585,6 +575,8 @@ ${quickFixes.map(fix => `              <li>${fix}</li>`).join('\n')}
             <p className="text-gray-700 mb-6">
               Hardware problems include loose connections, damaged cables, or ${deviceName} hardware failure. Physical issues are less common but should be checked if software solutions don't work.
             </p>
+
+            <TroubleshootingMatrix issue={{ deviceType: '${issue.deviceType}', platform: ${issue.platform != null ? JSON.stringify(issue.platform) : 'undefined'}, slug: '${issue.slug}' }} />
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Step-by-Step Fix Guide</h2>
 

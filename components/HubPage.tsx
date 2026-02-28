@@ -17,6 +17,10 @@ export interface HubPageConfig {
   path: string
   hubKey: HubKey
   intro: string
+  /** Primary CTA: e.g. { label: 'Run Zoom Meeting Check', href: '/meeting-check' } */
+  primaryCta?: { label: string; href: string }
+  /** Link to authority guide: e.g. { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' } */
+  authorityGuideLink?: { label: string; href: string }
   quickAnswer: { problem: string; platform: string; deviceType: 'mic' | 'webcam' | 'keyboard' | 'screen' }
   quickSummary: string[]
   why: string[]
@@ -101,9 +105,42 @@ export default function HubPage({
 
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
-          <div className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{config.title}</h1>
-            <p className="text-xl text-gray-600 max-w-4xl">{config.intro}</p>
+          <div className="mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{config.title}</h1>
+            {config.primaryCta && (
+              <div className="mb-4">
+                <Link
+                  href={config.primaryCta.href}
+                  className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  {config.primaryCta.label}
+                </Link>
+              </div>
+            )}
+            <p className="text-xl text-gray-600 max-w-3xl">{config.intro}</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-3 md:col-span-2">Top issues</h2>
+            {renderIssueGroups(issues)}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 mb-6 text-sm">
+            {config.authorityGuideLink && (
+              <Link href={config.authorityGuideLink.href} className="text-blue-600 hover:text-blue-800 font-medium">
+                {config.authorityGuideLink.label} →
+              </Link>
+            )}
+            <span className="text-gray-500">Related devices:</span>
+            {tools.map(tool => (
+              <Link
+                key={tool.href}
+                href={getLocalizedPath(tool.href, 'en')}
+                className="text-gray-700 hover:text-blue-600"
+              >
+                {tool.title}
+              </Link>
+            ))}
           </div>
 
           <div className="mb-6">
@@ -139,9 +176,6 @@ export default function HubPage({
               ))}
             </ol>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Common Issues On This Hub</h2>
-            <div className="grid md:grid-cols-2 gap-6 mb-8">{renderIssueGroups(issues)}</div>
-
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Browser/OS Permission Fixes</h2>
             <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
               {config.permissions.map((item, idx) => (
@@ -162,23 +196,6 @@ export default function HubPage({
                 <li key={idx}>{item}</li>
               ))}
             </ul>
-
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Common Issues On This Platform/App</h2>
-            <div className="grid md:grid-cols-2 gap-6 mb-8">{renderIssueGroups(issues)}</div>
-
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">Cross-Tool Checks</h2>
-            <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {tools.map(tool => (
-                <Link
-                  key={tool.href}
-                  href={getLocalizedPath(tool.href, 'en')}
-                  className="block border border-gray-200 rounded-lg p-4 hover:border-blue-500 hover:shadow-sm transition-colors"
-                >
-                  <p className="font-semibold text-gray-900">{tool.title}</p>
-                  <p className="text-sm text-blue-600 mt-1">Run test</p>
-                </Link>
-              ))}
-            </div>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-3">FAQs</h2>
             <div className="space-y-5 mb-6">
