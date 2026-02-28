@@ -35,23 +35,31 @@ export const metadata: Metadata = genMeta({
 const faqs = [
   {
     question: 'How do I test my microphone online?',
-    answer: 'Click "Allow" when prompted for microphone access. Speak into your mic and watch the volume meter respond. You can record a 5-second test clip and play it back to verify audio quality.'
+    answer: 'Click “Allow” when the browser asks for microphone access, then speak into your mic. The volume meter will show your input level; you can also record a short clip and play it back to confirm quality.'
   },
   {
     question: 'Why is my microphone not working?',
-    answer: 'Common causes include denied browser permissions, physical mute switches, wrong input device selected, or driver issues. Check browser permissions first, then verify system settings and ensure no other apps are using the microphone.'
+    answer: 'Usually the cause is denied browser or system permissions, a physical mute switch, or the wrong input device selected. Allow the mic in your browser and OS privacy settings, close other apps using the mic, and pick the correct device in sound settings.'
+  },
+  {
+    question: 'How can I check if my mic is working?',
+    answer: 'Run this test and watch the meter: if bars move when you speak, the browser sees your mic. Use the record-and-playback step to confirm the audio sounds clear. No movement means permissions or device selection need fixing.'
+  },
+  {
+    question: 'Is this microphone test private?',
+    answer: 'Yes. All processing happens in your browser; no audio is sent to our servers or stored. We don’t record, save, or share your voice.'
+  },
+  {
+    question: 'Does this work on mobile?',
+    answer: 'Yes, on phones and tablets that support getUserMedia in the browser (e.g. Chrome and Safari on iOS/Android). Allow microphone access when prompted; if the test works, your mic is working for that browser.'
   },
   {
     question: 'Can I test my microphone for Zoom or Teams?',
-    answer: 'Yes! If our microphone test works, your mic will work in Zoom, Microsoft Teams, Google Meet, and other video conferencing platforms. Test here first to avoid issues during important calls.'
-  },
-  {
-    question: 'Is my microphone data secure?',
-    answer: 'Absolutely. All audio processing happens locally in your browser. No audio data is sent to our servers, recorded, stored, or shared with anyone. Your privacy is completely protected.'
+    answer: 'Yes. If this test works in your browser, your mic will work in Zoom, Teams, and Meet. Run it before important calls to avoid “no audio” issues.'
   },
   {
     question: 'What should the volume meter show?',
-    answer: 'The meter should show green/yellow bars when you speak normally. If it stays red or shows no activity, check your mic volume settings, ensure you\'re not muted, and verify the correct input device is selected.'
+    answer: 'Green or yellow bars when you speak is ideal; red means too loud. No activity means the mic isn’t detected or is muted—check permissions and device selection.'
   }
 ]
 
@@ -167,9 +175,76 @@ export default function MicTestPage() {
             </Link>
           </div>
 
-          {/* Authority: how this diagnostic works, why problems happen */}
+          {/* Authority: when to test, what the test checks, problems, permissions, then how diagnostic works */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">How this diagnostic works &amp; why problems happen</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">When Should You Test Your Microphone?</h2>
+
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before Zoom or Teams calls</h4>
+            <p className="text-gray-700 mb-3">
+              A quick mic check before joining avoids “can’t hear you” and “no audio” issues. If this test works in your browser, your mic will work in Zoom, Teams, and Meet. Run the <Link href={getLocalizedPath('/meeting-check', locale)} className="text-blue-600 hover:text-blue-800">full meeting check</Link> to verify camera and mic together.
+            </p>
+
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When your mic sounds quiet or distorted</h4>
+            <p className="text-gray-700 mb-3">
+              Low volume or muffled sound often comes from system input levels, physical mute, or the wrong device. This tool’s level meter shows whether the browser is receiving signal; if it’s low, adjust OS settings or try our <Link href={getLocalizedPath('/issues/microphone-too-quiet-windows', locale)} className="text-blue-600 hover:text-blue-800">microphone too quiet (Windows)</Link> guide.
+            </p>
+
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When apps can&apos;t detect your microphone</h4>
+            <p className="text-gray-700 mb-3">
+              If an app says “no microphone” or “device not found,” the cause is usually permissions or another app holding the device. Testing here confirms whether the browser can see your mic; if it can’t, fix permissions first. For Zoom specifically, see <Link href={getLocalizedPath('/issues/microphone-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Zoom</Link>.
+            </p>
+
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before recording or streaming</h4>
+            <p className="text-gray-700 mb-6">
+              Recording and streaming need consistent input levels and no feedback. Use this test to set levels and confirm there’s no echo or crackle before you go live or hit record.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">What This Microphone Test Checks</h2>
+            <p className="text-gray-700 mb-2">
+              <strong>Input detection:</strong> Whether the browser can access your selected microphone and receive an audio stream.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Volume level monitoring:</strong> A real-time meter shows how loud the input is so you can adjust system or app gain.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Device switching:</strong> You can change the microphone in the tool (when the browser offers a device picker) to confirm which device is active.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Browser permissions:</strong> If the test never gets a signal, the issue is usually a denied or reset permission at the site or system level.
+            </p>
+            <p className="text-gray-700 mb-6">
+              <strong>Hardware response:</strong> Recording and playback confirm that the mic is not only detected but producing usable audio.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Microphone Problems This Test Helps Diagnose</h2>
+            <p className="text-gray-700 mb-2">
+              <strong>Microphone not detected:</strong> No bars or “no device” usually means blocked permissions or another app using the mic. Fix browser and OS permissions, then retest. More: <Link href={getLocalizedPath('/issues/microphone-not-working-chrome', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Chrome</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Microphone too quiet:</strong> Low or no movement on the meter points to input gain, mute, or wrong device. Raise input level in system sound settings and ensure the correct mic is selected; see <Link href={getLocalizedPath('/guides/mic-too-quiet', locale)} className="text-blue-600 hover:text-blue-800">microphone too quiet</Link> for more.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Echo or feedback:</strong> Speakers feeding into the mic cause echo. Use headphones or lower speaker volume. For call-specific echo: <Link href={getLocalizedPath('/issues/microphone-feedback-loop-problem', locale)} className="text-blue-600 hover:text-blue-800">microphone feedback loop</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Static or crackling:</strong> Often driver or USB/connection related. Try another port, update audio drivers, or see <Link href={getLocalizedPath('/guides/microphone-static-crackling', locale)} className="text-blue-600 hover:text-blue-800">static or crackling sound</Link>.
+            </p>
+            <p className="text-gray-700 mb-6">
+              <strong>Wrong microphone selected:</strong> System or browser may be using a different input. Use the tool’s device list (if shown) or system sound settings to pick the correct mic. <Link href={getLocalizedPath('/issues/microphone-keeps-switching-input', locale)} className="text-blue-600 hover:text-blue-800">Mic keeps switching input</Link> has more.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Browser Microphone Permissions Explained</h2>
+            <p className="text-gray-700 mb-3">
+              Browsers ask for microphone access when a site requests it; you must click “Allow” for this test to work. In Chrome, you can manage permissions via the lock icon next to the address bar or in Settings → Privacy and security → Site settings → Microphone.
+            </p>
+            <p className="text-gray-700 mb-3">
+              Windows and macOS add a second layer: even if the browser has permission, the OS can block “desktop” or “app” access to the microphone. If the test fails, check system Privacy/Settings and ensure microphone access is allowed for your browser.
+            </p>
+            <p className="text-gray-700 mb-6">
+              Permissions often fail silently: the page loads but no audio appears, or the prompt never shows if the site was previously blocked. Reset the site’s permission and reload, or use an incognito/private window to get a fresh prompt. For step-by-step Chrome setup: <Link href={getLocalizedPath('/guides/how-to-enable-microphone-chrome', locale)} className="text-blue-600 hover:text-blue-800">how to enable microphone in Chrome</Link>.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>
             <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.mic_how_to_title}</h3>
             
             <p className="text-lg text-gray-700 mb-6">
