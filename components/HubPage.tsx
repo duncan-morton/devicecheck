@@ -5,11 +5,39 @@ import RelatedGuides from '@/components/RelatedGuides'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { groupIssues, hubFilters, guideSets, toolSets, type IssueGroup } from '@/lib/hubs'
 import { getLocalizedPath } from '@/i18n/getTranslation'
 
 export type HubKey = 'windows' | 'mac' | 'chrome' | 'zoom' | 'teams' | 'discord' | 'laptop'
+
+/** Optional pillar section: problem clusters with intro and subsections (links rendered inline) */
+export interface ProblemClusterGroup {
+  title: string
+  paragraphs: string[]
+  links: Array<{ href: string; label: string }>
+}
+
+export interface ProblemClustersSection {
+  sectionTitle: string
+  intro: string
+  groups: ProblemClusterGroup[]
+}
+
+/** Optional pillar section: how platform accesses devices */
+export interface HowItWorksSection {
+  title: string
+  paragraphs: string[]
+  guideLink?: { href: string; label: string }
+}
+
+/** Optional pillar section: quick checklist with meeting-check link */
+export interface QuickChecklistSection {
+  title: string
+  items: string[]
+  meetingCheckHref: string
+}
 
 export interface HubPageConfig {
   title: string
@@ -21,9 +49,13 @@ export interface HubPageConfig {
   primaryCta?: { label: string; href: string }
   /** Link to authority guide: e.g. { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' } */
   authorityGuideLink?: { label: string; href: string }
+  /** Optional: pillar content below intro, above issue grid */
+  problemClusters?: ProblemClustersSection
+  howItWorks?: HowItWorksSection
+  quickChecklist?: QuickChecklistSection
   quickAnswer: { problem: string; platform: string; deviceType: 'mic' | 'webcam' | 'keyboard' | 'screen' }
-  quickSummary: string[]
-  why: string[]
+  quickSummary: Array<string | ReactNode>
+  why: Array<string | ReactNode>
   steps: string[]
   permissions: string[]
   advanced: string[]
@@ -119,6 +151,80 @@ export default function HubPage({
             )}
             <p className="text-xl text-gray-600 max-w-3xl">{config.intro}</p>
           </div>
+
+          {config.problemClusters && (
+            <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">{config.problemClusters.sectionTitle}</h2>
+              <p className="text-gray-700 mb-6">{config.problemClusters.intro}</p>
+              {config.problemClusters.groups.map((group, gIdx) => (
+                <div key={gIdx} className="mb-6 last:mb-0">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{group.title}</h3>
+                  {group.paragraphs.map((para, pIdx) => (
+                    <p key={pIdx} className="text-gray-700 mb-3">
+                      {para}
+                      {pIdx === group.paragraphs.length - 1 && group.links.length > 0 && (
+                        <>
+                          {' '}
+                          {group.links.map((link, lIdx) => (
+                            <span key={lIdx}>
+                              {lIdx > 0 && ', '}
+                              <Link href={getLocalizedPath(link.href, 'en')} className="text-blue-600 hover:text-blue-800">
+                                {link.label}
+                              </Link>
+                            </span>
+                          ))}
+                        </>
+                      )}
+                    </p>
+                  ))}
+                  {group.paragraphs.length === 0 && group.links.length > 0 && (
+                    <p className="text-gray-700">
+                      {group.links.map((link, lIdx) => (
+                        <span key={lIdx}>
+                          {lIdx > 0 && ', '}
+                          <Link href={getLocalizedPath(link.href, 'en')} className="text-blue-600 hover:text-blue-800">
+                            {link.label}
+                          </Link>
+                        </span>
+                      ))}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </section>
+          )}
+
+          {config.howItWorks && (
+            <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">{config.howItWorks.title}</h2>
+              {config.howItWorks.paragraphs.map((p, idx) => (
+                <p key={idx} className="text-gray-700 mb-3">{p}</p>
+              ))}
+              {config.howItWorks.guideLink && (
+                <p className="text-gray-700">
+                  <Link href={getLocalizedPath(config.howItWorks.guideLink.href, 'en')} className="text-blue-600 hover:text-blue-800">
+                    {config.howItWorks.guideLink.label} →
+                  </Link>
+                </p>
+              )}
+            </section>
+          )}
+
+          {config.quickChecklist && (
+            <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">{config.quickChecklist.title}</h2>
+              <ul className="list-disc pl-5 space-y-1 text-gray-700 mb-3">
+                {config.quickChecklist.items.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+              <p className="text-gray-700">
+                <Link href={getLocalizedPath(config.quickChecklist.meetingCheckHref, 'en')} className="text-blue-600 hover:text-blue-800 font-medium">
+                  Run full meeting check →
+                </Link>
+              </p>
+            </section>
+          )}
 
           <div className="grid md:grid-cols-2 gap-6 mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-3 md:col-span-2">Top issues</h2>
