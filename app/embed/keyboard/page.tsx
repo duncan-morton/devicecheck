@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import KeyboardTool from '@/components/KeyboardTool'
 import Link from 'next/link'
 
+const EMBED_BASE = 'https://devicecheck.io'
 export const metadata: Metadata = {
   title: 'Embed Keyboard Test',
   description: 'Embeddable keyboard test widget',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     follow: true
   },
   alternates: {
-    canonical: 'https://devicecheck.io/keyboard'
+    canonical: `${EMBED_BASE}/embed/keyboard`
   }
 }
 

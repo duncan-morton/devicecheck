@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import MicTool from '@/components/MicTool'
 import Link from 'next/link'
 
+const EMBED_BASE = 'https://devicecheck.io'
 export const metadata: Metadata = {
   title: 'Embed Microphone Test',
   description: 'Embeddable microphone test widget',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     follow: true
   },
   alternates: {
-    canonical: 'https://devicecheck.io/mic'
+    canonical: `${EMBED_BASE}/embed/mic`
   }
 }
 

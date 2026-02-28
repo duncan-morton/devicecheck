@@ -81,6 +81,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/guides/webcam-lagging-low-fps',
     '/guides/external-webcam-not-recognised',
     '/guides/webcam-quality-improve',
+    '/guides/improve-webcam-quality',
+    '/guides/how-device-access-works',
     '/guides/laptop-camera-not-working',
     // Keyboard guides
     '/guides/keyboard-not-working',

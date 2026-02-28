@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import WebcamTool from '@/components/WebcamTool'
 import Link from 'next/link'
 
+const EMBED_BASE = 'https://devicecheck.io'
 export const metadata: Metadata = {
   title: 'Embed Webcam Test',
   description: 'Embeddable webcam test widget',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     follow: true
   },
   alternates: {
-    canonical: 'https://devicecheck.io/webcam'
+    canonical: `${EMBED_BASE}/embed/webcam`
   }
 }
 
