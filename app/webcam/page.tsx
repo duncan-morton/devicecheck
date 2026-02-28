@@ -6,6 +6,7 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import WebcamToolWithQuickChecks from '@/components/WebcamToolWithQuickChecks'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import FixByPlatformSection from '@/components/FixByPlatformSection'
 import Link from 'next/link'
 
 export const revalidate = 86400 // ISR: Revalidate every 24 hours
@@ -36,7 +37,12 @@ const faqs = (t: ReturnType<typeof getTranslation>) => [
   { question: t.webcam_faq_2_q, answer: t.webcam_faq_2_a },
   { question: t.webcam_faq_3_q, answer: t.webcam_faq_3_a },
   { question: t.webcam_faq_4_q, answer: t.webcam_faq_4_a },
-  { question: t.webcam_faq_5_q, answer: t.webcam_faq_5_a }
+  { question: t.webcam_faq_5_q, answer: t.webcam_faq_5_a },
+  { question: 'Why is my webcam not detected?', answer: 'Usually the browser or OS has blocked camera access. Allow the camera for this site and for your browser in system Privacy settings, then close other apps using the camera and reload.' },
+  { question: 'How do I test my webcam for Zoom?', answer: 'Run this test first; if you see a live preview, your camera will work in Zoom. In Zoom, pick the same camera in Settings → Video. Run the full meeting check to test camera and mic together.' },
+  { question: 'Can I test my webcam online without downloading anything?', answer: 'Yes. This test runs in your browser. Click Allow when prompted for camera access and you’ll see a live preview. No app install required.' },
+  { question: 'Why is my webcam blurry or dark?', answer: 'Improve lighting and ensure the correct resolution is selected. This tool shows the resolution; if it’s low, check your conferencing app’s video settings. See our webcam quality guide for more.' },
+  { question: 'Does this webcam test work on mobile?', answer: 'Yes, on phones and tablets that support camera access in the browser (e.g. Chrome and Safari). Allow camera access when prompted; if the preview appears, your camera works for that browser.' }
 ]
 
 const steps = [
@@ -133,6 +139,8 @@ export default function WebcamTestPage() {
 
           <RelatedTools currentPath={getLocalizedPath('/webcam', locale)} locale={locale} />
 
+          <FixByPlatformSection locale={locale} />
+
           {/* Embed Link */}
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
             <p className="text-gray-700 mb-2">
@@ -145,6 +153,59 @@ export default function WebcamTestPage() {
               Get embed code →
             </Link>
           </div>
+
+          {/* Authority: when to test, what test checks, common problems, permissions (match /mic structure) */}
+          <section className="mt-8 border-t border-neutral-200 pt-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">When Should You Test Your Webcam?</h2>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before Zoom or Teams calls</h4>
+            <p className="text-gray-700 mb-3">
+              A quick camera check before joining avoids a black tile or “camera off” in the meeting. If this test shows a live preview, your camera will work in Zoom, Teams, and Meet. Run the <Link href={getLocalizedPath('/meeting-check', locale)} className="text-blue-600 hover:text-blue-800">full meeting check</Link> to verify camera and mic together.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When the image is blurry or poor quality</h4>
+            <p className="text-gray-700 mb-3">
+              Blur, grain, or dark video often comes from low light, wrong resolution, or a low-quality sensor. This tool shows the live feed and resolution so you can adjust lighting or settings. For improving quality, see <Link href={getLocalizedPath('/guides/webcam-too-dark-grainy', locale)} className="text-blue-600 hover:text-blue-800">webcam too dark or grainy</Link>.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When apps can&apos;t detect your camera</h4>
+            <p className="text-gray-700 mb-3">
+              If an app says “no camera” or shows a black screen, the cause is usually permissions or another app holding the camera. Testing here confirms whether the browser can see your camera; if it can’t, fix permissions first. For Zoom, see <Link href={getLocalizedPath('/issues/webcam-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">webcam not working in Zoom</Link>.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before recording or streaming</h4>
+            <p className="text-gray-700 mb-6">
+              Recording and streaming need a stable feed and correct resolution. Use this test to confirm the camera is detected and the preview looks right before you go live.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">What This Webcam Test Checks</h2>
+            <p className="text-gray-700 mb-2"><strong>Camera detection:</strong> Whether the browser can access your selected camera and receive a video stream.</p>
+            <p className="text-gray-700 mb-2"><strong>Live preview:</strong> A real-time feed so you can confirm framing, lighting, and that the correct camera is active.</p>
+            <p className="text-gray-700 mb-2"><strong>Resolution:</strong> The resolution badge shows what the browser is receiving so you can compare with app expectations.</p>
+            <p className="text-gray-700 mb-2"><strong>Browser permissions:</strong> If the test never shows video, the issue is usually a denied or reset permission at the site or system level.</p>
+            <p className="text-gray-700 mb-6"><strong>Hardware response:</strong> A visible preview confirms the camera is not only detected but producing usable video.</p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Webcam Problems This Test Helps Diagnose</h2>
+            <p className="text-gray-700 mb-2">
+              <strong>Camera not detected:</strong> No preview or “no device” usually means blocked permissions or another app using the camera. Fix browser and OS permissions, then retest. More: <Link href={getLocalizedPath('/issues/webcam-not-detected-chrome', locale)} className="text-blue-600 hover:text-blue-800">webcam not detected in Chrome</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Blurry or low quality:</strong> Often due to resolution, lighting, or focus. Check the resolution in the test and in your conferencing app; improve lighting or see <Link href={getLocalizedPath('/guides/webcam-quality-improve', locale)} className="text-blue-600 hover:text-blue-800">improve webcam quality</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Permissions blocked:</strong> The page loads but no video appears, or the prompt never shows. Reset the site’s camera permission and reload, or use an incognito window. See <Link href={getLocalizedPath('/guides/how-to-enable-camera-browser', locale)} className="text-blue-600 hover:text-blue-800">how to enable camera in browser</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Wrong camera selected:</strong> System or browser may be using a different device. Use the tool’s device list (if shown) or system settings to pick the correct camera. <Link href={getLocalizedPath('/issues/webcam-in-use-by-another-app', locale)} className="text-blue-600 hover:text-blue-800">Webcam in use by another app</Link> has more.
+            </p>
+            <p className="text-gray-700 mb-6">
+              <strong>Black screen in one app but not others:</strong> Usually one app is holding the camera or the app’s device selection is wrong. Close other video apps and choose the correct camera in the app’s settings.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Webcam Permissions Explained</h2>
+            <p className="text-gray-700 mb-3">
+              Browsers ask for camera access when a site requests it; you must click “Allow” for this test to work. Windows and macOS add a second layer: even if the browser has permission, the OS can block camera access for the browser. If the test fails, check system Privacy/Settings and ensure camera access is allowed for your browser.
+            </p>
+            <p className="text-gray-700 mb-6">
+              For how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+            </p>
+          </section>
 
           {/* Authority: how this diagnostic works, why problems happen */}
           <section className="mt-8 border-t border-neutral-200 pt-8">
@@ -206,6 +267,9 @@ export default function WebcamTestPage() {
                   <li>{t.webcam_browser_4}</li>
                   <li>{t.webcam_browser_5}</li>
                 </ul>
+                <p className="text-gray-700 mb-6">
+                  For how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+                </p>
                 <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.webcam_tips_title}</h3>
                 <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
                   <li>{t.webcam_tips_1}</li>

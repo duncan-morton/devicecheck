@@ -6,6 +6,7 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import MicTool from '@/components/MicTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import FixByPlatformSection from '@/components/FixByPlatformSection'
 import Link from 'next/link'
 import StepsBlock from '@/components/StepsBlock'
 
@@ -157,6 +158,8 @@ export default function MicTestPage() {
 
           <RelatedTools currentPath="/mic" locale={locale} />
 
+          <FixByPlatformSection locale={locale} />
+
           <div className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Quick checks</h2>
             <StepsBlock steps={steps} />
@@ -242,6 +245,9 @@ export default function MicTestPage() {
             </p>
             <p className="text-gray-700 mb-6">
               Permissions often fail silently: the page loads but no audio appears, or the prompt never shows if the site was previously blocked. Reset the site’s permission and reload, or use an incognito/private window to get a fresh prompt. For step-by-step Chrome setup: <Link href={getLocalizedPath('/guides/how-to-enable-microphone-chrome', locale)} className="text-blue-600 hover:text-blue-800">how to enable microphone in Chrome</Link>.
+            </p>
+            <p className="text-gray-700 mb-6">
+              For a full picture of how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>

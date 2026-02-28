@@ -237,6 +237,9 @@ export default function HubPage({
                 {config.authorityGuideLink.label} →
               </Link>
             )}
+            <Link href={getLocalizedPath('/guides/how-device-access-works', 'en')} className="text-blue-600 hover:text-blue-800 font-medium">
+              How device access works
+            </Link>
             <span className="text-gray-500">Related devices:</span>
             {tools.map(tool => (
               <Link

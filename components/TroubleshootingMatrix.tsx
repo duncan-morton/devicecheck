@@ -151,6 +151,9 @@ export default function TroubleshootingMatrix({ issue }: TroubleshootingMatrixPr
           </ul>
         </div>
 
+        <p className="text-gray-600 text-sm mt-2">
+          Most device problems happen across permission layers — see <Link href="/guides/how-device-access-works" className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+        </p>
         <div>
           <h3 className="font-medium text-gray-900 mb-1">If this fix doesn&apos;t work</h3>
           <ul className="list-disc pl-5 space-y-0.5">

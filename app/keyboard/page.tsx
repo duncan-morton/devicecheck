@@ -6,6 +6,7 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import KeyboardTool from '@/components/KeyboardTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import FixByPlatformSection from '@/components/FixByPlatformSection'
 import Link from 'next/link'
 import StepsBlock from '@/components/StepsBlock'
 
@@ -36,7 +37,12 @@ const faqs = (t: ReturnType<typeof getTranslation>) => [
   { question: t.keyboard_faq_2_q, answer: t.keyboard_faq_2_a },
   { question: t.keyboard_faq_3_q, answer: t.keyboard_faq_3_a },
   { question: t.keyboard_faq_4_q, answer: t.keyboard_faq_4_a },
-  { question: t.keyboard_faq_5_q, answer: t.keyboard_faq_5_a }
+  { question: t.keyboard_faq_5_q, answer: t.keyboard_faq_5_a },
+  { question: 'How do I test my keyboard online?', answer: 'Click inside the test area so it has focus, then press each key. Keys that register will highlight. Test one key at a time and in combinations to check for ghosting.' },
+  { question: 'Why are some keys not registering?', answer: 'Check that the test area has focus, the correct keyboard layout is selected in your OS, and no other app is capturing input. Stuck keys or hardware faults can also cause missed input.' },
+  { question: 'What is keyboard ghosting?', answer: 'Ghosting is when pressing several keys at once produces wrong or no output. This test shows which combinations fail. It’s common on cheaper keyboards with limited rollover.' },
+  { question: 'Does this keyboard test work on wireless keyboards?', answer: 'Yes. Wireless and Bluetooth keyboards work the same way in the test. Ensure the keyboard is paired and the page has focus; Bluetooth can add slight delay.' },
+  { question: 'Can I test my keyboard for gaming?', answer: 'Yes. Press multiple keys at once to test rollover and ghosting. If many keys register together, the keyboard is suitable for gaming. See our keyboard ghosting guide for more.' }
 ]
 
 const steps = [
@@ -133,6 +139,8 @@ export default function KeyboardTestPage() {
 
           <RelatedTools currentPath={getLocalizedPath('/keyboard', locale)} locale={locale} />
 
+          <FixByPlatformSection locale={locale} />
+
           <div className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Quick checks</h2>
             <StepsBlock steps={steps} />
@@ -151,9 +159,56 @@ export default function KeyboardTestPage() {
             </Link>
           </div>
 
-          {/* Authority: how this diagnostic works, why problems happen */}
+          {/* Authority: when to test, what test checks, common problems, device access (match /mic structure) */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">How this diagnostic works &amp; why problems happen</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">When Should You Test Your Keyboard?</h2>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before gaming or long typing sessions</h4>
+            <p className="text-gray-700 mb-3">
+              Keys that don’t register or ghost (wrong keys firing) can ruin games and work. This test lets you press every key and see which ones respond. Fix layout or hardware issues before you rely on the keyboard.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When keys stick, repeat, or don’t register</h4>
+            <p className="text-gray-700 mb-3">
+              Sticky or repeating keys often point to debris, worn switches, or software (e.g. Sticky Keys). Use this tool to see which keys misbehave; then check <Link href={getLocalizedPath('/guides/sticky-repeating-keys', locale)} className="text-blue-600 hover:text-blue-800">sticky or repeating keys</Link> for fixes.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When you suspect ghosting or wrong layout</h4>
+            <p className="text-gray-700 mb-3">
+              Ghosting is when pressing several keys at once causes wrong or missing input. This test shows which key combinations register. For why it happens and what to do, see <Link href={getLocalizedPath('/guides/keyboard-ghosting-explained', locale)} className="text-blue-600 hover:text-blue-800">keyboard ghosting explained</Link>.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">After connecting a new or external keyboard</h4>
+            <p className="text-gray-700 mb-6">
+              Confirm the OS sees the keyboard and the correct layout is selected. Run this test to verify every key maps as expected before you depend on it for work or play.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">What This Keyboard Test Checks</h2>
+            <p className="text-gray-700 mb-2"><strong>Key registration:</strong> Whether each key press is received by the browser and shown on screen.</p>
+            <p className="text-gray-700 mb-2"><strong>Multi-key input:</strong> Holding several keys at once reveals ghosting or rollover limits.</p>
+            <p className="text-gray-700 mb-2"><strong>Layout:</strong> The test reflects the active system layout (e.g. QWERTY), so you can confirm the right layout is selected.</p>
+            <p className="text-gray-700 mb-2"><strong>Modifier keys:</strong> Shift, Ctrl, Alt, and Meta can be tested to ensure they combine correctly with other keys.</p>
+            <p className="text-gray-700 mb-6"><strong>No permissions needed:</strong> Keyboard input does not require browser or OS device permissions like camera or mic; the test only needs focus.</p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Keyboard Problems This Test Helps Diagnose</h2>
+            <p className="text-gray-700 mb-2">
+              <strong>Keys not registering:</strong> If a key never lights in the test, it may be stuck, broken, or the wrong layout may be active. Check system keyboard settings and try another port or cable. More: <Link href={getLocalizedPath('/guides/keys-not-registering', locale)} className="text-blue-600 hover:text-blue-800">keys not registering</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Ghosting:</strong> Multiple keys pressed together produce wrong or missing characters. This test shows which combinations fail. See <Link href={getLocalizedPath('/issues/keyboard-ghosting-issue', locale)} className="text-blue-600 hover:text-blue-800">keyboard ghosting issue</Link> for causes and fixes.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Wrong layout or characters:</strong> You press one key but another character appears. Confirm the correct keyboard layout and language in OS settings. <Link href={getLocalizedPath('/issues/keyboard-keys-typing-wrong', locale)} className="text-blue-600 hover:text-blue-800">Keys typing wrong characters</Link> has more.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Input delay:</strong> Keys feel slow to respond. Often caused by Bluetooth latency, USB power, or background software. Test with a wired keyboard to compare; see <Link href={getLocalizedPath('/issues/keyboard-slow-to-respond', locale)} className="text-blue-600 hover:text-blue-800">keyboard slow to respond</Link>.
+            </p>
+            <p className="text-gray-700 mb-6">
+              <strong>Keyboard not detected:</strong> The OS doesn’t list the keyboard or it stops working after sleep. Reconnect, try another port, and check Device Manager or System Preferences. <Link href={getLocalizedPath('/issues/keyboard-not-detected-usb', locale)} className="text-blue-600 hover:text-blue-800">Keyboard not detected (USB)</Link> can help.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Keyboard Input and Device Access</h2>
+            <p className="text-gray-700 mb-6">
+              Keyboard input does not use camera or microphone permissions. The browser receives key events when the page has focus. For how device access (camera, mic, and selection) works across OS, browser, and app layers, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>
             <h3 className="text-xl font-bold text-gray-900 mt-4 mb-3">{t.keyboard_how_title}</h3>
             
             <p className="text-lg text-gray-700 mb-6">

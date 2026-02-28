@@ -6,6 +6,7 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import ScreenTool from '@/components/ScreenTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import FixByPlatformSection from '@/components/FixByPlatformSection'
 import Link from 'next/link'
 import StepsBlock from '@/components/StepsBlock'
 
@@ -51,6 +52,18 @@ const faqs = [
   {
     question: 'Does this test work on all monitors?',
     answer: 'Yes! Our screen test works on LCD, LED, OLED, and all monitor types. Enter fullscreen mode for the most accurate test results.'
+  },
+  {
+    question: 'Why is my screen flickering?',
+    answer: 'Flicker is often caused by the cable, wrong refresh rate, or graphics drivers. Try another cable, set the correct refresh rate in display settings, and update your GPU drivers.'
+  },
+  {
+    question: 'How do I test screen colour accuracy?',
+    answer: 'Use the solid colour and gradient modes in fullscreen. Check that red, green, and blue look correct and that gradients are smooth. Calibrate in OS display settings if colours look off.'
+  },
+  {
+    question: 'Does this screen test work on laptops?',
+    answer: 'Yes. Run the test in fullscreen on the built-in display or an external monitor. The test uses whatever display is currently active.'
   }
 ]
 
@@ -148,14 +161,63 @@ export default function ScreenTestPage() {
 
           <RelatedTools currentPath="/screen" locale={locale} />
 
+          <FixByPlatformSection locale={locale} />
+
           <div className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Quick checks</h2>
             <StepsBlock steps={steps} />
           </div>
 
-          {/* Authority: how this diagnostic works, why problems happen */}
+          {/* Authority: when to test, what test checks, common problems, device access (match /mic structure) */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">How this diagnostic works &amp; why problems happen</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">When Should You Test Your Screen?</h2>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before or after buying a monitor</h4>
+            <p className="text-gray-700 mb-3">
+              Dead or stuck pixels are common reasons for returns. Run this test (fullscreen) to check solid colours before the return window closes. If you find defects, see <Link href={getLocalizedPath('/guides/dead-pixel-test-guide', locale)} className="text-blue-600 hover:text-blue-800">dead pixel test guide</Link> and your warranty policy.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When you notice flickering or artefacts</h4>
+            <p className="text-gray-700 mb-3">
+              Flicker, banding, or odd colours can be cable, driver, or panel related. This test helps isolate the issue by cycling colours and fullscreen. For flicker fixes, see <Link href={getLocalizedPath('/guides/screen-flickering', locale)} className="text-blue-600 hover:text-blue-800">screen flickering</Link>.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When colours look wrong or washed out</h4>
+            <p className="text-gray-700 mb-3">
+              Use the solid colour and gradient screens to see if the panel is uniform and if colours match expectations. Calibration and cable/driver checks often fix colour issues. <Link href={getLocalizedPath('/guides/colour-calibration-basics', locale)} className="text-blue-600 hover:text-blue-800">Colour calibration basics</Link> can help.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When checking refresh rate or resolution</h4>
+            <p className="text-gray-700 mb-6">
+              Ensure your display is set to native resolution and desired refresh rate in OS settings. This test runs in the browser at your current display mode, so you can confirm what the system is outputting.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">What This Screen Test Checks</h2>
+            <p className="text-gray-700 mb-2"><strong>Dead pixels:</strong> Solid colours (especially black, white, red, green, blue) reveal permanently black or unresponsive pixels.</p>
+            <p className="text-gray-700 mb-2"><strong>Stuck pixels:</strong> Pixels stuck on one colour show as coloured dots on black or white; they can sometimes be fixed.</p>
+            <p className="text-gray-700 mb-2"><strong>Colour uniformity:</strong> Fullscreen solid colours help you spot tint or brightness variation across the panel.</p>
+            <p className="text-gray-700 mb-2"><strong>Backlight and gradients:</strong> Dark screens expose backlight bleed; gradients expose banding or colour accuracy issues.</p>
+            <p className="text-gray-700 mb-6"><strong>No permissions needed:</strong> The test only uses the display output; no camera or microphone access. Run in fullscreen for best coverage.</p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Screen Problems This Test Helps Diagnose</h2>
+            <p className="text-gray-700 mb-2">
+              <strong>Dead pixels:</strong> Black dots on coloured backgrounds that never change. They cannot be fixed. Count and document them for warranty; see <Link href={getLocalizedPath('/guides/dead-pixel-test-guide', locale)} className="text-blue-600 hover:text-blue-800">dead pixel test guide</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Flickering:</strong> Screen flickers or flashes. Often cable, refresh rate, or driver related. Test with different cables and update GPU drivers. More: <Link href={getLocalizedPath('/guides/screen-flickering-fix', locale)} className="text-blue-600 hover:text-blue-800">screen flickering fix</Link>.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Colour or calibration issues:</strong> Colours look wrong or washed out. Check cable, resolution, and OS colour profile. <Link href={getLocalizedPath('/guides/screen-looks-washed-out', locale)} className="text-blue-600 hover:text-blue-800">Screen looks washed out</Link> and colour calibration guides can help.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Refresh rate or resolution wrong:</strong> The display may be running at a lower resolution or refresh rate than the panel supports. Set the correct mode in system display settings. <Link href={getLocalizedPath('/issues/monitor-refresh-rate-wrong', locale)} className="text-blue-600 hover:text-blue-800">Monitor refresh rate wrong</Link> has more.
+            </p>
+            <p className="text-gray-700 mb-6">
+              <strong>Backlight bleed:</strong> Light leaking from edges on dark screens. Use the test’s dark mode to assess severity. Usually a panel characteristic rather than something software can fix.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Screen Test and Device Access</h2>
+            <p className="text-gray-700 mb-6">
+              This test only uses your display output; it does not request camera or microphone. For how device access (camera, mic, and app selection) works across OS, browser, and app layers, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>
             <h3 className="text-xl font-bold text-gray-900 mt-4 mb-3">How to Test Your Screen for Dead Pixels</h3>
             
             <p className="text-lg text-gray-700 mb-6">

@@ -6,6 +6,7 @@ import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTransla
 import MeetingCheckTool from '@/components/MeetingCheckTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
+import FixByPlatformSection from '@/components/FixByPlatformSection'
 import Link from 'next/link'
 import StepsBlock from '@/components/StepsBlock'
 
@@ -51,6 +52,18 @@ const faqs = [
   {
     question: 'Will this test work for Zoom, Teams, and Google Meet?',
     answer: 'Yes! If our meeting check passes, your setup will work with Zoom, Microsoft Teams, Google Meet, and other video conferencing platforms. We test the same requirements these platforms need.'
+  },
+  {
+    question: 'Why did my camera or microphone test fail?',
+    answer: 'Usually the browser or OS has blocked access. Allow camera and microphone for this site and for your browser in system Privacy settings. Close other apps using the camera or mic, then run the check again.'
+  },
+  {
+    question: 'Do I need to install anything for the meeting check?',
+    answer: 'No. The check runs in your browser. You only need to allow camera and microphone when prompted. No app download or account required.'
+  },
+  {
+    question: 'Tests pass here but my app still has no camera or mic. Why?',
+    answer: 'The meeting app may be using a different device. In Zoom, Teams, or Meet, open Settings → Video and Audio and select the same camera and microphone that passed in this check.'
   }
 ]
 
@@ -148,14 +161,60 @@ export default function MeetingCheckPage() {
 
           <RelatedTools currentPath="/meeting-check" locale={locale} />
 
+          <FixByPlatformSection locale={locale} />
+
           <div className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-2">Quick checks</h2>
             <StepsBlock steps={steps} />
           </div>
 
-          {/* Authority: how this diagnostic works, why problems happen */}
+          {/* Authority: when to run, what it tests, common problems, permissions (match /mic structure) */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">How this diagnostic works &amp; why problems happen</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">When Should You Run a Meeting Check?</h2>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before important Zoom, Teams, or Meet calls</h4>
+            <p className="text-gray-700 mb-3">
+              A quick run a few minutes before the call catches permission, device, or network issues while you still have time to fix them. If all tests pass here, your setup will work in the meeting app.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">After changing devices or permissions</h4>
+            <p className="text-gray-700 mb-3">
+              New headset, different camera, or a fresh OS/browser permission reset can break video or audio. Run the check after any change to confirm camera and mic are detected and network is stable.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When you had “no camera” or “no mic” last time</h4>
+            <p className="text-gray-700 mb-3">
+              If a previous call failed with device issues, run this check first. It tests the same layers (network, camera, microphone) that Zoom, Teams, and Meet use. Fix any failing step before joining again.
+            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before your first call on a new platform</h4>
+            <p className="text-gray-700 mb-6">
+              First time on Zoom, Teams, or Meet? Run the meeting check so you grant browser and OS permissions once and confirm devices work before others are waiting.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">What This Meeting Check Tests</h2>
+            <p className="text-gray-700 mb-2"><strong>Network:</strong> Ping and jitter to gauge latency and stability. High values can cause lag or choppy audio in calls.</p>
+            <p className="text-gray-700 mb-2"><strong>Camera access:</strong> Whether the browser can get a video stream from your camera. Same permission and device stack that meeting apps use.</p>
+            <p className="text-gray-700 mb-2"><strong>Microphone access:</strong> Whether the browser can get an audio stream from your mic. Confirms permissions and device selection.</p>
+            <p className="text-gray-700 mb-2"><strong>Pass/fail summary:</strong> A single view of what’s working so you can fix only what failed.</p>
+            <p className="text-gray-700 mb-6"><strong>No account or install:</strong> Runs in the browser; no app or login required. Uses the same device access as web-based meeting clients.</p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Problems This Check Helps Diagnose</h2>
+            <p className="text-gray-700 mb-2">
+              <strong>Camera test fails:</strong> Usually browser or OS has blocked the camera, or another app is using it. Allow camera for this site and for your browser in system Privacy; close other video apps. More: <Link href={getLocalizedPath('/issues/webcam-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">webcam not working in Zoom</Link> (same fix for other apps).
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>Microphone test fails:</strong> Often permissions or wrong device. Allow mic for this site and in OS settings; pick the correct input in system sound. See <Link href={getLocalizedPath('/issues/microphone-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Zoom</Link> for steps.
+            </p>
+            <p className="text-gray-700 mb-2">
+              <strong>High ping or jitter:</strong> Network congestion, WiFi, or bandwidth-heavy apps. Use wired Ethernet if possible, close streaming/downloads, and retest. If it stays high, check your connection or ISP.
+            </p>
+            <p className="text-gray-700 mb-6">
+              <strong>Tests pass here but fail in the app:</strong> The app may be using a different camera or mic. In Zoom, Teams, or Meet, open Settings → Video/Audio and select the same devices that passed in this check.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Meeting Check and Device Permissions</h2>
+            <p className="text-gray-700 mb-6">
+              Camera and microphone tests use the same OS → browser → app layers as video calls. If the check fails for camera or mic, fix permissions at the browser and system level. For how those layers work and why devices fail even when they work elsewhere, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>
             <h3 className="text-xl font-bold text-gray-900 mt-4 mb-3">How to Check Your Setup Before Video Calls</h3>
             
             <p className="text-lg text-gray-700 mb-6">
