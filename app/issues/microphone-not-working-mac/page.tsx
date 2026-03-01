@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-working-mac'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working on Mac - Complete Fix Guide',
   description: 'Fix microphone not working on mac. Step-by-step troubleshooting guide covering Mac settings, permissions, drivers, and solutions for mac cannot access microphone.',
   path: issuePath,
   keywords: ["microphone not working mac","mac mic not detected","macos microphone issues"]
-}), alternates }
+}) }
 
 const faqs = [
   {

@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-detected-usb'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'USB Microphone Not Detected - Complete Fix Guide',
   description: 'Fix usb microphone not detected. Step-by-step troubleshooting guide covering USB settings, permissions, drivers, and solutions for usb microphone not showing as input.',
   path: issuePath,
   keywords: ["usb microphone not detected","usb mic not working","usb microphone fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

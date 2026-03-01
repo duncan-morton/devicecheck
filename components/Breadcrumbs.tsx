@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { ChevronRight, Home } from 'lucide-react'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateBreadcrumbListSchema } from '@/lib/seo/jsonLd'
-import { getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 
 interface BreadcrumbItem {
   name: string
@@ -18,7 +19,7 @@ export default function Breadcrumbs({ items, locale = 'en' }: BreadcrumbsProps) 
   const homePath = locale === 'en' ? '/' : `/${locale}`
   const allItems = [
     { name: 'Home', path: homePath },
-    ...items.map(item => ({ ...item, path: getLocalizedPath(item.path, locale) }))
+    ...items.map(item => ({ ...item, path: localizePathIfSupported(item.path, locale) }))
   ]
 
   const jsonLd = generateBreadcrumbListSchema(allItems, locale)

@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import WebcamTool from '@/components/WebcamTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -46,13 +47,13 @@ export default function WebcamTestPage() {
   const webAppSchema = generateWebApplicationSchema(
     t.webcam_meta_title,
     t.webcam_meta_description,
-    getLocalizedPath('/webcam', locale),
+    localizePathIfSupported('/webcam', locale),
     locale
   )
 
   const breadcrumbs = generateBreadcrumbListSchema([
-    { name: t.breadcrumb_home, path: getLocalizedPath('/', locale) },
-    { name: t.webcam_test, path: getLocalizedPath('/webcam', locale) }
+    { name: t.breadcrumb_home, path: localizePathIfSupported('/', locale) },
+    { name: t.webcam_test, path: localizePathIfSupported('/webcam', locale) }
   ], locale)
 
   const faqSchema = generateFAQPageSchema(faqs(t), locale)
@@ -65,10 +66,10 @@ export default function WebcamTestPage() {
       
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
-          <Breadcrumbs items={[{ name: t.webcam_test, path: getLocalizedPath('/webcam', locale) }]} locale={locale} />
+          <Breadcrumbs items={[{ name: t.webcam_test, path: localizePathIfSupported('/webcam', locale) }]} locale={locale} />
           
           <Link 
-            href={getLocalizedPath('/', locale)}
+            href={localizePathIfSupported('/', locale)}
             className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
           >
             ← All tools
@@ -96,7 +97,7 @@ export default function WebcamTestPage() {
             <WebcamTool />
           </div>
 
-          <RelatedTools currentPath={getLocalizedPath('/webcam', locale)} locale={locale} />
+          <RelatedTools currentPath={localizePathIfSupported('/webcam', locale)} locale={locale} />
 
           {/* Comprehensive SEO Content */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">
@@ -221,13 +222,13 @@ export default function WebcamTestPage() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.webcam_troubleshooting_title}</h3>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li><Link href={getLocalizedPath("/guides/webcam-not-working", locale)} className="text-blue-600 hover:text-blue-800">Webcam not working</Link></li>
-              <li><Link href={getLocalizedPath("/guides/webcam-not-detected-chrome", locale)} className="text-blue-600 hover:text-blue-800">Webcam not detected in Chrome</Link></li>
-              <li><Link href={getLocalizedPath("/guides/webcam-test-zoom", locale)} className="text-blue-600 hover:text-blue-800">Test webcam for Zoom</Link></li>
-              <li><Link href={getLocalizedPath("/guides/webcam-too-dark-grainy", locale)} className="text-blue-600 hover:text-blue-800">Webcam too dark or grainy</Link></li>
-              <li><Link href={getLocalizedPath("/guides/webcam-lagging-low-fps", locale)} className="text-blue-600 hover:text-blue-800">Webcam lagging or low FPS</Link></li>
-              <li><Link href={getLocalizedPath("/guides/external-webcam-not-recognised", locale)} className="text-blue-600 hover:text-blue-800">External webcam not recognised</Link></li>
-              <li><Link href={getLocalizedPath("/guides/how-to-enable-camera-browser", locale)} className="text-blue-600 hover:text-blue-800">Enable camera in browser</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/webcam-not-working", locale)} className="text-blue-600 hover:text-blue-800">Webcam not working</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/webcam-not-detected-chrome", locale)} className="text-blue-600 hover:text-blue-800">Webcam not detected in Chrome</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/webcam-test-zoom", locale)} className="text-blue-600 hover:text-blue-800">Test webcam for Zoom</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/webcam-too-dark-grainy", locale)} className="text-blue-600 hover:text-blue-800">Webcam too dark or grainy</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/webcam-lagging-low-fps", locale)} className="text-blue-600 hover:text-blue-800">Webcam lagging or low FPS</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/external-webcam-not-recognised", locale)} className="text-blue-600 hover:text-blue-800">External webcam not recognised</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/how-to-enable-camera-browser", locale)} className="text-blue-600 hover:text-blue-800">Enable camera in browser</Link></li>
             </ul>
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.frequently_asked_questions}</h3>

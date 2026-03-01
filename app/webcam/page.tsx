@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import WebcamToolWithQuickChecks from '@/components/WebcamToolWithQuickChecks'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -86,13 +87,13 @@ export default function WebcamTestPage() {
   const webAppSchema = generateWebApplicationSchema(
     t.webcam_meta_title,
     t.webcam_meta_description,
-    getLocalizedPath('/webcam', locale),
+    localizePathIfSupported('/webcam', locale),
     locale
   )
 
   const breadcrumbs = generateBreadcrumbListSchema([
-    { name: t.breadcrumb_home, path: getLocalizedPath('/', locale) },
-    { name: t.webcam_test, path: getLocalizedPath('/webcam', locale) }
+    { name: t.breadcrumb_home, path: localizePathIfSupported('/', locale) },
+    { name: t.webcam_test, path: localizePathIfSupported('/webcam', locale) }
   ], locale)
 
   const faqSchema = generateFAQPageSchema(faqs(t), locale)
@@ -106,10 +107,10 @@ export default function WebcamTestPage() {
       
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 pt-4 pb-8 max-w-6xl">
-          <Breadcrumbs items={[{ name: t.webcam_test, path: getLocalizedPath('/webcam', locale) }]} locale={locale} />
+          <Breadcrumbs items={[{ name: t.webcam_test, path: localizePathIfSupported('/webcam', locale) }]} locale={locale} />
           
           <Link 
-            href={getLocalizedPath('/', locale)}
+            href={localizePathIfSupported('/', locale)}
             className="inline-block text-sm text-neutral-500 hover:text-neutral-900 mb-2 transition-colors"
           >
             ← All tools
@@ -137,7 +138,7 @@ export default function WebcamTestPage() {
             <WebcamToolWithQuickChecks steps={steps} />
           </div>
 
-          <RelatedTools currentPath={getLocalizedPath('/webcam', locale)} locale={locale} />
+          <RelatedTools currentPath={localizePathIfSupported('/webcam', locale)} locale={locale} />
 
           <FixByPlatformSection locale={locale} />
 
@@ -159,15 +160,15 @@ export default function WebcamTestPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">When Should You Test Your Webcam?</h2>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before Zoom or Teams calls</h4>
             <p className="text-gray-700 mb-3">
-              A quick camera check before joining avoids a black tile or “camera off” in the meeting. If this test shows a live preview, your camera will work in Zoom, Teams, and Meet. Run the <Link href={getLocalizedPath('/meeting-check', locale)} className="text-blue-600 hover:text-blue-800">full meeting check</Link> to verify camera and mic together.
+              A quick camera check before joining avoids a black tile or “camera off” in the meeting. If this test shows a live preview, your camera will work in Zoom, Teams, and Meet. Run the <Link href={localizePathIfSupported('/meeting-check', locale)} className="text-blue-600 hover:text-blue-800">full meeting check</Link> to verify camera and mic together.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When the image is blurry or poor quality</h4>
             <p className="text-gray-700 mb-3">
-              Blur, grain, or dark video often comes from low light, wrong resolution, or a low-quality sensor. This tool shows the live feed and resolution so you can adjust lighting or settings. For improving quality, see <Link href={getLocalizedPath('/guides/webcam-too-dark-grainy', locale)} className="text-blue-600 hover:text-blue-800">webcam too dark or grainy</Link>.
+              Blur, grain, or dark video often comes from low light, wrong resolution, or a low-quality sensor. This tool shows the live feed and resolution so you can adjust lighting or settings. For improving quality, see <Link href={localizePathIfSupported('/guides/webcam-too-dark-grainy', locale)} className="text-blue-600 hover:text-blue-800">webcam too dark or grainy</Link>.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When apps can&apos;t detect your camera</h4>
             <p className="text-gray-700 mb-3">
-              If an app says “no camera” or shows a black screen, the cause is usually permissions or another app holding the camera. Testing here confirms whether the browser can see your camera; if it can’t, fix permissions first. For Zoom, see <Link href={getLocalizedPath('/issues/webcam-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">webcam not working in Zoom</Link>.
+              If an app says “no camera” or shows a black screen, the cause is usually permissions or another app holding the camera. Testing here confirms whether the browser can see your camera; if it can’t, fix permissions first. For Zoom, see <Link href={localizePathIfSupported('/issues/webcam-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">webcam not working in Zoom</Link>.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before recording or streaming</h4>
             <p className="text-gray-700 mb-6">
@@ -183,16 +184,16 @@ export default function WebcamTestPage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Webcam Problems This Test Helps Diagnose</h2>
             <p className="text-gray-700 mb-2">
-              <strong>Camera not detected:</strong> No preview or “no device” usually means blocked permissions or another app using the camera. Fix browser and OS permissions, then retest. More: <Link href={getLocalizedPath('/issues/webcam-not-detected-chrome', locale)} className="text-blue-600 hover:text-blue-800">webcam not detected in Chrome</Link>.
+              <strong>Camera not detected:</strong> No preview or “no device” usually means blocked permissions or another app using the camera. Fix browser and OS permissions, then retest. More: <Link href={localizePathIfSupported('/issues/webcam-not-detected-chrome', locale)} className="text-blue-600 hover:text-blue-800">webcam not detected in Chrome</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Blurry or low quality:</strong> Often due to resolution, lighting, or focus. Check the resolution in the test and in your conferencing app; improve lighting or see <Link href={getLocalizedPath('/guides/webcam-quality-improve', locale)} className="text-blue-600 hover:text-blue-800">improve webcam quality</Link>.
+              <strong>Blurry or low quality:</strong> Often due to resolution, lighting, or focus. Check the resolution in the test and in your conferencing app; improve lighting or see <Link href={localizePathIfSupported('/guides/webcam-quality-improve', locale)} className="text-blue-600 hover:text-blue-800">improve webcam quality</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Permissions blocked:</strong> The page loads but no video appears, or the prompt never shows. Reset the site’s camera permission and reload, or use an incognito window. See <Link href={getLocalizedPath('/guides/how-to-enable-camera-browser', locale)} className="text-blue-600 hover:text-blue-800">how to enable camera in browser</Link>.
+              <strong>Permissions blocked:</strong> The page loads but no video appears, or the prompt never shows. Reset the site’s camera permission and reload, or use an incognito window. See <Link href={localizePathIfSupported('/guides/how-to-enable-camera-browser', locale)} className="text-blue-600 hover:text-blue-800">how to enable camera in browser</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Wrong camera selected:</strong> System or browser may be using a different device. Use the tool’s device list (if shown) or system settings to pick the correct camera. <Link href={getLocalizedPath('/issues/webcam-in-use-by-another-app', locale)} className="text-blue-600 hover:text-blue-800">Webcam in use by another app</Link> has more.
+              <strong>Wrong camera selected:</strong> System or browser may be using a different device. Use the tool’s device list (if shown) or system settings to pick the correct camera. <Link href={localizePathIfSupported('/issues/webcam-in-use-by-another-app', locale)} className="text-blue-600 hover:text-blue-800">Webcam in use by another app</Link> has more.
             </p>
             <p className="text-gray-700 mb-6">
               <strong>Black screen in one app but not others:</strong> Usually one app is holding the camera or the app’s device selection is wrong. Close other video apps and choose the correct camera in the app’s settings.
@@ -203,7 +204,7 @@ export default function WebcamTestPage() {
               Browsers ask for camera access when a site requests it; you must click “Allow” for this test to work. Windows and macOS add a second layer: even if the browser has permission, the OS can block camera access for the browser. If the test fails, check system Privacy/Settings and ensure camera access is allowed for your browser.
             </p>
             <p className="text-gray-700 mb-6">
-              For how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+              For how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={localizePathIfSupported('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
             </p>
           </section>
 
@@ -268,7 +269,7 @@ export default function WebcamTestPage() {
                   <li>{t.webcam_browser_5}</li>
                 </ul>
                 <p className="text-gray-700 mb-6">
-                  For how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+                  For how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={localizePathIfSupported('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
                 </p>
                 <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{t.webcam_tips_title}</h3>
                 <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
@@ -329,13 +330,13 @@ export default function WebcamTestPage() {
                 {t.webcam_troubleshooting_title}
               </summary>
               <ul className="list-disc pl-6 space-y-2 text-gray-700 mt-4">
-                <li><Link href={getLocalizedPath("/guides/webcam-not-working", locale)} className="text-blue-600 hover:text-blue-800">Webcam not working</Link></li>
-                <li><Link href={getLocalizedPath("/guides/webcam-not-detected-chrome", locale)} className="text-blue-600 hover:text-blue-800">Webcam not detected in Chrome</Link></li>
-                <li><Link href={getLocalizedPath("/guides/webcam-test-zoom", locale)} className="text-blue-600 hover:text-blue-800">Test webcam for Zoom</Link></li>
-                <li><Link href={getLocalizedPath("/guides/webcam-too-dark-grainy", locale)} className="text-blue-600 hover:text-blue-800">Webcam too dark or grainy</Link></li>
-                <li><Link href={getLocalizedPath("/guides/webcam-lagging-low-fps", locale)} className="text-blue-600 hover:text-blue-800">Webcam lagging or low FPS</Link></li>
-                <li><Link href={getLocalizedPath("/guides/external-webcam-not-recognised", locale)} className="text-blue-600 hover:text-blue-800">External webcam not recognised</Link></li>
-                <li><Link href={getLocalizedPath("/guides/how-to-enable-camera-browser", locale)} className="text-blue-600 hover:text-blue-800">Enable camera in browser</Link></li>
+                <li><Link href={localizePathIfSupported("/guides/webcam-not-working", locale)} className="text-blue-600 hover:text-blue-800">Webcam not working</Link></li>
+                <li><Link href={localizePathIfSupported("/guides/webcam-not-detected-chrome", locale)} className="text-blue-600 hover:text-blue-800">Webcam not detected in Chrome</Link></li>
+                <li><Link href={localizePathIfSupported("/guides/webcam-test-zoom", locale)} className="text-blue-600 hover:text-blue-800">Test webcam for Zoom</Link></li>
+                <li><Link href={localizePathIfSupported("/guides/webcam-too-dark-grainy", locale)} className="text-blue-600 hover:text-blue-800">Webcam too dark or grainy</Link></li>
+                <li><Link href={localizePathIfSupported("/guides/webcam-lagging-low-fps", locale)} className="text-blue-600 hover:text-blue-800">Webcam lagging or low FPS</Link></li>
+                <li><Link href={localizePathIfSupported("/guides/external-webcam-not-recognised", locale)} className="text-blue-600 hover:text-blue-800">External webcam not recognised</Link></li>
+                <li><Link href={localizePathIfSupported("/guides/how-to-enable-camera-browser", locale)} className="text-blue-600 hover:text-blue-800">Enable camera in browser</Link></li>
               </ul>
             </details>
 

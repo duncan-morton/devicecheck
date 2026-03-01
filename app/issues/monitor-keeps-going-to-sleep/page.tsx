@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/monitor-keeps-going-to-sleep'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Monitor Keeps Going to Sleep - Complete Fix Guide',
   description: 'Fix monitor keeps going to sleep. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for screen enters sleep mode repeatedly.',
   path: issuePath,
   keywords: ["monitor sleep mode issue","screen keeps sleeping","monitor sleep problem"]
-}), alternates }
+}) }
 
 const faqs = [
   {

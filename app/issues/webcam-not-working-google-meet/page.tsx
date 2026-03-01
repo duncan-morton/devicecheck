@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-not-working-google-meet'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Not Working in Google Meet - Complete Fix Guide',
   description: 'Fix webcam not working in google meet. Step-by-step troubleshooting guide covering Google Meet settings, permissions, drivers, and solutions for webcam not showing or detected in google meet.',
   path: issuePath,
   keywords: ["webcam not working google meet","google meet camera fix","google meet webcam not detected","google meet camera not showing","google meet video not working"]
-}), alternates }
+}) }
 
 const faqs = [
   {

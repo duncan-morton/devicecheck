@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-muted-windows-11'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Muted on Windows 11 - Complete Fix Guide',
   description: 'Fix microphone muted on windows 11. Step-by-step troubleshooting guide covering Windows 11 settings, permissions, drivers, and solutions for windows 11 microphone stuck on mute or zero volume.',
   path: issuePath,
   keywords: ["microphone muted windows 11","windows 11 mic mute fix","mic volume locked at zero"]
-}), alternates }
+}) }
 
 const faqs = [
   {

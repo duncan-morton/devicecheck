@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Camera, Mic, Keyboard, Monitor, Video } from 'lucide-react'
-import { getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 
 interface Tool {
   name: string
@@ -58,7 +59,7 @@ export default function RelatedTools({ currentPath, title = 'Related Tools', loc
         {relatedTools.map(tool => (
           <Link
             key={tool.path}
-            href={getLocalizedPath(tool.path, locale)}
+            href={localizePathIfSupported(tool.path, locale)}
             className="group h-full flex bg-white rounded-xl border border-gray-200 p-5 hover:border-blue-300 hover:shadow-lg transition-all"
           >
             <div className="flex items-start gap-4 w-full">

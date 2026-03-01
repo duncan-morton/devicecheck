@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import MeetingCheckTool from '@/components/MeetingCheckTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -131,7 +132,7 @@ export default function MeetingCheckPage() {
           <Breadcrumbs items={[{ name: t.meeting_check, path: '/meeting-check' }]} locale={locale} />
           
           <Link 
-            href={getLocalizedPath('/', locale)}
+            href={localizePathIfSupported('/', locale)}
             className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
           >
             ← All tools
@@ -197,10 +198,10 @@ export default function MeetingCheckPage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Problems This Check Helps Diagnose</h2>
             <p className="text-gray-700 mb-2">
-              <strong>Camera test fails:</strong> Usually browser or OS has blocked the camera, or another app is using it. Allow camera for this site and for your browser in system Privacy; close other video apps. More: <Link href={getLocalizedPath('/issues/webcam-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">webcam not working in Zoom</Link> (same fix for other apps).
+              <strong>Camera test fails:</strong> Usually browser or OS has blocked the camera, or another app is using it. Allow camera for this site and for your browser in system Privacy; close other video apps. More: <Link href={localizePathIfSupported('/issues/webcam-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">webcam not working in Zoom</Link> (same fix for other apps).
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Microphone test fails:</strong> Often permissions or wrong device. Allow mic for this site and in OS settings; pick the correct input in system sound. See <Link href={getLocalizedPath('/issues/microphone-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Zoom</Link> for steps.
+              <strong>Microphone test fails:</strong> Often permissions or wrong device. Allow mic for this site and in OS settings; pick the correct input in system sound. See <Link href={localizePathIfSupported('/issues/microphone-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Zoom</Link> for steps.
             </p>
             <p className="text-gray-700 mb-2">
               <strong>High ping or jitter:</strong> Network congestion, WiFi, or bandwidth-heavy apps. Use wired Ethernet if possible, close streaming/downloads, and retest. If it stays high, check your connection or ISP.
@@ -211,7 +212,7 @@ export default function MeetingCheckPage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Meeting Check and Device Permissions</h2>
             <p className="text-gray-700 mb-6">
-              Camera and microphone tests use the same OS → browser → app layers as video calls. If the check fails for camera or mic, fix permissions at the browser and system level. For how those layers work and why devices fail even when they work elsewhere, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+              Camera and microphone tests use the same OS → browser → app layers as video calls. If the check fails for camera or mic, fix permissions at the browser and system level. For how those layers work and why devices fail even when they work elsewhere, see <Link href={localizePathIfSupported('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>

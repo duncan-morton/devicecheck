@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/screen-color-calibration-windows'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Screen Color Calibration on Windows - Complete Fix Guide',
   description: 'Fix screen color calibration on windows. Step-by-step troubleshooting guide covering Windows settings, permissions, drivers, and solutions for screen colors look incorrect or need calibration on windows.',
   path: issuePath,
   keywords: ["screen color calibration windows","windows display calibration","monitor color calibration windows","windows screen color fix","display calibration windows"]
-}), alternates }
+}) }
 
 const faqs = [
   {

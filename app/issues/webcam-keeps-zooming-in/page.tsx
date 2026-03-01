@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-keeps-zooming-in'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Keeps Zooming In - Complete Fix Guide',
   description: 'Fix webcam keeps zooming in. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for auto-zoom or auto-crop enabled unexpectedly.',
   path: issuePath,
   keywords: ["webcam zooming in","auto zoom webcam fix","camera crops face automatically"]
-}), alternates }
+}) }
 
 const faqs = [
   {

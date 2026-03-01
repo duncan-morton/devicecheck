@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-working-obs-studio'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working in OBS Studio - Complete Fix Guide',
   description: 'Fix microphone not working in obs studio. Step-by-step troubleshooting guide covering OBS settings, permissions, drivers, and solutions for obs not capturing microphone audio.',
   path: issuePath,
   keywords: ["microphone not working obs","obs mic not detected","obs audio input fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

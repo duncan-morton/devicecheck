@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/chrome-microphone-permission-blocked'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Chrome Microphone Permission Blocked - Complete Fix Guide',
   description: 'Fix chrome microphone permission blocked. Step-by-step troubleshooting guide covering Chrome settings, permissions, drivers, and solutions for chrome blocking microphone access.',
   path: issuePath,
   keywords: ["chrome microphone blocked","chrome mic permission denied","chrome allow microphone"]
-}), alternates }
+}) }
 
 const faqs = [
   {

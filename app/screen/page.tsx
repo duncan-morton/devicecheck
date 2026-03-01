@@ -2,7 +2,9 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import ScreenTool from '@/components/ScreenTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -131,7 +133,7 @@ export default function ScreenTestPage() {
           <Breadcrumbs items={[{ name: t.screen_test, path: '/screen' }]} locale={locale} />
           
           <Link 
-            href={getLocalizedPath('/', locale)}
+            href={localizePathIfSupported('/', locale)}
             className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
           >
             ← All tools
@@ -173,15 +175,15 @@ export default function ScreenTestPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">When Should You Test Your Screen?</h2>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before or after buying a monitor</h4>
             <p className="text-gray-700 mb-3">
-              Dead or stuck pixels are common reasons for returns. Run this test (fullscreen) to check solid colours before the return window closes. If you find defects, see <Link href={getLocalizedPath('/guides/dead-pixel-test-guide', locale)} className="text-blue-600 hover:text-blue-800">dead pixel test guide</Link> and your warranty policy.
+              Dead or stuck pixels are common reasons for returns. Run this test (fullscreen) to check solid colours before the return window closes. If you find defects, see <Link href={localizePathIfSupported('/guides/dead-pixel-test-guide', locale)} className="text-blue-600 hover:text-blue-800">dead pixel test guide</Link> and your warranty policy.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When you notice flickering or artefacts</h4>
             <p className="text-gray-700 mb-3">
-              Flicker, banding, or odd colours can be cable, driver, or panel related. This test helps isolate the issue by cycling colours and fullscreen. For flicker fixes, see <Link href={getLocalizedPath('/guides/screen-flickering', locale)} className="text-blue-600 hover:text-blue-800">screen flickering</Link>.
+              Flicker, banding, or odd colours can be cable, driver, or panel related. This test helps isolate the issue by cycling colours and fullscreen. For flicker fixes, see <Link href={localizePathIfSupported('/guides/screen-flickering', locale)} className="text-blue-600 hover:text-blue-800">screen flickering</Link>.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When colours look wrong or washed out</h4>
             <p className="text-gray-700 mb-3">
-              Use the solid colour and gradient screens to see if the panel is uniform and if colours match expectations. Calibration and cable/driver checks often fix colour issues. <Link href={getLocalizedPath('/guides/colour-calibration-basics', locale)} className="text-blue-600 hover:text-blue-800">Colour calibration basics</Link> can help.
+              Use the solid colour and gradient screens to see if the panel is uniform and if colours match expectations. Calibration and cable/driver checks often fix colour issues. <Link href={localizePathIfSupported('/guides/colour-calibration-basics', locale)} className="text-blue-600 hover:text-blue-800">Colour calibration basics</Link> can help.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When checking refresh rate or resolution</h4>
             <p className="text-gray-700 mb-6">
@@ -197,16 +199,16 @@ export default function ScreenTestPage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Screen Problems This Test Helps Diagnose</h2>
             <p className="text-gray-700 mb-2">
-              <strong>Dead pixels:</strong> Black dots on coloured backgrounds that never change. They cannot be fixed. Count and document them for warranty; see <Link href={getLocalizedPath('/guides/dead-pixel-test-guide', locale)} className="text-blue-600 hover:text-blue-800">dead pixel test guide</Link>.
+              <strong>Dead pixels:</strong> Black dots on coloured backgrounds that never change. They cannot be fixed. Count and document them for warranty; see <Link href={localizePathIfSupported('/guides/dead-pixel-test-guide', locale)} className="text-blue-600 hover:text-blue-800">dead pixel test guide</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Flickering:</strong> Screen flickers or flashes. Often cable, refresh rate, or driver related. Test with different cables and update GPU drivers. More: <Link href={getLocalizedPath('/guides/screen-flickering-fix', locale)} className="text-blue-600 hover:text-blue-800">screen flickering fix</Link>.
+              <strong>Flickering:</strong> Screen flickers or flashes. Often cable, refresh rate, or driver related. Test with different cables and update GPU drivers. More: <Link href={localizePathIfSupported('/guides/screen-flickering-fix', locale)} className="text-blue-600 hover:text-blue-800">screen flickering fix</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Colour or calibration issues:</strong> Colours look wrong or washed out. Check cable, resolution, and OS colour profile. <Link href={getLocalizedPath('/guides/screen-looks-washed-out', locale)} className="text-blue-600 hover:text-blue-800">Screen looks washed out</Link> and colour calibration guides can help.
+              <strong>Colour or calibration issues:</strong> Colours look wrong or washed out. Check cable, resolution, and OS colour profile. <Link href={localizePathIfSupported('/guides/screen-looks-washed-out', locale)} className="text-blue-600 hover:text-blue-800">Screen looks washed out</Link> and colour calibration guides can help.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Refresh rate or resolution wrong:</strong> The display may be running at a lower resolution or refresh rate than the panel supports. Set the correct mode in system display settings. <Link href={getLocalizedPath('/issues/monitor-refresh-rate-wrong', locale)} className="text-blue-600 hover:text-blue-800">Monitor refresh rate wrong</Link> has more.
+              <strong>Refresh rate or resolution wrong:</strong> The display may be running at a lower resolution or refresh rate than the panel supports. Set the correct mode in system display settings. <Link href={localizePathIfSupported('/issues/monitor-refresh-rate-wrong', locale)} className="text-blue-600 hover:text-blue-800">Monitor refresh rate wrong</Link> has more.
             </p>
             <p className="text-gray-700 mb-6">
               <strong>Backlight bleed:</strong> Light leaking from edges on dark screens. Use the test’s dark mode to assess severity. Usually a panel characteristic rather than something software can fix.
@@ -214,7 +216,7 @@ export default function ScreenTestPage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Screen Test and Device Access</h2>
             <p className="text-gray-700 mb-6">
-              This test only uses your display output; it does not request camera or microphone. For how device access (camera, mic, and app selection) works across OS, browser, and app layers, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+              This test only uses your display output; it does not request camera or microphone. For how device access (camera, mic, and app selection) works across OS, browser, and app layers, see <Link href={localizePathIfSupported('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>

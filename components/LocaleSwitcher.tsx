@@ -2,7 +2,8 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { getLocaleFromPath, getPathWithoutLocale, getLocalizedPath, SUPPORTED_LOCALES, LOCALE_NAMES, type Locale } from '@/i18n/getTranslation'
+import { getLocaleFromPath, getPathWithoutLocale, SUPPORTED_LOCALES, LOCALE_NAMES, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 
 export default function LocaleSwitcher() {
   const pathname = usePathname()
@@ -15,7 +16,7 @@ export default function LocaleSwitcher() {
         value={currentLocale}
         onChange={(e) => {
           const newLocale = e.target.value as Locale
-          const newPath = getLocalizedPath(pathWithoutLocale, newLocale)
+          const newPath = localizePathIfSupported(pathWithoutLocale, newLocale)
           window.location.href = newPath
         }}
         className="appearance-none bg-white border border-gray-300 rounded px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
@@ -45,7 +46,7 @@ export function LocaleSwitcherLinks() {
     <div className="flex items-center gap-2 flex-wrap">
       {SUPPORTED_LOCALES.map((locale) => {
         const isActive = locale === currentLocale
-        const href = getLocalizedPath(pathWithoutLocale, locale)
+        const href = localizePathIfSupported(pathWithoutLocale, locale)
         
         return (
           <Link

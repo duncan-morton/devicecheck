@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-keeps-disconnecting-usb'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'USB Webcam Keeps Disconnecting - Complete Fix Guide',
   description: 'Fix usb webcam keeps disconnecting. Step-by-step troubleshooting guide covering USB settings, permissions, drivers, and solutions for webcam randomly disconnects or resets.',
   path: issuePath,
   keywords: ["usb webcam disconnecting","webcam resets randomly","camera disconnect fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

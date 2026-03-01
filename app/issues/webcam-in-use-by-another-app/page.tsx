@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-in-use-by-another-app'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam In Use by Another Application - Complete Fix Guide',
   description: 'Fix webcam in use by another application. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for camera locked by another program.',
   path: issuePath,
   keywords: ["webcam in use","camera in use by another app","camera busy fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

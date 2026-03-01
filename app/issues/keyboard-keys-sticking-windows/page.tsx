@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/keyboard-keys-sticking-windows'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Keyboard Keys Sticking on Windows - Complete Fix Guide',
   description: 'Fix keyboard keys sticking on windows. Step-by-step troubleshooting guide covering Windows settings, permissions, drivers, and solutions for keyboard keys sticking or repeating on windows.',
   path: issuePath,
   keywords: ["keyboard keys sticking windows","sticky keys windows fix","keyboard repeating keys windows","windows keyboard keys stuck","keyboard sticky keys fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

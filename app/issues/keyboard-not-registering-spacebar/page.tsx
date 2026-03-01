@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/keyboard-not-registering-spacebar'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Spacebar Not Registering - Complete Fix Guide',
   description: 'Fix spacebar not registering. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for spacebar occasionally or fully fails.',
   path: issuePath,
   keywords: ["spacebar not working","space key fix","keyboard space bar problem"]
-}), alternates }
+}) }
 
 const faqs = [
   {

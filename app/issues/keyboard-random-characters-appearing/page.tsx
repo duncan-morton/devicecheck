@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/keyboard-random-characters-appearing'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Keyboard Typing Random Characters - Complete Fix Guide',
   description: 'Fix keyboard typing random characters. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for unexpected characters appear while typing.',
   path: issuePath,
   keywords: ["keyboard random characters","keyboard typing nonsense","keys producing wrong output"]
-}), alternates }
+}) }
 
 const faqs = [
   {

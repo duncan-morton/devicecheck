@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-working-iphone-browser'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working in iPhone Browser - Complete Fix Guide',
   description: 'Fix microphone not working in iphone browser. Step-by-step troubleshooting guide covering iPhone settings, permissions, drivers, and solutions for iphone browser blocking microphone access.',
   path: issuePath,
   keywords: ["microphone not working iphone browser","iphone allow microphone safari","ios mic permission web"]
-}), alternates }
+}) }
 
 const faqs = [
   {

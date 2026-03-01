@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-fuzzy-blurry-image'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Fuzzy or Blurry Image - Complete Fix Guide',
   description: 'Fix webcam fuzzy or blurry image. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for image appears unfocused or low quality.',
   path: issuePath,
   keywords: ["webcam blurry image","fuzzy webcam fix","webcam not focused"]
-}), alternates }
+}) }
 
 const faqs = [
   {

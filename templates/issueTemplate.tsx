@@ -3,7 +3,8 @@ import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateArticleSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
 import { buildLocalizedUrl } from '@/lib/seo/urls'
-import { SUPPORTED_LOCALES, type Locale } from '@/i18n/getTranslation'
+import { getSupportedLocalesForPath } from '@/lib/i18n/routeLocaleSupport'
+import type { Locale } from '@/i18n/getTranslation'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import TOCAccordion from '@/components/TOCAccordion'
 import RelatedGuides from '@/components/RelatedGuides'
@@ -261,7 +262,8 @@ export function generateIssueMetadata(issue: IssueData): Metadata {
     keywords: issue.keywords
   })
   const languages: Record<string, string> = {}
-  for (const loc of SUPPORTED_LOCALES) {
+  const supported = getSupportedLocalesForPath(path)
+  for (const loc of supported) {
     languages[loc] = buildLocalizedUrl(path, loc as Locale)
   }
   languages['x-default'] = `${BASE_URL}${path}`

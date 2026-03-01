@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-working-windows-11'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working on Windows 11 - Complete Fix Guide',
   description: 'Fix microphone not working on windows 11. Step-by-step troubleshooting guide covering Windows 11 settings, permissions, drivers, and solutions for microphone not detected on windows 11.',
   path: issuePath,
   keywords: ["microphone not working windows 11","windows 11 mic not detected","windows 11 microphone fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

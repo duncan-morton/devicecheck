@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import KeyboardTool from '@/components/KeyboardTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -86,13 +87,13 @@ export default function KeyboardTestPage() {
   const webAppSchema = generateWebApplicationSchema(
     t.keyboard_meta_title,
     t.keyboard_meta_description,
-    getLocalizedPath('/keyboard', locale),
+    localizePathIfSupported('/keyboard', locale),
     locale
   )
 
   const breadcrumbs = generateBreadcrumbListSchema([
-    { name: t.breadcrumb_home, path: getLocalizedPath('/', locale) },
-    { name: t.keyboard_test, path: getLocalizedPath('/keyboard', locale) }
+    { name: t.breadcrumb_home, path: localizePathIfSupported('/', locale) },
+    { name: t.keyboard_test, path: localizePathIfSupported('/keyboard', locale) }
   ], locale)
 
   const faqSchema = generateFAQPageSchema(faqs(t), locale)
@@ -106,10 +107,10 @@ export default function KeyboardTestPage() {
       
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
-          <Breadcrumbs items={[{ name: t.keyboard_test, path: getLocalizedPath('/keyboard', locale) }]} locale={locale} />
+          <Breadcrumbs items={[{ name: t.keyboard_test, path: localizePathIfSupported('/keyboard', locale) }]} locale={locale} />
           
           <Link 
-            href={getLocalizedPath('/', locale)}
+            href={localizePathIfSupported('/', locale)}
             className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
           >
             ← All tools
@@ -137,7 +138,7 @@ export default function KeyboardTestPage() {
             <KeyboardTool />
           </div>
 
-          <RelatedTools currentPath={getLocalizedPath('/keyboard', locale)} locale={locale} />
+          <RelatedTools currentPath={localizePathIfSupported('/keyboard', locale)} locale={locale} />
 
           <FixByPlatformSection locale={locale} />
 
@@ -168,11 +169,11 @@ export default function KeyboardTestPage() {
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When keys stick, repeat, or don’t register</h4>
             <p className="text-gray-700 mb-3">
-              Sticky or repeating keys often point to debris, worn switches, or software (e.g. Sticky Keys). Use this tool to see which keys misbehave; then check <Link href={getLocalizedPath('/guides/sticky-repeating-keys', locale)} className="text-blue-600 hover:text-blue-800">sticky or repeating keys</Link> for fixes.
+              Sticky or repeating keys often point to debris, worn switches, or software (e.g. Sticky Keys). Use this tool to see which keys misbehave; then check <Link href={localizePathIfSupported('/guides/sticky-repeating-keys', locale)} className="text-blue-600 hover:text-blue-800">sticky or repeating keys</Link> for fixes.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When you suspect ghosting or wrong layout</h4>
             <p className="text-gray-700 mb-3">
-              Ghosting is when pressing several keys at once causes wrong or missing input. This test shows which key combinations register. For why it happens and what to do, see <Link href={getLocalizedPath('/guides/keyboard-ghosting-explained', locale)} className="text-blue-600 hover:text-blue-800">keyboard ghosting explained</Link>.
+              Ghosting is when pressing several keys at once causes wrong or missing input. This test shows which key combinations register. For why it happens and what to do, see <Link href={localizePathIfSupported('/guides/keyboard-ghosting-explained', locale)} className="text-blue-600 hover:text-blue-800">keyboard ghosting explained</Link>.
             </p>
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">After connecting a new or external keyboard</h4>
             <p className="text-gray-700 mb-6">
@@ -188,24 +189,24 @@ export default function KeyboardTestPage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Keyboard Problems This Test Helps Diagnose</h2>
             <p className="text-gray-700 mb-2">
-              <strong>Keys not registering:</strong> If a key never lights in the test, it may be stuck, broken, or the wrong layout may be active. Check system keyboard settings and try another port or cable. More: <Link href={getLocalizedPath('/guides/keys-not-registering', locale)} className="text-blue-600 hover:text-blue-800">keys not registering</Link>.
+              <strong>Keys not registering:</strong> If a key never lights in the test, it may be stuck, broken, or the wrong layout may be active. Check system keyboard settings and try another port or cable. More: <Link href={localizePathIfSupported('/guides/keys-not-registering', locale)} className="text-blue-600 hover:text-blue-800">keys not registering</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Ghosting:</strong> Multiple keys pressed together produce wrong or missing characters. This test shows which combinations fail. See <Link href={getLocalizedPath('/issues/keyboard-ghosting-issue', locale)} className="text-blue-600 hover:text-blue-800">keyboard ghosting issue</Link> for causes and fixes.
+              <strong>Ghosting:</strong> Multiple keys pressed together produce wrong or missing characters. This test shows which combinations fail. See <Link href={localizePathIfSupported('/issues/keyboard-ghosting-issue', locale)} className="text-blue-600 hover:text-blue-800">keyboard ghosting issue</Link> for causes and fixes.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Wrong layout or characters:</strong> You press one key but another character appears. Confirm the correct keyboard layout and language in OS settings. <Link href={getLocalizedPath('/issues/keyboard-keys-typing-wrong', locale)} className="text-blue-600 hover:text-blue-800">Keys typing wrong characters</Link> has more.
+              <strong>Wrong layout or characters:</strong> You press one key but another character appears. Confirm the correct keyboard layout and language in OS settings. <Link href={localizePathIfSupported('/issues/keyboard-keys-typing-wrong', locale)} className="text-blue-600 hover:text-blue-800">Keys typing wrong characters</Link> has more.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Input delay:</strong> Keys feel slow to respond. Often caused by Bluetooth latency, USB power, or background software. Test with a wired keyboard to compare; see <Link href={getLocalizedPath('/issues/keyboard-slow-to-respond', locale)} className="text-blue-600 hover:text-blue-800">keyboard slow to respond</Link>.
+              <strong>Input delay:</strong> Keys feel slow to respond. Often caused by Bluetooth latency, USB power, or background software. Test with a wired keyboard to compare; see <Link href={localizePathIfSupported('/issues/keyboard-slow-to-respond', locale)} className="text-blue-600 hover:text-blue-800">keyboard slow to respond</Link>.
             </p>
             <p className="text-gray-700 mb-6">
-              <strong>Keyboard not detected:</strong> The OS doesn’t list the keyboard or it stops working after sleep. Reconnect, try another port, and check Device Manager or System Preferences. <Link href={getLocalizedPath('/issues/keyboard-not-detected-usb', locale)} className="text-blue-600 hover:text-blue-800">Keyboard not detected (USB)</Link> can help.
+              <strong>Keyboard not detected:</strong> The OS doesn’t list the keyboard or it stops working after sleep. Reconnect, try another port, and check Device Manager or System Preferences. <Link href={localizePathIfSupported('/issues/keyboard-not-detected-usb', locale)} className="text-blue-600 hover:text-blue-800">Keyboard not detected (USB)</Link> can help.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Keyboard Input and Device Access</h2>
             <p className="text-gray-700 mb-6">
-              Keyboard input does not use camera or microphone permissions. The browser receives key events when the page has focus. For how device access (camera, mic, and selection) works across OS, browser, and app layers, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+              Keyboard input does not use camera or microphone permissions. The browser receives key events when the page has focus. For how device access (camera, mic, and selection) works across OS, browser, and app layers, see <Link href={localizePathIfSupported('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>
@@ -334,13 +335,13 @@ export default function KeyboardTestPage() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.keyboard_troubleshooting_title}</h3>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li><Link href={getLocalizedPath("/guides/keyboard-not-working", locale)} className="text-blue-600 hover:text-blue-800">Keyboard not working</Link></li>
-              <li><Link href={getLocalizedPath("/guides/keys-not-registering", locale)} className="text-blue-600 hover:text-blue-800">Keys not registering</Link></li>
-              <li><Link href={getLocalizedPath("/guides/sticky-repeating-keys", locale)} className="text-blue-600 hover:text-blue-800">Sticky or repeating keys</Link></li>
-              <li><Link href={getLocalizedPath("/guides/keyboard-ghosting-explained", locale)} className="text-blue-600 hover:text-blue-800">Keyboard ghosting explained</Link></li>
-              <li><Link href={getLocalizedPath("/guides/mechanical-keyboard-switch-test", locale)} className="text-blue-600 hover:text-blue-800">Mechanical keyboard switch test</Link></li>
-              <li><Link href={getLocalizedPath("/guides/how-to-test-keyboard-windows", locale)} className="text-blue-600 hover:text-blue-800">Test keyboard on Windows</Link></li>
-              <li><Link href={getLocalizedPath("/guides/how-to-test-keyboard-mac", locale)} className="text-blue-600 hover:text-blue-800">Test keyboard on Mac</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/keyboard-not-working", locale)} className="text-blue-600 hover:text-blue-800">Keyboard not working</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/keys-not-registering", locale)} className="text-blue-600 hover:text-blue-800">Keys not registering</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/sticky-repeating-keys", locale)} className="text-blue-600 hover:text-blue-800">Sticky or repeating keys</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/keyboard-ghosting-explained", locale)} className="text-blue-600 hover:text-blue-800">Keyboard ghosting explained</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/mechanical-keyboard-switch-test", locale)} className="text-blue-600 hover:text-blue-800">Mechanical keyboard switch test</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/how-to-test-keyboard-windows", locale)} className="text-blue-600 hover:text-blue-800">Test keyboard on Windows</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/how-to-test-keyboard-mac", locale)} className="text-blue-600 hover:text-blue-800">Test keyboard on Mac</Link></li>
             </ul>
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.frequently_asked_questions}</h3>

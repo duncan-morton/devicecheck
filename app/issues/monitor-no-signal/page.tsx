@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/monitor-no-signal'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Monitor Showing No Signal - Complete Fix Guide',
   description: 'Fix monitor showing no signal. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for monitor receives no input from device.',
   path: issuePath,
   keywords: ["monitor no signal","no signal fix monitor","screen says no signal"]
-}), alternates }
+}) }
 
 const faqs = [
   {

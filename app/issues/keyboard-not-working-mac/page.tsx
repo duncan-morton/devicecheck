@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/keyboard-not-working-mac'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Keyboard Not Working on Mac - Complete Fix Guide',
   description: 'Fix keyboard not working on mac. Step-by-step troubleshooting guide covering macOS settings, permissions, drivers, and solutions for keyboard not responding or keys not registering on mac.',
   path: issuePath,
   keywords: ["keyboard not working mac","mac keyboard fix","keyboard not responding mac","mac keyboard troubleshooting","macbook keyboard not working"]
-}), alternates }
+}) }
 
 const faqs = [
   {

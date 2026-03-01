@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-static-crackling-windows'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Static or Crackling on Windows - Complete Fix Guide',
   description: 'Fix microphone static or crackling on windows. Step-by-step troubleshooting guide covering Windows settings, permissions, drivers, and solutions for microphone producing static, crackling, or distorted audio on windows.',
   path: issuePath,
   keywords: ["microphone static windows","mic crackling windows","microphone distortion windows","windows mic static fix","microphone audio issues windows"]
-}), alternates }
+}) }
 
 const faqs = [
   {

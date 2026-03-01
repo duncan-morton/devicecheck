@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-not-working-discord'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Not Working in Discord - Complete Fix Guide',
   description: 'Fix webcam not working in discord. Step-by-step troubleshooting guide covering Discord settings, permissions, drivers, and solutions for discord cannot access camera.',
   path: issuePath,
   keywords: ["webcam not working discord","discord camera fix","discord video not working"]
-}), alternates }
+}) }
 
 const faqs = [
   {

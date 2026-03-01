@@ -1,7 +1,8 @@
 import { Metadata } from 'next'
 import type { Locale } from '@/i18n/getTranslation'
-import { getLocalizedPath, SUPPORTED_LOCALES } from '@/i18n/getTranslation'
-import { buildLocalizedUrl, getBasePath, shouldHaveAlternates } from './urls'
+import { getLocalizedPath } from '@/i18n/getTranslation'
+import { getSupportedLocalesForPath } from '@/lib/i18n/routeLocaleSupport'
+import { buildLocalizedUrl, getBasePath } from './urls'
 
 const BASE_URL = 'https://devicecheck.io'
 const SITE_NAME = 'DeviceCheck.io'
@@ -35,23 +36,17 @@ export function generateMetadata(config: PageMetadata): Metadata {
   const canonical = `${BASE_URL}${config.path}`
   const ogImage = config.ogImage || `${BASE_URL}/og-image.png`
 
-  // Generate hreflang alternates only for home + 5 tools
-  let alternates: Metadata['alternates'] = {
-    canonical
+  // Generate hreflang only for locales that actually have this route (avoid 404s)
+  const basePath = getBasePath(config.path)
+  const supported = getSupportedLocalesForPath(config.path)
+  const languages: Record<string, string> = {}
+  for (const loc of supported) {
+    languages[loc] = buildLocalizedUrl(basePath, loc)
   }
-  
-  if (shouldHaveAlternates(config.path)) {
-    const basePath = getBasePath(config.path)
-    const languages: Record<string, string> = {}
-    
-    for (const loc of SUPPORTED_LOCALES) {
-      languages[loc] = buildLocalizedUrl(basePath, loc)
-    }
-    
-    alternates = {
-      canonical,
-      languages
-    }
+  languages['x-default'] = `${BASE_URL}${basePath}`
+  const alternates: Metadata['alternates'] = {
+    canonical,
+    languages
   }
 
   return {

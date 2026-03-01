@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-feedback-loop-problem'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Feedback Loop Problem - Complete Fix Guide',
   description: 'Fix microphone feedback loop problem. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for loud feedback loop from speakers.',
   path: issuePath,
   keywords: ["microphone feedback loop","mic loud feedback","speaker mic loop fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

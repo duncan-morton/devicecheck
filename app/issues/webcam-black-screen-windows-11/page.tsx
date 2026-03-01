@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-black-screen-windows-11'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Shows Black Screen on Windows 11 - Complete Fix Guide',
   description: 'Fix webcam shows black screen on windows 11. Step-by-step troubleshooting guide covering Windows 11 settings, permissions, drivers, and solutions for webcam turns on but only shows a black screen.',
   path: issuePath,
   keywords: ["webcam black screen windows 11","windows 11 camera black","camera not showing image windows 11"]
-}), alternates }
+}) }
 
 const faqs = [
   {

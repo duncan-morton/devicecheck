@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-lagging-or-choppy'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Lagging or Choppy Video - Complete Fix Guide',
   description: 'Fix webcam lagging or choppy video. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for slow, laggy, or low-fps webcam performance.',
   path: issuePath,
   keywords: ["webcam lagging","webcam low fps","camera choppy video"]
-}), alternates }
+}) }
 
 const faqs = [
   {

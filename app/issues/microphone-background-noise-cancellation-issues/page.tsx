@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-background-noise-cancellation-issues'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Noise Cancellation Issues - Complete Fix Guide',
   description: 'Fix microphone noise cancellation issues. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for noise suppression causing muffled voice.',
   path: issuePath,
   keywords: ["microphone noise cancellation issue","mic muffled voice noise suppression","noise reduction mic problem"]
-}), alternates }
+}) }
 
 const faqs = [
   {

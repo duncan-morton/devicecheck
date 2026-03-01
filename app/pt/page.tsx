@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebSiteSchema, generateOrganizationSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import Link from 'next/link'
 import { Camera, Mic, Keyboard, Monitor, Video, CheckCircle2 } from 'lucide-react'
 
@@ -39,35 +40,35 @@ export default function Home() {
   const tools = [
     {
       name: t.webcam_test,
-      path: getLocalizedPath('/webcam', locale),
+      path: localizePathIfSupported('/webcam', locale),
       description: 'Test your camera resolution, frame rate, and framing. Perfect for Zoom, Teams, and Google Meet.',
       icon: <Camera size={32} />,
       color: 'blue'
     },
     {
       name: t.microphone_test,
-      path: getLocalizedPath('/mic', locale),
+      path: localizePathIfSupported('/mic', locale),
       description: 'Check mic input levels, audio quality, and record playback. Verify your microphone works perfectly.',
       icon: <Mic size={32} />,
       color: 'green'
     },
     {
       name: t.keyboard_test,
-      path: getLocalizedPath('/keyboard', locale),
+      path: localizePathIfSupported('/keyboard', locale),
       description: 'Test all keys, detect stuck keys, and check for keyboard ghosting. Essential for gaming and work.',
       icon: <Keyboard size={32} />,
       color: 'purple'
     },
     {
       name: t.screen_test,
-      path: getLocalizedPath('/screen', locale),
+      path: localizePathIfSupported('/screen', locale),
       description: 'Check for dead pixels, stuck pixels, and color accuracy. Test monitor quality instantly.',
       icon: <Monitor size={32} />,
       color: 'orange'
     },
     {
       name: t.meeting_check,
-      path: getLocalizedPath('/meeting-check', locale),
+      path: localizePathIfSupported('/meeting-check', locale),
       description: 'Test network connectivity, camera, and microphone before video calls. Ensure everything works.',
       icon: <Video size={32} />,
       color: 'red'

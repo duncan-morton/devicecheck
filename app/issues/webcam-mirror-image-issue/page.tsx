@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-mirror-image-issue'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Appears Mirrored or Flipped - Complete Fix Guide',
   description: 'Fix webcam appears mirrored or flipped. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for video preview flipped horizontally.',
   path: issuePath,
   keywords: ["webcam mirrored","camera flipped","webcam reverse image fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

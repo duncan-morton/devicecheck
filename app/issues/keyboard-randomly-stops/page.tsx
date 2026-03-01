@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/keyboard-randomly-stops'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Keyboard Randomly Stops Working - Complete Fix Guide',
   description: 'Fix keyboard randomly stops working. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for intermittent keyboard failure.',
   path: issuePath,
   keywords: ["keyboard randomly stops working","keyboard intermittent fix","keyboard disconnects randomly"]
-}), alternates }
+}) }
 
 const faqs = [
   {

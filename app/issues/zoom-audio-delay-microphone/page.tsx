@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/zoom-audio-delay-microphone'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Zoom Microphone Delay or Lag - Complete Fix Guide',
   description: 'Fix zoom microphone delay or lag. Step-by-step troubleshooting guide covering Zoom settings, permissions, drivers, and solutions for delay or lag in zoom audio input.',
   path: issuePath,
   keywords: ["zoom microphone delay","zoom audio lag","zoom mic latency"]
-}), alternates }
+}) }
 
 const faqs = [
   {

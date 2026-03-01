@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-not-working-mac'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Not Working on Mac - Complete Fix Guide',
   description: 'Fix webcam not working on mac. Step-by-step troubleshooting guide covering Mac settings, permissions, drivers, and solutions for mac cannot access camera.',
   path: issuePath,
   keywords: ["webcam not working mac","mac camera not detected","macos webcam fix"]
-}), alternates }
+}) }
 
 const faqs = [
   {

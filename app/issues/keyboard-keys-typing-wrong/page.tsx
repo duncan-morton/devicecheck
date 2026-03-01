@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/keyboard-keys-typing-wrong'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Keyboard Typing the Wrong Characters - Complete Fix Guide',
   description: 'Fix keyboard typing the wrong characters. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for incorrect characters appear when typing.',
   path: issuePath,
   keywords: ["keyboard typing wrong characters","wrong keyboard layout fix","keyboard types wrong letters"]
-}), alternates }
+}) }
 
 const faqs = [
   {

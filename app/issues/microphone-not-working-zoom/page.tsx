@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-working-zoom'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working in Zoom - Complete Fix Guide',
   description: 'Fix microphone not working in zoom. Step-by-step troubleshooting guide covering Zoom settings, permissions, drivers, and solutions for microphone not detected or no audio in zoom.',
   path: issuePath,
   keywords: ["microphone not working zoom","zoom mic fix","zoom microphone not detected","zoom audio not working","zoom microphone settings"]
-}), alternates }
+}) }
 
 const faqs = [
   {

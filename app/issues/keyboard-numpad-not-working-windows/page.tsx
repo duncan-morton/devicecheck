@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/keyboard-numpad-not-working-windows'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Keyboard Numpad Not Working on Windows - Complete Fix Guide',
   description: 'Fix keyboard numpad not working on windows. Step-by-step troubleshooting guide covering Windows settings, permissions, drivers, and solutions for keyboard number pad not responding on windows.',
   path: issuePath,
   keywords: ["keyboard numpad not working windows","numpad not working windows","number pad not working","windows numpad fix","keyboard number pad issues"]
-}), alternates }
+}) }
 
 const faqs = [
   {

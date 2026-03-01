@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/monitor-ghosting-games'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Monitor Ghosting in Games - Complete Fix Guide',
   description: 'Fix monitor ghosting in games. Step-by-step troubleshooting guide covering Gaming settings, permissions, drivers, and solutions for monitor showing ghosting or motion blur in games.',
   path: issuePath,
   keywords: ["monitor ghosting games","gaming monitor ghosting","monitor motion blur games","gaming display ghosting fix","monitor response time ghosting"]
-}), alternates }
+}) }
 
 const faqs = [
   {

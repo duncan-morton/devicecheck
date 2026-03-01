@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { getLocaleFromPath, getLocalizedPath } from '@/i18n/getTranslation'
+import { getLocaleFromPath } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 
 export default function Footer() {
   const pathname = usePathname()
@@ -17,19 +18,19 @@ export default function Footer() {
         <nav className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
             <Link
-              href={getLocalizedPath('/privacy', locale)}
+              href={localizePathIfSupported('/privacy', locale)}
               className="text-slate-500 hover:text-slate-900 text-sm transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href={getLocalizedPath('/terms', locale)}
+              href={localizePathIfSupported('/terms', locale)}
               className="text-slate-500 hover:text-slate-900 text-sm transition-colors"
             >
               Terms
             </Link>
             <Link
-              href={getLocalizedPath('/contact', locale)}
+              href={localizePathIfSupported('/contact', locale)}
               className="text-slate-500 hover:text-slate-900 text-sm transition-colors"
             >
               Contact

@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-not-working-zoom'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Not Working in Zoom - Complete Fix Guide',
   description: 'Fix webcam not working in zoom. Step-by-step troubleshooting guide covering Zoom settings, permissions, drivers, and solutions for webcam not showing or detected in zoom.',
   path: issuePath,
   keywords: ["webcam not working zoom","zoom camera fix","zoom webcam not detected","zoom camera not showing","zoom video not working"]
-}), alternates }
+}) }
 
 const faqs = [
   {

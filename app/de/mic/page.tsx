@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import MicTool from '@/components/MicTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -83,7 +84,7 @@ export default function MicTestPage() {
           <Breadcrumbs items={[{ name: t.microphone_test, path: '/de/mic' }]} locale={locale} />
           
           <Link 
-            href={getLocalizedPath('/', locale)}
+            href={localizePathIfSupported('/', locale)}
             className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
           >
             ← All tools
@@ -111,7 +112,7 @@ export default function MicTestPage() {
             <MicTool />
           </div>
 
-          <RelatedTools currentPath={getLocalizedPath("/mic", locale)} locale={locale} />
+          <RelatedTools currentPath={localizePathIfSupported("/mic", locale)} locale={locale} />
 
           {/* Comprehensive SEO Content */}
           <article className="prose prose-slate max-w-none bg-white p-8 md:p-12 rounded-2xl border border-gray-200 mb-12">

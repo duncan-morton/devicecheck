@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-works-in-some-apps-not-others'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Works in Some Apps but Not Others - Complete Fix Guide',
   description: 'Fix microphone works in some apps but not others. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for microphone detected inconsistently across apps.',
   path: issuePath,
   keywords: ["microphone works in some apps","mic inconsistent fix","mic not working in all apps"]
-}), alternates }
+}) }
 
 const faqs = [
   {

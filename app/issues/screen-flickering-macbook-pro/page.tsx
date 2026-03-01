@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/screen-flickering-macbook-pro'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Screen Flickering on MacBook Pro - Complete Fix Guide',
   description: 'Fix screen flickering on macbook pro. Step-by-step troubleshooting guide covering MacBook Pro settings, permissions, drivers, and solutions for screen flickering or display issues on macbook pro.',
   path: issuePath,
   keywords: ["screen flickering macbook pro","macbook pro display flickering","macbook pro screen issues","macbook pro screen flicker fix","macbook pro display problems"]
-}), alternates }
+}) }
 
 const faqs = [
   {

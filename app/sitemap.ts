@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import * as fs from 'fs'
 import * as path from 'path'
 import { buildLocalizedUrl } from '@/lib/seo/urls'
-import { SUPPORTED_LOCALES, type Locale } from '@/i18n/getTranslation'
+import { getSupportedLocalesForPath } from '@/lib/i18n/routeLocaleSupport'
 
 interface IssueData {
   slug: string
@@ -109,13 +109,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const issueRoutes = issues.map((issue) => `/issues/${issue.slug}`)
 
   const routes: MetadataRoute.Sitemap = [
-    // Routes with hreflang alternates (home + 5 tools)
-    ...routesWithAlternates.map((route) => {
+  // Routes with hreflang alternates (home + 5 tools) — only emit locale URLs that exist
+  ...routesWithAlternates.map((route) => {
+      const supported = getSupportedLocalesForPath(route.path)
       const languages: Record<string, string> = {}
-      for (const locale of SUPPORTED_LOCALES) {
+      for (const locale of supported) {
         languages[locale] = buildLocalizedUrl(route.path, locale)
       }
-      
       return {
         url: buildLocalizedUrl(route.path, 'en'),
         lastModified: new Date(),

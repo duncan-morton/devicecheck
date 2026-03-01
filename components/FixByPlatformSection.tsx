@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 
 const PLATFORM_HUBS = [
   { name: 'Zoom', path: '/hubs/zoom-issues', description: 'Fix Zoom mic and camera issues for meetings.' },
@@ -29,7 +30,7 @@ export default function FixByPlatformSection({ locale = 'en' }: FixByPlatformSec
         {PLATFORM_HUBS.map((hub) => (
           <Link
             key={hub.path}
-            href={getLocalizedPath(hub.path, locale)}
+            href={localizePathIfSupported(hub.path, locale)}
             className="group bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all flex items-start justify-between gap-3"
           >
             <div>

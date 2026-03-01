@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/monitor-refresh-rate-wrong'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Monitor Refresh Rate Wrong - Complete Fix Guide',
   description: 'Fix monitor refresh rate wrong. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for refresh rate stuck at wrong value.',
   path: issuePath,
   keywords: ["monitor refresh rate wrong","refresh rate stuck","monitor hz incorrect"]
-}), alternates }
+}) }
 
 const faqs = [
   {

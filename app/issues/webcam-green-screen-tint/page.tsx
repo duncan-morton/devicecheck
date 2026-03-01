@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-green-screen-tint'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Showing Green Screen or Tint - Complete Fix Guide',
   description: 'Fix webcam showing green screen or tint. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for green tint or corrupted webcam colors.',
   path: issuePath,
   keywords: ["webcam green screen","webcam green tint fix","camera green image"]
-}), alternates }
+}) }
 
 const faqs = [
   {

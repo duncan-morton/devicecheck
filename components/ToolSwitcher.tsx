@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { getLocaleFromPath, getLocalizedPath, getPathWithoutLocale, type Locale } from '@/i18n/getTranslation'
+import { getLocaleFromPath, getPathWithoutLocale, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import { CheckCircle2, Camera, Mic, Keyboard, Monitor, Video, AlertCircle, ChevronDown } from 'lucide-react'
 import AdBanner from '@/components/AdBanner'
 
@@ -56,7 +57,7 @@ export default function ToolSwitcher() {
   }
   
   const locale = getLocaleFromPath(pathname)
-  const homePath = getLocalizedPath('/', locale)
+  const homePath = localizePathIfSupported('/', locale)
   const isHubsActive = pathname != null && getPathWithoutLocale(pathname).startsWith('/hubs/')
   
   return (
@@ -97,7 +98,7 @@ export default function ToolSwitcher() {
                   {platformHubs.map((hub) => (
                     <Link
                       key={hub.path}
-                      href={getLocalizedPath(hub.path, locale)}
+                      href={localizePathIfSupported(hub.path, locale)}
                       className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                     >
                       {hub.label}
@@ -115,7 +116,7 @@ export default function ToolSwitcher() {
                   {platformHubs.map((hub) => (
                     <Link
                       key={hub.path}
-                      href={getLocalizedPath(hub.path, locale)}
+                      href={localizePathIfSupported(hub.path, locale)}
                       onClick={() => setPlatformsOpen(false)}
                       className="px-3 py-2 rounded-md text-sm text-slate-700 hover:bg-slate-50"
                     >
@@ -129,7 +130,7 @@ export default function ToolSwitcher() {
 
             {tools.map((tool) => {
               const Icon = tool.icon
-              const toolPath = getLocalizedPath(tool.path, locale)
+              const toolPath = localizePathIfSupported(tool.path, locale)
               const isActive = isActiveRoute(pathname, tool.path)
               
               return (
@@ -151,7 +152,7 @@ export default function ToolSwitcher() {
             
             {/* Issues link (lighter emphasis) */}
             <Link
-              href={getLocalizedPath(issuesPath, locale)}
+              href={localizePathIfSupported(issuesPath, locale)}
               aria-current={isActiveRoute(pathname, issuesPath) ? 'page' : undefined}
               className={
                 isActiveRoute(pathname, issuesPath)

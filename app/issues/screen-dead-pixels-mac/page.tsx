@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/screen-dead-pixels-mac'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Screen Dead Pixels on Mac - Complete Fix Guide',
   description: 'Fix screen dead pixels on mac. Step-by-step troubleshooting guide covering macOS settings, permissions, drivers, and solutions for dead or stuck pixels on mac display.',
   path: issuePath,
   keywords: ["screen dead pixels mac","mac dead pixel fix","macbook dead pixels","mac display dead pixels","mac screen pixel issues"]
-}), alternates }
+}) }
 
 const faqs = [
   {

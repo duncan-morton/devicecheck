@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import { generateMetadata as genMeta } from '@/lib/seo/metadata'
 import JsonLdScript from '@/components/JsonLdScript'
 import { generateWebApplicationSchema, generateBreadcrumbListSchema, generateFAQPageSchema, generateHowToSchema } from '@/lib/seo/jsonLd'
-import { getTranslation, getLocalizedPath, type Locale } from '@/i18n/getTranslation'
+import { getTranslation, type Locale } from '@/i18n/getTranslation'
+import { localizePathIfSupported } from '@/lib/i18n/routeLocaleSupport'
 import MicTool from '@/components/MicTool'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import RelatedTools from '@/components/RelatedTools'
@@ -128,7 +129,7 @@ export default function MicTestPage() {
           <Breadcrumbs items={[{ name: t.microphone_test, path: '/mic' }]} locale={locale} />
           
           <Link 
-            href={getLocalizedPath('/', locale)}
+            href={localizePathIfSupported('/', locale)}
             className="inline-block text-sm text-slate-500 hover:text-slate-900 mb-4 transition-colors"
           >
             ← All tools
@@ -184,17 +185,17 @@ export default function MicTestPage() {
 
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before Zoom or Teams calls</h4>
             <p className="text-gray-700 mb-3">
-              A quick mic check before joining avoids “can’t hear you” and “no audio” issues. If this test works in your browser, your mic will work in Zoom, Teams, and Meet. Run the <Link href={getLocalizedPath('/meeting-check', locale)} className="text-blue-600 hover:text-blue-800">full meeting check</Link> to verify camera and mic together.
+              A quick mic check before joining avoids “can’t hear you” and “no audio” issues. If this test works in your browser, your mic will work in Zoom, Teams, and Meet. Run the <Link href={localizePathIfSupported('/meeting-check', locale)} className="text-blue-600 hover:text-blue-800">full meeting check</Link> to verify camera and mic together.
             </p>
 
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When your mic sounds quiet or distorted</h4>
             <p className="text-gray-700 mb-3">
-              Low volume or muffled sound often comes from system input levels, physical mute, or the wrong device. This tool’s level meter shows whether the browser is receiving signal; if it’s low, adjust OS settings or try our <Link href={getLocalizedPath('/issues/microphone-too-quiet-windows', locale)} className="text-blue-600 hover:text-blue-800">microphone too quiet (Windows)</Link> guide.
+              Low volume or muffled sound often comes from system input levels, physical mute, or the wrong device. This tool’s level meter shows whether the browser is receiving signal; if it’s low, adjust OS settings or try our <Link href={localizePathIfSupported('/issues/microphone-too-quiet-windows', locale)} className="text-blue-600 hover:text-blue-800">microphone too quiet (Windows)</Link> guide.
             </p>
 
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">When apps can&apos;t detect your microphone</h4>
             <p className="text-gray-700 mb-3">
-              If an app says “no microphone” or “device not found,” the cause is usually permissions or another app holding the device. Testing here confirms whether the browser can see your mic; if it can’t, fix permissions first. For Zoom specifically, see <Link href={getLocalizedPath('/issues/microphone-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Zoom</Link>.
+              If an app says “no microphone” or “device not found,” the cause is usually permissions or another app holding the device. Testing here confirms whether the browser can see your mic; if it can’t, fix permissions first. For Zoom specifically, see <Link href={localizePathIfSupported('/issues/microphone-not-working-zoom', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Zoom</Link>.
             </p>
 
             <h4 className="text-lg font-semibold text-gray-900 mt-4 mb-2">Before recording or streaming</h4>
@@ -221,19 +222,19 @@ export default function MicTestPage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Microphone Problems This Test Helps Diagnose</h2>
             <p className="text-gray-700 mb-2">
-              <strong>Microphone not detected:</strong> No bars or “no device” usually means blocked permissions or another app using the mic. Fix browser and OS permissions, then retest. More: <Link href={getLocalizedPath('/issues/microphone-not-working-chrome', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Chrome</Link>.
+              <strong>Microphone not detected:</strong> No bars or “no device” usually means blocked permissions or another app using the mic. Fix browser and OS permissions, then retest. More: <Link href={localizePathIfSupported('/issues/microphone-not-working-chrome', locale)} className="text-blue-600 hover:text-blue-800">microphone not working in Chrome</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Microphone too quiet:</strong> Low or no movement on the meter points to input gain, mute, or wrong device. Raise input level in system sound settings and ensure the correct mic is selected; see <Link href={getLocalizedPath('/guides/mic-too-quiet', locale)} className="text-blue-600 hover:text-blue-800">microphone too quiet</Link> for more.
+              <strong>Microphone too quiet:</strong> Low or no movement on the meter points to input gain, mute, or wrong device. Raise input level in system sound settings and ensure the correct mic is selected; see <Link href={localizePathIfSupported('/guides/mic-too-quiet', locale)} className="text-blue-600 hover:text-blue-800">microphone too quiet</Link> for more.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Echo or feedback:</strong> Speakers feeding into the mic cause echo. Use headphones or lower speaker volume. For call-specific echo: <Link href={getLocalizedPath('/issues/microphone-feedback-loop-problem', locale)} className="text-blue-600 hover:text-blue-800">microphone feedback loop</Link>.
+              <strong>Echo or feedback:</strong> Speakers feeding into the mic cause echo. Use headphones or lower speaker volume. For call-specific echo: <Link href={localizePathIfSupported('/issues/microphone-feedback-loop-problem', locale)} className="text-blue-600 hover:text-blue-800">microphone feedback loop</Link>.
             </p>
             <p className="text-gray-700 mb-2">
-              <strong>Static or crackling:</strong> Often driver or USB/connection related. Try another port, update audio drivers, or see <Link href={getLocalizedPath('/guides/microphone-static-crackling', locale)} className="text-blue-600 hover:text-blue-800">static or crackling sound</Link>.
+              <strong>Static or crackling:</strong> Often driver or USB/connection related. Try another port, update audio drivers, or see <Link href={localizePathIfSupported('/guides/microphone-static-crackling', locale)} className="text-blue-600 hover:text-blue-800">static or crackling sound</Link>.
             </p>
             <p className="text-gray-700 mb-6">
-              <strong>Wrong microphone selected:</strong> System or browser may be using a different input. Use the tool’s device list (if shown) or system sound settings to pick the correct mic. <Link href={getLocalizedPath('/issues/microphone-keeps-switching-input', locale)} className="text-blue-600 hover:text-blue-800">Mic keeps switching input</Link> has more.
+              <strong>Wrong microphone selected:</strong> System or browser may be using a different input. Use the tool’s device list (if shown) or system sound settings to pick the correct mic. <Link href={localizePathIfSupported('/issues/microphone-keeps-switching-input', locale)} className="text-blue-600 hover:text-blue-800">Mic keeps switching input</Link> has more.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Browser Microphone Permissions Explained</h2>
@@ -244,10 +245,10 @@ export default function MicTestPage() {
               Windows and macOS add a second layer: even if the browser has permission, the OS can block “desktop” or “app” access to the microphone. If the test fails, check system Privacy/Settings and ensure microphone access is allowed for your browser.
             </p>
             <p className="text-gray-700 mb-6">
-              Permissions often fail silently: the page loads but no audio appears, or the prompt never shows if the site was previously blocked. Reset the site’s permission and reload, or use an incognito/private window to get a fresh prompt. For step-by-step Chrome setup: <Link href={getLocalizedPath('/guides/how-to-enable-microphone-chrome', locale)} className="text-blue-600 hover:text-blue-800">how to enable microphone in Chrome</Link>.
+              Permissions often fail silently: the page loads but no audio appears, or the prompt never shows if the site was previously blocked. Reset the site’s permission and reload, or use an incognito/private window to get a fresh prompt. For step-by-step Chrome setup: <Link href={localizePathIfSupported('/guides/how-to-enable-microphone-chrome', locale)} className="text-blue-600 hover:text-blue-800">how to enable microphone in Chrome</Link>.
             </p>
             <p className="text-gray-700 mb-6">
-              For a full picture of how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={getLocalizedPath('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
+              For a full picture of how camera, microphone, and device access work across hardware, OS, and browser, see <Link href={localizePathIfSupported('/guides/how-device-access-works', locale)} className="text-blue-600 hover:text-blue-800">how device access works</Link>.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How this diagnostic works &amp; why problems happen</h2>
@@ -395,13 +396,13 @@ export default function MicTestPage() {
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.mic_troubleshooting_title}</h3>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li><Link href={getLocalizedPath("/guides/microphone-not-working", locale)} className="text-blue-600 hover:text-blue-800">Microphone not working</Link></li>
-              <li><Link href={getLocalizedPath("/guides/microphone-too-quiet", locale)} className="text-blue-600 hover:text-blue-800">Microphone too quiet</Link></li>
-              <li><Link href={getLocalizedPath("/guides/microphone-static-crackling", locale)} className="text-blue-600 hover:text-blue-800">Static or crackling sound</Link></li>
-              <li><Link href={getLocalizedPath("/guides/microphone-test-zoom", locale)} className="text-blue-600 hover:text-blue-800">Test microphone for Zoom</Link></li>
-              <li><Link href={getLocalizedPath("/guides/microphone-test-microsoft-teams", locale)} className="text-blue-600 hover:text-blue-800">Test microphone for Microsoft Teams</Link></li>
-              <li><Link href={getLocalizedPath("/guides/microphone-not-detected-windows-11", locale)} className="text-blue-600 hover:text-blue-800">Microphone not detected (Windows 11)</Link></li>
-              <li><Link href={getLocalizedPath("/guides/how-to-enable-microphone-chrome", locale)} className="text-blue-600 hover:text-blue-800">Enable microphone in Chrome</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/microphone-not-working", locale)} className="text-blue-600 hover:text-blue-800">Microphone not working</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/microphone-too-quiet", locale)} className="text-blue-600 hover:text-blue-800">Microphone too quiet</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/microphone-static-crackling", locale)} className="text-blue-600 hover:text-blue-800">Static or crackling sound</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/microphone-test-zoom", locale)} className="text-blue-600 hover:text-blue-800">Test microphone for Zoom</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/microphone-test-microsoft-teams", locale)} className="text-blue-600 hover:text-blue-800">Test microphone for Microsoft Teams</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/microphone-not-detected-windows-11", locale)} className="text-blue-600 hover:text-blue-800">Microphone not detected (Windows 11)</Link></li>
+              <li><Link href={localizePathIfSupported("/guides/how-to-enable-microphone-chrome", locale)} className="text-blue-600 hover:text-blue-800">Enable microphone in Chrome</Link></li>
             </ul>
 
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{t.frequently_asked_questions}</h3>

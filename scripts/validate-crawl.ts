@@ -1,17 +1,19 @@
 /**
  * Crawl integrity validation.
- * Run: npx ts-node --compiler-options '{"module":"CommonJS"}' scripts/validate-crawl.ts
- * Or: node --loader ts-node/esm scripts/validate-crawl.ts
+ * Run: npx tsx scripts/validate-crawl.ts
  *
  * Checks:
  * - Every issue slug in data/issues.json has app/issues/[slug]/page.tsx
  * - Every guide in sitemap has app/guides/[slug]/page.tsx
  * - Hub paths exist
  * - No sitemap entry for embed routes
+ * - No alternates point to non-existent locale routes (getSupportedLocalesForPath → route exists)
+ * - EN-only routes (hubs, contact, issues, guides) are not emitted under locale prefixes in sitemap (by design)
  */
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { getSupportedLocalesForPath } from '../lib/i18n/routeLocaleSupport'
 
 const ROOT = path.join(process.cwd())
 
@@ -119,6 +121,32 @@ function main() {
 
   // 4. Embed must NOT be in sitemap (sitemap.ts has no embed entries - just confirm)
   // No programmatic check; sitemap is correct by design.
+
+  // 5. Alternates: every supported locale for a path must have a real route (filesystem)
+  const routesWithAlternates = ['/', '/mic', '/webcam', '/keyboard', '/screen', '/meeting-check']
+  for (const route of routesWithAlternates) {
+    const supported = getSupportedLocalesForPath(route)
+    for (const locale of supported) {
+      const segment = route === '/' ? '' : route
+      const pagePath = locale === 'en' ? `app${segment}/page.tsx` : `app/${locale}${segment}/page.tsx`
+      if (!exists(pagePath)) {
+        errors.push(`Alternate locale route missing: ${pagePath} (route ${route}, locale ${locale})`)
+      }
+    }
+  }
+
+  // 6. EN-only routes: hubs, contact, issues, guides must not appear as /de/, /es/, etc. in sitemap.
+  // Sitemap emits static routes as baseUrl+route (EN only); no alternates for those. Assert no locale hub/contact files.
+  const enOnlyPaths = ['/hubs/zoom-issues', '/contact']
+  const nonEnLocales = ['de', 'es', 'fr', 'pt', 'hi']
+  for (const p of enOnlyPaths) {
+    for (const loc of nonEnLocales) {
+      const pagePath = `app/${loc}${p}/page.tsx`
+      if (exists(pagePath)) {
+        errors.push(`EN-only route exists in locale tree (should not be in sitemap alternates): ${pagePath}`)
+      }
+    }
+  }
 
   if (errors.length > 0) {
     console.error('Crawl validation FAILED:\n')

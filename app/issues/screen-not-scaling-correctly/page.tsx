@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/screen-not-scaling-correctly'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Screen Scaling Not Working - Complete Fix Guide',
   description: 'Fix screen scaling not working. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for resolution or scaling settings ignored.',
   path: issuePath,
   keywords: ["screen scaling not working","windows scaling issue","monitor scaling problem"]
-}), alternates }
+}) }
 
 const faqs = [
   {

@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-too-bright-overexposed'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Too Bright or Overexposed - Complete Fix Guide',
   description: 'Fix webcam too bright or overexposed. Step-by-step troubleshooting guide covering All settings, permissions, drivers, and solutions for webcam image appears too bright or washed out.',
   path: issuePath,
   keywords: ["webcam too bright","camera overexposed fix","webcam washed out image"]
-}), alternates }
+}) }
 
 const faqs = [
   {

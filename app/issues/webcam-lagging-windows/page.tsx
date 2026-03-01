@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-lagging-windows'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Lagging on Windows - Complete Fix Guide',
   description: 'Fix webcam lagging on windows. Step-by-step troubleshooting guide covering Windows settings, permissions, drivers, and solutions for webcam video lagging or low frame rate on windows.',
   path: issuePath,
   keywords: ["webcam lagging windows","camera lagging windows","webcam low fps windows","windows webcam performance","webcam frame rate issues windows"]
-}), alternates }
+}) }
 
 const faqs = [
   {

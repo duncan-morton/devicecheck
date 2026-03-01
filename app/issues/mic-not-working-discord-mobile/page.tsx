@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/mic-not-working-discord-mobile'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working on Discord Mobile - Complete Fix Guide',
   description: 'Fix microphone not working on discord mobile. Step-by-step troubleshooting guide covering Discord Mobile settings, permissions, drivers, and solutions for microphone not working in discord mobile app.',
   path: issuePath,
   keywords: ["mic not working discord mobile","discord mobile microphone fix","discord mobile mic not working","discord microphone permission mobile","discord mobile audio issues"]
-}), alternates }
+}) }
 
 const faqs = [
   {

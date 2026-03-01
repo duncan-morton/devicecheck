@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/screen-not-detected-windows'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Monitor Not Detected on Windows - Complete Fix Guide',
   description: 'Fix monitor not detected on windows. Step-by-step troubleshooting guide covering Windows settings, permissions, drivers, and solutions for external monitor not recognised.',
   path: issuePath,
   keywords: ["monitor not detected windows","windows external display fix","windows second monitor not detected"]
-}), alternates }
+}) }
 
 const faqs = [
   {

@@ -18,16 +18,12 @@ export const revalidate = 86400
 
 const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-working-chromebook'
-const alternates = {
-  canonical: baseUrl + issuePath,
-  languages: { en: baseUrl + issuePath, de: baseUrl + '/de' + issuePath, es: baseUrl + '/es' + issuePath, fr: baseUrl + '/fr' + issuePath, pt: baseUrl + '/pt' + issuePath, hi: baseUrl + '/hi' + issuePath, 'x-default': baseUrl + issuePath },
-}
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working on Chromebook - Complete Fix Guide',
   description: 'Fix microphone not working on chromebook. Step-by-step troubleshooting guide covering Chromebook settings, permissions, drivers, and solutions for chromebook microphone not detected or silent.',
   path: issuePath,
   keywords: ["microphone not working chromebook","chromebook mic fix","chromeos microphone issue"]
-}), alternates }
+}) }
 
 const faqs = [
   {
