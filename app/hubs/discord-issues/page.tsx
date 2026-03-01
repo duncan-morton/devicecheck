@@ -29,7 +29,66 @@ export default function Page() {
         path,
         hubKey: 'discord',
         primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
-        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-device-access-works' },
+        problemClusters: {
+          sectionTitle: 'Common Discord Device Problems',
+          intro:
+            'Discord issues usually fall into a few categories: camera not working or not detected, microphone not working or robotic audio, permission denials, or OS-level conflicts (e.g. another app holding the device). Identifying which type you have speeds up the fix.',
+          groups: [
+            {
+              title: 'Discord Camera Not Working',
+              paragraphs: [
+                'A black screen or "no camera" in Discord typically means the camera is blocked by the OS, used by another app, or Discord is set to the wrong device. On Windows and macOS, privacy settings must allow Discord (or your browser) to use the camera.',
+                'If the camera works in other apps but not in Discord, check User Settings → Voice & Video and select the correct camera. For step-by-step fixes, see the'
+              ],
+              links: [{ href: '/issues/webcam-not-working-discord', label: 'webcam not working in Discord' }]
+            },
+            {
+              title: 'Discord Microphone Not Working',
+              paragraphs: [
+                'When others can\'t hear you in Discord, or your voice sounds robotic, the mic is usually blocked by system privacy settings, not selected in Discord Voice & Video, or held by another app. Allow the microphone for Discord in Windows or macOS, then in Discord choose the correct input device.',
+                'For detailed steps and troubleshooting, see the'
+              ],
+              links: [{ href: '/issues/microphone-not-working-discord', label: 'microphone not working in Discord' }]
+            },
+            {
+              title: 'Discord Permission or Access Problems',
+              paragraphs: [
+                'If Discord cannot see your camera or microphone at all, the block is usually at the OS layer. Windows and macOS require explicit permission for each app. Browser Discord needs site permission via the lock icon.',
+                'For how to unblock devices, see'
+              ],
+              links: [{ href: '/guides/how-to-enable-camera-browser', label: 'how to enable camera and microphone in the browser' }]
+            },
+            {
+              title: 'Discord Audio or Device Conflicts',
+              paragraphs: [
+                'Robotic voice, echo, or no input in Discord are often caused by noise suppression, virtual audio devices, or another app holding the mic. Only one app can use the camera or mic at a time, so Zoom or Teams can block Discord.',
+                'For audio and conflict fixes, see the'
+              ],
+              links: [{ href: '/issues/microphone-not-working-discord', label: 'microphone not working in Discord' }]
+            }
+          ]
+        },
+        howItWorks: {
+          title: 'How Discord Accesses Your Camera & Microphone',
+          paragraphs: [
+            'Discord needs permission at several layers. First, the OS (Windows or macOS) must allow Discord to use the microphone and camera. If that\'s denied, Discord never sees the devices.',
+            'In the Discord app, you then choose which camera and microphone to use in User Settings → Voice & Video. Only one app can use the camera or mic at a time, so another conferencing app or browser tab can block Discord and cause "no input" or black video.',
+            'Understanding these layers helps when diagnosing: start with OS permissions, then confirm device selection and input sensitivity inside Discord. For more on how apps get access, see the guide below.'
+          ],
+          guideLink: { href: '/guides/how-device-access-works', label: 'How device access works' }
+        },
+        quickChecklist: {
+          title: 'Before Your Next Discord Call — Quick Checklist',
+          items: [
+            'Test your camera with an online test or Discord video settings',
+            'Test your microphone and confirm it\'s selected in Discord Voice & Video',
+            'Close conflicting apps (other voice or video apps)',
+            'Check Discord Voice & Video and confirm the correct devices and input sensitivity',
+            'Run a full meeting check to verify everything before joining'
+          ],
+          meetingCheckHref: '/meeting-check'
+        },
         intro:
           'Fix Discord mic and camera issues in one place. Use these steps to unblock permissions, stop robotic audio, and select the correct devices for Discord voice and video.',
         quickAnswer: {

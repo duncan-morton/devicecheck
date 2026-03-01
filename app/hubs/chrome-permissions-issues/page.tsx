@@ -29,7 +29,66 @@ export default function Page() {
         path,
         hubKey: 'chrome',
         primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
-        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-device-access-works' },
+        problemClusters: {
+          sectionTitle: 'Common Chrome Permission Problems',
+          intro:
+            'Chrome device issues usually fall into a few categories: camera not working or blocked, microphone not working or blocked, site permission denials, or conflicts (e.g. another tab or app holding the device). Identifying which type you have speeds up the fix.',
+          groups: [
+            {
+              title: 'Chrome Camera Not Working or Blocked',
+              paragraphs: [
+                'A black screen or "camera blocked" in Chrome typically means the site does not have permission, another tab is using the camera, or the wrong device is selected. Click the lock icon in the address bar and set Camera to Allow; close other tabs using the camera.',
+                'If the camera works on other sites but not this one, reset the site permission and re-allow. For step-by-step fixes, see the'
+              ],
+              links: [{ href: '/issues/webcam-not-detected-chrome', label: 'webcam not detected in Chrome' }]
+            },
+            {
+              title: 'Chrome Microphone Not Working or Blocked',
+              paragraphs: [
+                'When the mic is not detected or blocked in Chrome, the site usually does not have permission or another tab is using the microphone. Click the lock icon and set Microphone to Allow; select the correct input in site settings.',
+                'For detailed steps and troubleshooting, see the'
+              ],
+              links: [{ href: '/issues/chrome-microphone-permission-blocked', label: 'Chrome microphone permission blocked' }]
+            },
+            {
+              title: 'Chrome Permission or Access Problems',
+              paragraphs: [
+                'If a site cannot see your camera or microphone at all, the block is at the browser (site permission) or OS layer. Chrome stores per-site decisions; Windows or macOS must also allow Chrome to use the devices.',
+                'For how permissions and device access work, see'
+              ],
+              links: [{ href: '/guides/how-device-access-works', label: 'how device access works' }]
+            },
+            {
+              title: 'Chrome Audio or Device Conflicts',
+              paragraphs: [
+                'Wrong device, echo, or "device in use" in Chrome are often caused by another tab or app holding the mic or camera, or a virtual device being selected. Only one tab or app can use the camera or mic at a time.',
+                'For conflict and permission fixes, see'
+              ],
+              links: [{ href: '/guides/how-to-enable-microphone-chrome', label: 'how to enable microphone in Chrome' }]
+            }
+          ]
+        },
+        howItWorks: {
+          title: 'How Chrome Accesses Your Camera & Microphone',
+          paragraphs: [
+            'Chrome needs permission at two layers. First, the OS (Windows or macOS) must allow Chrome to use the microphone and camera. Second, each site needs permission—via the lock icon or prompt—to use the devices.',
+            'When you allow a site, Chrome stores that decision. You can then choose which camera and microphone to use in site settings when multiple devices exist. Only one tab or app can use the camera or mic at a time, so another tab or conferencing app can block access and cause "not detected" or black video.',
+            'Understanding these layers helps when diagnosing: start with OS permissions, then Chrome site permissions, then device selection. For more on how apps get access, see the guide below.'
+          ],
+          guideLink: { href: '/guides/how-device-access-works', label: 'How device access works' }
+        },
+        quickChecklist: {
+          title: 'Before Your Next Chrome Call — Quick Checklist',
+          items: [
+            'Test your camera with an online test',
+            'Test your microphone and confirm it\'s selected in Chrome site settings',
+            'Close other tabs or apps using the camera or mic',
+            'Check the lock icon for the call site and confirm Microphone and Camera are allowed',
+            'Run a full meeting check to verify everything before joining'
+          ],
+          meetingCheckHref: '/meeting-check'
+        },
         intro:
           'Fix Chrome microphone and camera permission problems fast. This hub shows how to unblock devices, pick the right input, and stop Chrome from denying access during calls.',
         quickAnswer: {

@@ -29,7 +29,66 @@ export default function Page() {
         path,
         hubKey: 'laptop',
         primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
-        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-device-access-works' },
+        problemClusters: {
+          sectionTitle: 'Common Laptop Device Problems',
+          intro:
+            'Laptop device issues usually fall into a few categories: camera not working or not detected, microphone not working or not selected, permission denials, or conflicts (e.g. another app holding the device or USB power saving). Identifying which type you have speeds up the fix.',
+          groups: [
+            {
+              title: 'Laptop Camera Not Working',
+              paragraphs: [
+                'A black screen or "no camera" on a laptop typically means the camera is blocked by OS privacy settings, used by another app, or the wrong device is selected. Enable camera access in Windows or macOS privacy settings and close other apps using the camera.',
+                'On some laptops the camera can freeze or disconnect; USB power saving may be involved. For step-by-step fixes, see the'
+              ],
+              links: [{ href: '/issues/webcam-freezing-after-few-seconds', label: 'webcam freezing after a few seconds' }]
+            },
+            {
+              title: 'Laptop Microphone Not Working',
+              paragraphs: [
+                'When the mic is not detected or not working on a laptop, it is usually blocked by privacy settings, not selected as the default input, or held by another app. Allow microphone access in system settings, then set the correct device in Sound.',
+                'For detailed steps and troubleshooting, see the'
+              ],
+              links: [{ href: '/guides/microphone-not-working', label: 'microphone not working (general)' }]
+            },
+            {
+              title: 'Laptop Permission or Access Problems',
+              paragraphs: [
+                'If apps cannot see your camera or microphone at all, the block is usually at the OS layer. Windows and macOS require explicit permission for each app; on laptops, these can reset after updates or sleep.',
+                'For how permissions and device access work, see'
+              ],
+              links: [{ href: '/guides/how-device-access-works', label: 'how device access works' }]
+            },
+            {
+              title: 'Laptop Audio or Device Conflicts',
+              paragraphs: [
+                'Echo, feedback, or devices dropping on a laptop are often caused by another app holding the mic or camera, USB power saving, or thermal throttling. Only one app can use the camera or mic at a time.',
+                'For conflict and stability fixes, see the'
+              ],
+              links: [{ href: '/guides/laptop-camera-not-working', label: 'laptop camera not working' }]
+            }
+          ]
+        },
+        howItWorks: {
+          title: 'How Your Laptop Accesses Devices',
+          paragraphs: [
+            'On a laptop, the OS (Windows or macOS) controls device access. Privacy settings must allow each app to use the microphone and camera. If that\'s denied, no app can use the devices.',
+            'In the browser, each site also needs permission via the lock icon or prompt. In each app (Zoom, Teams, etc.), you then choose which camera and microphone to use. Only one app can use the camera or mic at a time. On laptops, USB power saving or sleep can also cause devices to drop.',
+            'Understanding these layers helps when diagnosing: start with OS permissions, then confirm device selection inside the app. For more on how apps get access, see the guide below.'
+          ],
+          guideLink: { href: '/guides/how-device-access-works', label: 'How device access works' }
+        },
+        quickChecklist: {
+          title: 'Before Your Next Call on Your Laptop — Quick Checklist',
+          items: [
+            'Test your camera with an online test',
+            'Test your microphone and confirm it\'s selected in system Sound settings',
+            'Close conflicting apps (video calls, streaming, or camera apps)',
+            'Check system Privacy settings and confirm Microphone and Camera are allowed',
+            'Run a full meeting check to verify everything before joining'
+          ],
+          meetingCheckHref: '/meeting-check'
+        },
         intro:
           'A single hub for laptop device issues on Windows and macOS. Fix microphones, webcams, keyboards, and screens with clear steps for both platforms.',
         quickAnswer: {

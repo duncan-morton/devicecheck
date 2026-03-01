@@ -29,7 +29,66 @@ export default function Page() {
         path,
         hubKey: 'teams',
         primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
-        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-device-access-works' },
+        problemClusters: {
+          sectionTitle: 'Common Teams Device Problems',
+          intro:
+            'Microsoft Teams issues usually fall into a few categories: camera not working or not detected, microphone not working or not selected, permission denials, or OS-level conflicts (e.g. another app holding the device). Identifying which type you have speeds up the fix.',
+          groups: [
+            {
+              title: 'Teams Camera Not Working',
+              paragraphs: [
+                'A black screen or "no camera" in Teams typically means the camera is blocked by the OS, used by another app, or Teams is set to the wrong device. On Windows and macOS, privacy settings must allow Teams (or your browser) to use the camera.',
+                'If the camera works in other apps but not in Teams, check Teams Settings → Devices and select the correct camera. For step-by-step fixes, see the'
+              ],
+              links: [{ href: '/issues/webcam-not-working-teams', label: 'webcam not working in Microsoft Teams' }]
+            },
+            {
+              title: 'Teams Microphone Not Working',
+              paragraphs: [
+                'When others can\'t hear you in Teams, the mic is usually blocked by system privacy settings, not selected in Teams Devices, or held by another app. Allow the microphone for Teams (or your browser) in Windows or macOS, then in Teams choose the correct input device.',
+                'For detailed steps and troubleshooting, see the'
+              ],
+              links: [{ href: '/issues/microphone-not-working-teams', label: 'microphone not working in Microsoft Teams' }]
+            },
+            {
+              title: 'Teams Permission or Access Problems',
+              paragraphs: [
+                'If Teams cannot see your camera or microphone at all, the block is usually at the OS or browser layer. Windows and macOS require explicit permission for each app; browser Teams needs site permission via the lock icon or prompt.',
+                'For how to unblock devices, see'
+              ],
+              links: [{ href: '/guides/how-to-enable-camera-browser', label: 'how to enable camera and microphone in the browser' }]
+            },
+            {
+              title: 'Teams Audio or Device Conflicts',
+              paragraphs: [
+                'Echo, feedback, or no audio in Teams are often caused by speaker output being picked up by the mic, virtual audio devices, or another app holding the device. Only one app can use the camera or mic at a time, so Zoom, Discord, or browser tabs can block Teams.',
+                'For device selection and conflict fixes, see the'
+              ],
+              links: [{ href: '/issues/microphone-not-working-teams', label: 'microphone not working in Teams' }]
+            }
+          ]
+        },
+        howItWorks: {
+          title: 'How Teams Accesses Your Camera & Microphone',
+          paragraphs: [
+            'Teams needs permission at several layers. First, the OS (Windows or macOS) must allow Teams—or the browser, if you use Teams on the web—to use the microphone and camera. If that\'s denied, Teams never sees the devices.',
+            'In the browser, Teams Web also needs site permission (via the lock icon or prompt). In the Teams desktop app, you then choose which camera and microphone to use in Settings → Devices. Only one app can use the camera or mic at a time, so another conferencing app or browser tab can block Teams and cause "not detected" or black video.',
+            'Understanding these layers helps when diagnosing: start with OS and browser permissions, then confirm device selection inside Teams. For more on how apps get access, see the guide below.'
+          ],
+          guideLink: { href: '/guides/how-device-access-works', label: 'How device access works' }
+        },
+        quickChecklist: {
+          title: 'Before Your Next Teams Call — Quick Checklist',
+          items: [
+            'Test your camera with an online test or Teams device settings',
+            'Test your microphone and confirm it\'s selected in Teams Devices',
+            'Close conflicting apps (other video calls, streaming, or camera apps)',
+            'Check Teams Settings → Devices and confirm the correct camera and mic',
+            'Run a full meeting check to verify everything before joining'
+          ],
+          meetingCheckHref: '/meeting-check'
+        },
         intro:
           'Solve Microsoft Teams microphone and webcam issues quickly. This hub covers permissions, correct device selection, and app conflicts that keep Teams from seeing your devices.',
         quickAnswer: {

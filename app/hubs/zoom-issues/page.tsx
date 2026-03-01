@@ -30,7 +30,7 @@ export default function Page() {
         path,
         hubKey: 'zoom',
         primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
-        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-device-access-works' },
         problemClusters: {
           sectionTitle: 'Common Zoom Device Problems',
           intro:
@@ -40,36 +40,33 @@ export default function Page() {
               title: 'Zoom Camera Not Working',
               paragraphs: [
                 'A black screen or "no camera" in Zoom typically means the camera is blocked by the OS, used by another app, or Zoom is set to the wrong device. On Windows and macOS, privacy settings must allow Zoom (or your browser) to use the camera.',
-                'If the camera works in other apps but not in Zoom, check Zoom Settings → Video and select the correct camera. For Zoom in the browser, use the site’s permission prompt or the lock icon to allow camera access.',
-                'For step-by-step fixes, see:'
+                'If the camera works in other apps but not in Zoom, check Zoom Settings → Video and select the correct camera. For step-by-step fixes, see the'
               ],
-              links: [
-                { href: '/issues/webcam-not-working-zoom', label: 'Webcam not working in Zoom' },
-                { href: '/guides/webcam-not-working', label: 'Webcam not working (general)' },
-                { href: '/guides/laptop-camera-not-working', label: 'Laptop camera not working' }
-              ]
+              links: [{ href: '/issues/webcam-not-working-zoom', label: 'webcam not working in Zoom' }]
             },
             {
               title: 'Zoom Microphone Not Working',
               paragraphs: [
                 'When others can’t hear you in Zoom, the mic is usually blocked by system privacy settings, not selected in Zoom Audio settings, or held by another app. Allow the microphone for Zoom (or your browser) in Windows or macOS, then in Zoom choose the correct input device.',
-                'For detailed steps and troubleshooting, see:'
+                'For detailed steps and troubleshooting, see the'
               ],
-              links: [
-                { href: '/issues/microphone-not-working-zoom', label: 'Microphone not working in Zoom' },
-                { href: '/guides/microphone-test-zoom', label: 'Microphone test for Zoom' }
-              ]
+              links: [{ href: '/issues/microphone-not-working-zoom', label: 'microphone not working in Zoom' }]
             },
             {
-              title: 'Zoom Audio or Echo Problems',
+              title: 'Zoom Permission or Access Problems',
+              paragraphs: [
+                'If Zoom cannot see your camera or microphone at all, the block is usually at the OS or browser layer. Windows and macOS require explicit permission for each app; browser Zoom needs site permission via the lock icon or prompt.',
+                'For how to unblock devices, see'
+              ],
+              links: [{ href: '/guides/how-to-enable-camera-browser', label: 'how to enable camera and microphone in the browser' }]
+            },
+            {
+              title: 'Zoom Audio or Device Conflicts',
               paragraphs: [
                 'Delay, echo, or feedback in Zoom are often caused by speaker output being picked up by the mic, virtual audio devices, or network latency. Use a headset or wired headphones to reduce echo; close other audio apps and check Zoom’s device selection.',
-                'For delay and feedback fixes, see:'
+                'For delay and feedback fixes, see the'
               ],
-              links: [
-                { href: '/issues/zoom-audio-delay-microphone', label: 'Zoom microphone delay or lag' },
-                { href: '/issues/microphone-feedback-loop-problem', label: 'Microphone feedback loop' }
-              ]
+              links: [{ href: '/issues/zoom-audio-delay-microphone', label: 'Zoom microphone delay or lag' }]
             }
           ]
         },
@@ -80,7 +77,7 @@ export default function Page() {
             'In the browser, Zoom Web also needs site permission (via the lock icon or prompt). In the Zoom desktop app, you then choose which camera and microphone to use in Settings → Audio and Video. Only one app can use the camera or mic at a time, so another conferencing app or browser tab can block Zoom and cause "not detected" or black video.',
             'Understanding these layers helps when diagnosing: start with OS and browser permissions, then confirm device selection inside Zoom. For more on how apps get access, see the guide below.'
           ],
-          guideLink: { href: '/guides/how-to-enable-camera-browser', label: 'How to enable camera and microphone in the browser' }
+          guideLink: { href: '/guides/how-device-access-works', label: 'How device access works' }
         },
         quickChecklist: {
           title: 'Before Your Next Zoom Call — Quick Checklist',

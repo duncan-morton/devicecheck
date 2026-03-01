@@ -29,7 +29,66 @@ export default function Page() {
         path,
         hubKey: 'windows',
         primaryCta: { label: 'Run Full Meeting Check', href: '/meeting-check' },
-        authorityGuideLink: { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' },
+        authorityGuideLink: { label: 'How device access works', href: '/guides/how-device-access-works' },
+        problemClusters: {
+          sectionTitle: 'Common Windows Device Problems',
+          intro:
+            'Windows device issues usually fall into a few categories: camera not working or not detected, microphone not working or not selected, permission denials after updates, or conflicts (e.g. another app holding the device). Identifying which type you have speeds up the fix.',
+          groups: [
+            {
+              title: 'Windows Camera Not Working',
+              paragraphs: [
+                'A black screen or "no camera" on Windows typically means the camera is blocked by privacy settings, used by another app, or the wrong device is selected. Settings → Privacy & Security → Camera must allow desktop apps to use the camera.',
+                'If the camera works in one app but not another, check the app\'s device selection and close other apps using the camera. For step-by-step fixes, see the'
+              ],
+              links: [{ href: '/issues/webcam-not-working-windows-11', label: 'webcam not working on Windows 11' }]
+            },
+            {
+              title: 'Windows Microphone Not Working',
+              paragraphs: [
+                'When the mic is not detected or not working on Windows, it is usually blocked by privacy settings after an update, not selected as the default input, or held by another app. Allow microphone access in Settings → Privacy & Security, then set the correct device in Sound settings.',
+                'For detailed steps and troubleshooting, see the'
+              ],
+              links: [{ href: '/issues/microphone-not-working-windows-11', label: 'microphone not working on Windows 11' }]
+            },
+            {
+              title: 'Windows Permission or Access Problems',
+              paragraphs: [
+                'If apps cannot see your camera or microphone at all, the block is usually at the OS layer. Windows 10 and 11 require explicit permission for each app; after updates, these can reset.',
+                'For how permissions and device access work, see'
+              ],
+              links: [{ href: '/guides/how-device-access-works', label: 'how device access works' }]
+            },
+            {
+              title: 'Windows Audio or Device Conflicts',
+              paragraphs: [
+                'Echo, feedback, or devices dropping on Windows are often caused by another app holding the mic or camera, virtual audio devices, or driver issues. Only one app can use the camera or mic at a time.',
+                'For conflict and driver fixes, see the'
+              ],
+              links: [{ href: '/guides/microphone-not-working', label: 'microphone not working (general)' }]
+            }
+          ]
+        },
+        howItWorks: {
+          title: 'How Windows Accesses Your Devices',
+          paragraphs: [
+            'Windows controls device access at the OS layer. Settings → Privacy & Security → Microphone and Camera must allow access for desktop (and optionally browser) apps. If that\'s denied, no app can use the devices.',
+            'In the browser, each site also needs permission via the lock icon or prompt. In each app (Zoom, Teams, etc.), you then choose which camera and microphone to use. Only one app can use the camera or mic at a time, so another app can block access and cause "not detected" or black video.',
+            'Understanding these layers helps when diagnosing: start with Windows privacy permissions, then confirm device selection inside the app. For more on how apps get access, see the guide below.'
+          ],
+          guideLink: { href: '/guides/how-device-access-works', label: 'How device access works' }
+        },
+        quickChecklist: {
+          title: 'Before Your Next Call on Windows — Quick Checklist',
+          items: [
+            'Test your camera with an online test',
+            'Test your microphone and confirm it\'s selected in Sound settings',
+            'Close conflicting apps (video calls, streaming, or camera apps)',
+            'Check Settings → Privacy & Security and confirm Microphone and Camera are allowed',
+            'Run a full meeting check to verify everything before joining'
+          ],
+          meetingCheckHref: '/meeting-check'
+        },
         intro:
           'Resolve Windows 10 and Windows 11 microphone, webcam, keyboard, and screen problems with a single hub. Use this checklist to diagnose permissions, drivers, and hardware quickly before important calls or work.',
         quickAnswer: {
