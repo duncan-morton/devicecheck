@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate-issues": "ts-node --esm scripts/generateIssues.ts"
+    "generate-issues": "ts-node --esm scripts/generateIssues.ts",
+    "indexnow": "tsx scripts/indexnow-submit.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
@@ -25,6 +26,7 @@
     "eslint-config-next": "16.0.7",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.7.0",
     "typescript": "^5"
   }
 }
