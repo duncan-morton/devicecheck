@@ -39,18 +39,58 @@ export interface QuickChecklistSection {
   meetingCheckHref: string
 }
 
+/** Optional: symptom → explanation + one issue link (expert triage, not a link list) */
+export interface InstantDiagnosisScenario {
+  headline: string
+  explanation: string
+  linkHref: string
+  linkLabel: string
+}
+
+export interface InstantDiagnosisSection {
+  sectionTitle: string
+  intro?: string | ReactNode
+  scenarios: InstantDiagnosisScenario[]
+}
+
+/** Optional: titled blocks with short paragraphs (authority explainer) */
+export interface WhyFailsBlock {
+  title: string
+  paragraphs: Array<string | ReactNode>
+}
+
+export interface WhyZoomFailsSection {
+  sectionTitle: string
+  blocks: WhyFailsBlock[]
+}
+
+export interface ZoomVsOtherSection {
+  sectionTitle: string
+  paragraphs: Array<string | ReactNode>
+}
+
+export interface BeforeSettingsSection {
+  sectionTitle: string
+  items: string[]
+  meetingCheckHref?: string
+}
+
 export interface HubPageConfig {
   title: string
   description: string
   path: string
   hubKey: HubKey
-  intro: string
+  intro: string | ReactNode
   /** Primary CTA: e.g. { label: 'Run Zoom Meeting Check', href: '/meeting-check' } */
   primaryCta?: { label: string; href: string }
   /** Link to authority guide: e.g. { label: 'How device access works', href: '/guides/how-to-enable-camera-browser' } */
   authorityGuideLink?: { label: string; href: string }
   /** Optional: pillar content below intro, above issue grid */
+  instantDiagnosis?: InstantDiagnosisSection
+  beforeSettingsChange?: BeforeSettingsSection
   problemClusters?: ProblemClustersSection
+  whyZoomFails?: WhyZoomFailsSection
+  zoomVsOther?: ZoomVsOtherSection
   howItWorks?: HowItWorksSection
   quickChecklist?: QuickChecklistSection
   quickAnswer: { problem: string; platform: string; deviceType: 'mic' | 'webcam' | 'keyboard' | 'screen' }
@@ -149,8 +189,34 @@ export default function HubPage({
                 </Link>
               </div>
             )}
-            <p className="text-xl text-gray-600 max-w-3xl">{config.intro}</p>
+            {typeof config.intro === 'string' ? (
+              <p className="text-xl text-gray-600 max-w-3xl">{config.intro}</p>
+            ) : (
+              <div className="text-xl text-gray-600 max-w-3xl space-y-3">{config.intro}</div>
+            )}
           </div>
+
+          {config.instantDiagnosis && (
+            <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">{config.instantDiagnosis.sectionTitle}</h2>
+              {config.instantDiagnosis.intro && (
+                <div className="text-gray-700 mb-6 max-w-3xl">{config.instantDiagnosis.intro}</div>
+              )}
+              <div className="space-y-5">
+                {config.instantDiagnosis.scenarios.map((s, idx) => (
+                  <div key={idx} className="border-b border-gray-100 pb-5 last:border-0 last:pb-0">
+                    <h3 className="text-lg font-semibold text-gray-900">{s.headline}</h3>
+                    <p className="text-gray-700 mt-2">
+                      {s.explanation}{' '}
+                      <Link href={getLocalizedPath(s.linkHref, 'en')} className="text-blue-600 hover:text-blue-800">
+                        {s.linkLabel}
+                      </Link>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {config.problemClusters && (
             <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
@@ -191,6 +257,54 @@ export default function HubPage({
                   )}
                 </div>
               ))}
+            </section>
+          )}
+
+          {config.whyZoomFails && (
+            <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{config.whyZoomFails.sectionTitle}</h2>
+              {config.whyZoomFails.blocks.map((block, bIdx) => (
+                <div key={bIdx} className="mb-6 last:mb-0">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{block.title}</h3>
+                  {block.paragraphs.map((p, pIdx) => (
+                    <p key={pIdx} className="text-gray-700 mb-3 last:mb-0">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </section>
+          )}
+
+          {config.zoomVsOther && (
+            <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">{config.zoomVsOther.sectionTitle}</h2>
+              {config.zoomVsOther.paragraphs.map((p, idx) => (
+                <p key={idx} className="text-gray-700 mb-3">
+                  {p}
+                </p>
+              ))}
+            </section>
+          )}
+
+          {config.beforeSettingsChange && (
+            <section className="mb-8 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">{config.beforeSettingsChange.sectionTitle}</h2>
+              <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                {config.beforeSettingsChange.items.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+              {config.beforeSettingsChange.meetingCheckHref && (
+                <p className="text-gray-700 mt-4">
+                  <Link
+                    href={getLocalizedPath(config.beforeSettingsChange.meetingCheckHref, 'en')}
+                    className="text-blue-600 hover:text-blue-800 font-medium"
+                  >
+                    Run full meeting check →
+                  </Link>
+                </p>
+              )}
             </section>
           )}
 
