@@ -9,6 +9,7 @@ import HelpfulWidget from '@/components/HelpfulWidget'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
 import IssueDiagnostic from '@/components/IssueDiagnostic'
+import { ZoomCheckThisFirst, ZoomWhatThisUsuallyMeans } from '@/components/ZoomIssueAuthoritySections'
 import IssueLinksPanel from '@/components/IssueLinksPanel'
 import TroubleshootingMatrix from '@/components/TroubleshootingMatrix'
 import Link from 'next/link'
@@ -16,7 +17,6 @@ import issuesData from '@/data/issues.json'
 
 export const revalidate = 86400
 
-const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/microphone-not-working-zoom'
 export const metadata: Metadata = { ...genMeta({
   title: 'Microphone Not Working in Zoom - Complete Fix Guide',
@@ -86,13 +86,62 @@ export default function IssuePage() {
           
           <div className="mb-4">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Microphone Not Working in Zoom</h1>
-            <p className="text-xl text-gray-600 max-w-3xl">
-              Microphone not detected or no audio in Zoom. This guide covers all solutions, from permissions to driver updates.
-            </p>
+            <div className="text-xl text-gray-600 max-w-3xl space-y-3">
+              <p>No meter, wrong input, or silence in Zoom usually splits into three buckets: Zoom is on the wrong device, the OS denied the Zoom app (not the browser), or another program owns the mic endpoint.</p>
+              <p>
+                Use the{' '}
+                <Link href="/mic" className="text-blue-600 hover:text-blue-800">
+                  microphone test
+                </Link>{' '}
+                to check input levels and OS detection before you change Zoom processing options.
+              </p>
+            </div>
           </div>
 
+          <ZoomWhatThisUsuallyMeans
+            causes={[
+              {
+                title: 'Zoom is using the wrong microphone',
+                text: 'Bluetooth headsets expose “hands-free” and “stereo” profiles as different inputs. Zoom may bind to the quiet or dead one while the OS default elsewhere still looks fine.'
+              },
+              {
+                title: 'Another app or driver is holding exclusive mode',
+                text: 'Some audio interfaces and voice apps open the mic in exclusive mode. Zoom then sees nothing, a frozen device list, or one-way audio until that app releases the endpoint.'
+              },
+              {
+                title: 'Desktop Zoom blocked in OS privacy',
+                text: 'macOS and Windows list Zoom separately from Chrome. You can allow the browser for a web meeting while the installed client remains blocked—so “it works in Zoom on the web” but not in the app.'
+              },
+              {
+                title: 'Input meters move but remote participants hear silence',
+                text: 'That pattern often means Zoom is monitoring one device while the meeting is bound to another, or a mute/original-sound path is swallowing send audio even though local monitoring still moves.'
+              },
+              {
+                title: 'USB or dock reconnect changed device identity',
+                text: 'After unplugging or sleep, the OS may present the same mic under a new ID. Zoom keeps the old selection until you restart or manually re-pick the active input.'
+              }
+            ]}
+          />
+
+          <ZoomCheckThisFirst
+            items={[
+              'Zoom → Settings → Audio: pick the mic you expect; run Test Speaker & Microphone.',
+              'Confirm the OS input meter moves when you speak (outside Zoom).',
+              'Quit other meeting apps and voice recorders that might keep the mic open.',
+              'Fully restart Zoom after changing default devices or Bluetooth mode.',
+              'Compare web Zoom vs desktop Zoom once to see if only the client path fails.'
+            ]}
+          />
+
           <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
-            This is a Zoom device issue. <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Zoom issues →</Link>
+            <p className="mb-2">
+              This page is part of the Zoom device cluster. Use the hub for triage across camera, mic, and audio.
+            </p>
+            <p>
+              <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800 font-medium">
+                Zoom issues hub →
+              </Link>
+            </p>
           </div>
 
 
@@ -115,29 +164,55 @@ export default function IssuePage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Check Zoom audio settings</li>
-              <li>Verify microphone permissions</li>
-              <li>Select correct microphone in Zoom</li>
-              <li>Test microphone in Zoom settings</li>
-              <li>Update Zoom application</li>
+              <li>Select the correct mic in Zoom → Settings → Audio and retest</li>
+              <li>Allow microphone for the Zoom app in system privacy</li>
+              <li>Exit other apps using the mic; restart Zoom</li>
+              <li>Prefer wired or stereo Bluetooth profile over narrowband hands-free when possible</li>
+              <li>Update Zoom after OS upgrades and reconfirm privacy toggles</li>
             </ul>
 
-            <p className="text-sm text-gray-500 mt-4 mb-6">
-              Next: <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">Run full meeting check</Link> · <Link href="/webcam" className="text-blue-600 hover:text-blue-800">Webcam test</Link>
+            <p className="text-sm text-gray-500 mt-4 mb-2">
+              <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">
+                Run full meeting check
+              </Link>{' '}
+              to validate mic, speaker, and connection together.
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              If video is also wrong, run a{' '}
+              <Link href="/webcam" className="text-blue-600 hover:text-blue-800">
+                webcam test
+              </Link>{' '}
+              so you split camera issues from audio.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why It Works Outside Zoom</h2>
+            <p className="text-gray-700 mb-4">
+              Voice Memos, a browser tab, or another meeting app can capture fine while Zoom fails because each app negotiates its own device handle and permission. Zoom also applies its own processing chain; a device that works for simple recording can still mis-route under Zoom’s selected input.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Use the{' '}
+              <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800">
+                Zoom issues hub
+              </Link>{' '}
+              when you are unsure whether the problem is mic, camera, or delay.
+            </p>
+            <p className="text-gray-700 mb-4">
+              If picture breaks at the same time, treat camera selection and locks separately—see{' '}
+              <Link href="/issues/webcam-not-working-zoom" className="text-blue-600 hover:text-blue-800">
+                webcam not working in Zoom
+              </Link>
+              .
+            </p>
+            <p className="text-gray-700 mb-6">
+              Bluetooth and USB audio often present multiple endpoints. The OS can show activity on one node while Zoom is mapped to another; that mismatch is invisible in generic “check your mic” advice but shows up immediately in Zoom’s device list after a rescan.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why This Happens</h2>
             <p className="text-gray-700 mb-4">
-              Zoom includes strict privacy controls that can block microphone access. The system requires explicit permission for applications to use your microphone, and these settings can be reset after updates or changed accidentally.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Driver issues are another common cause. Zoom may not automatically install the correct drivers for your microphone, especially for USB devices or specialized equipment. Outdated drivers can cause detection problems or poor performance.
-            </p>
-            <p className="text-gray-700 mb-4">
-              System conflicts occur when multiple applications try to access the microphone simultaneously. Zoom allows only one application to use the microphone at a time, so background apps or previous sessions can block access.
+              Zoom reads whatever inputs the OS enumerates at session start. Plug-order, sleep, and profile switches change that list without invalidating Zoom’s cached choice—so the app looks broken even though the hardware is fine.
             </p>
             <p className="text-gray-700 mb-6">
-              Hardware problems include loose connections, damaged cables, or microphone hardware failure. Physical issues are less common but should be checked if software solutions don't work.
+              Exclusive-mode drivers and virtual cables insert extra “microphones” in the list. Zoom happily selects one that looks correct by name while the real capsule sits on a different entry.
             </p>
 
             <TroubleshootingMatrix issue={{ deviceType: 'mic', platform: "Zoom", slug: 'microphone-not-working-zoom' }} />
@@ -280,20 +355,13 @@ export default function IssuePage() {
               ))}
             </div>
 
-            <RelatedGuides guides={[
-          {
-                    "title": "Microphone Not Working in Chrome",
-                    "href": "/issues/microphone-not-working-chrome"
-          },
-          {
-                    "title": "Microphone Not Working on Discord Mobile",
-                    "href": "/issues/mic-not-working-discord-mobile"
-          },
-          {
-                    "title": "Microphone Not Working in Safari",
-                    "href": "/issues/microphone-not-working-safari"
-          }
-]} />
+            <RelatedGuides
+              guides={[
+                { title: 'Webcam Not Working in Zoom', href: '/issues/webcam-not-working-zoom' },
+                { title: 'Zoom Microphone Delay or Lag', href: '/issues/zoom-audio-delay-microphone' },
+                { title: 'Microphone Not Working in Chrome', href: '/issues/microphone-not-working-chrome' }
+              ]}
+            />
 
             <p className="text-gray-700 mb-6 mt-8">
               Use the <Link href="/mic" className="text-blue-600 hover:text-blue-800">online microphone test</Link> to confirm everything is working.

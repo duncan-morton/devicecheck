@@ -9,6 +9,7 @@ import HelpfulWidget from '@/components/HelpfulWidget'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
 import IssueDiagnostic from '@/components/IssueDiagnostic'
+import { ZoomCheckThisFirst, ZoomWhatThisUsuallyMeans } from '@/components/ZoomIssueAuthoritySections'
 import IssueLinksPanel from '@/components/IssueLinksPanel'
 import TroubleshootingMatrix from '@/components/TroubleshootingMatrix'
 import Link from 'next/link'
@@ -16,7 +17,6 @@ import issuesData from '@/data/issues.json'
 
 export const revalidate = 86400
 
-const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/zoom-audio-delay-microphone'
 export const metadata: Metadata = { ...genMeta({
   title: 'Zoom Microphone Delay or Lag - Complete Fix Guide',
@@ -86,13 +86,62 @@ export default function IssuePage() {
           
           <div className="mb-4">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Zoom Microphone Delay or Lag</h1>
-            <p className="text-xl text-gray-600 max-w-3xl">
-              Delay or lag in Zoom audio input. This guide covers all solutions, from permissions to driver updates.
-            </p>
+            <div className="text-xl text-gray-600 max-w-3xl space-y-3">
+              <p>Noticeable lag, garbled syllables, or “underwater” voice in Zoom is usually buffer and routing: Bluetooth profiles, virtual cables, CPU load, or Zoom’s own processing fighting your speaker path—not a vague “slow internet” alone.</p>
+              <p>
+                Use the{' '}
+                <Link href="/mic" className="text-blue-600 hover:text-blue-800">
+                  microphone test
+                </Link>{' '}
+                to hear your raw input latency outside Zoom, then compare inside a Zoom test meeting.
+              </p>
+            </div>
           </div>
 
+          <ZoomWhatThisUsuallyMeans
+            causes={[
+              {
+                title: 'Bluetooth hands-free profile is throttling audio',
+                text: 'The HFP/HSP path trades quality and latency for duplex voice. Zoom may be on that narrowband node while another app used the high-quality stereo profile—so “fine elsewhere, awful in Zoom” is expected until you switch device or use wired audio.'
+              },
+              {
+                title: 'Speaker sound is feeding back into the mic path',
+                text: 'Echo cancellation and gain riding add delay while they hunt the loop. Headphones break the acoustic path; without them, Zoom keeps adjusting and you hear latency or pumping.'
+              },
+              {
+                title: 'Virtual audio or “listen to this device” doubles the buffer',
+                text: 'OBS, VoiceMeeter, loopback drivers, or Windows monitoring insert extra stages. Each stage adds milliseconds; stacked virtual devices blow past what feels real-time in Zoom.'
+              },
+              {
+                title: 'CPU or network contention starves encoding',
+                text: 'When the machine is saturated, audio frames wait in queue. Video offloads often steal time from audio scheduling, so heavy tabs or uploads can lag voice before bandwidth is “officially” the problem.'
+              },
+              {
+                title: 'Wrong mic selected with heavy processing',
+                text: 'Zoom on a far-field or inactive input still runs noise suppression and AGC on garbage—adding delay without fixing clarity. Correct selection comes first; processing second.'
+              }
+            ]}
+          />
+
+          <ZoomCheckThisFirst
+            items={[
+              'Switch to wired headphones (or wired mic) for one call and see if lag disappears.',
+              'Zoom → Settings → Audio: pick the physical input you are actually speaking into.',
+              'Turn off “Listen to this device” and other OS monitoring paths while testing.',
+              'Quit virtual audio apps and heavy browser tabs; restart Zoom.',
+              'Run a short test call after a clean restart before changing advanced audio flags.'
+            ]}
+          />
+
           <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
-            This is a Zoom device issue. <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Zoom issues →</Link>
+            <p className="mb-2">
+              This page is part of the Zoom device cluster. Use the hub for triage across camera, mic, and audio.
+            </p>
+            <p>
+              <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800 font-medium">
+                Zoom issues hub →
+              </Link>
+            </p>
           </div>
 
 
@@ -115,29 +164,58 @@ export default function IssuePage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Check Zoom audio settings</li>
-              <li>Verify microphone permissions</li>
-              <li>Select correct microphone in Zoom</li>
-              <li>Test microphone in Zoom settings</li>
-              <li>Update Zoom application</li>
+              <li>Use wired headphones to kill speaker-to-mic loops</li>
+              <li>Prefer wired or high-quality Bluetooth mode over hands-free when possible</li>
+              <li>Remove virtual audio layers and OS “listen” paths while testing</li>
+              <li>Lower CPU load from tabs and uploads during calls</li>
+              <li>Confirm the correct mic in Zoom before toggling advanced audio options</li>
             </ul>
 
-            <p className="text-sm text-gray-500 mt-4 mb-6">
-              Next: <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">Run full meeting check</Link> · <Link href="/webcam" className="text-blue-600 hover:text-blue-800">Webcam test</Link>
+            <p className="text-sm text-gray-500 mt-4 mb-2">
+              <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">
+                Run full meeting check
+              </Link>{' '}
+              to stress mic, speaker, and network in one pass.
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              If video stutters with audio, run a{' '}
+              <Link href="/webcam" className="text-blue-600 hover:text-blue-800">
+                webcam test
+              </Link>{' '}
+              to see whether CPU or bandwidth is overloaded.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why It Works Outside Zoom</h2>
+            <p className="text-gray-700 mb-4">
+              A browser recorder or simple voice app often opens a single low-latency path with minimal processing. Zoom runs acoustic echo cancellation, packet loss concealment, and often pairs with video encode—each adds buffer budget that shows up as lip-sync drift or late consonants.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Teams and Meet use their own stacks and defaults; “fine in Teams, laggy in Zoom” usually means profile, device mode, or processing differ—not that Zoom is uniquely broken on your hardware.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Tie delay back to selection and silence issues with{' '}
+              <Link href="/issues/microphone-not-working-zoom" className="text-blue-600 hover:text-blue-800">
+                microphone not working in Zoom
+              </Link>{' '}
+              when the wrong input is in play.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Return to the{' '}
+              <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800">
+                Zoom issues hub
+              </Link>{' '}
+              if you need to separate delay from no-audio or camera failures.
+            </p>
+            <p className="text-gray-700 mb-6">
+              Device locking still matters: another app can leave the Bluetooth chip in a mode that forces Zoom onto the narrowband profile even after the other app closes, until you reset the radio or reconnect.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why This Happens</h2>
             <p className="text-gray-700 mb-4">
-              Zoom includes strict privacy controls that can block microphone access. The system requires explicit permission for applications to use your microphone, and these settings can be reset after updates or changed accidentally.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Driver issues are another common cause. Zoom may not automatically install the correct drivers for your microphone, especially for USB devices or specialized equipment. Outdated drivers can cause detection problems or poor performance.
-            </p>
-            <p className="text-gray-700 mb-4">
-              System conflicts occur when multiple applications try to access the microphone simultaneously. Zoom allows only one application to use the microphone at a time, so background apps or previous sessions can block access.
+              Latency is cumulative across capture, OS mixing, optional virtual devices, encoder queues, and network jitter buffers. Zoom hides most of that behind “automatic” audio—when any stage runs hot, voice arrives late before packet loss is obvious.
             </p>
             <p className="text-gray-700 mb-6">
-              Hardware problems include loose connections, damaged cables, or microphone hardware failure. Physical issues are less common but should be checked if software solutions don't work.
+              Fixing delay is about shortening the chain: fewer virtual devices, a closed acoustic loop, and a profile that is not fighting full-duplex on a single Bluetooth channel.
             </p>
 
             <TroubleshootingMatrix issue={{ deviceType: 'mic', platform: "Zoom", slug: 'zoom-audio-delay-microphone' }} />
@@ -280,20 +358,13 @@ export default function IssuePage() {
               ))}
             </div>
 
-            <RelatedGuides guides={[
-          {
-                    "title": "Microphone Not Working in Chrome",
-                    "href": "/issues/microphone-not-working-chrome"
-          },
-          {
-                    "title": "Microphone Not Working on Discord Mobile",
-                    "href": "/issues/mic-not-working-discord-mobile"
-          },
-          {
-                    "title": "Microphone Not Working in Safari",
-                    "href": "/issues/microphone-not-working-safari"
-          }
-]} />
+            <RelatedGuides
+              guides={[
+                { title: 'Microphone Not Working in Zoom', href: '/issues/microphone-not-working-zoom' },
+                { title: 'Webcam Not Working in Zoom', href: '/issues/webcam-not-working-zoom' },
+                { title: 'Microphone Not Working in Chrome', href: '/issues/microphone-not-working-chrome' }
+              ]}
+            />
 
             <p className="text-gray-700 mb-6 mt-8">
               Use the <Link href="/mic" className="text-blue-600 hover:text-blue-800">online microphone test</Link> to confirm everything is working.

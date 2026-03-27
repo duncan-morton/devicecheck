@@ -9,6 +9,7 @@ import HelpfulWidget from '@/components/HelpfulWidget'
 import QuickAnswerBox from '@/components/QuickAnswerBox'
 import StepsBlock from '@/components/StepsBlock'
 import IssueDiagnostic from '@/components/IssueDiagnostic'
+import { ZoomCheckThisFirst, ZoomWhatThisUsuallyMeans } from '@/components/ZoomIssueAuthoritySections'
 import IssueLinksPanel from '@/components/IssueLinksPanel'
 import TroubleshootingMatrix from '@/components/TroubleshootingMatrix'
 import Link from 'next/link'
@@ -16,7 +17,6 @@ import issuesData from '@/data/issues.json'
 
 export const revalidate = 86400
 
-const baseUrl = 'https://devicecheck.io'
 const issuePath = '/issues/webcam-not-working-zoom'
 export const metadata: Metadata = { ...genMeta({
   title: 'Webcam Not Working in Zoom - Complete Fix Guide',
@@ -86,13 +86,62 @@ export default function IssuePage() {
           
           <div className="mb-4">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Webcam Not Working in Zoom</h1>
-            <p className="text-xl text-gray-600 max-w-3xl">
-              Webcam not showing or detected in Zoom. This guide covers all solutions, from permissions to driver updates.
-            </p>
+            <div className="text-xl text-gray-600 max-w-3xl space-y-3">
+              <p>Black tile, “no camera,” or wrong picture in Zoom almost always means selection, a lock from another app, or OS privacy scoped to the Zoom binary—not generic “broken hardware.”</p>
+              <p>
+                Run a{' '}
+                <Link href="/webcam" className="text-blue-600 hover:text-blue-800">
+                  webcam test
+                </Link>{' '}
+                to confirm the issue is Zoom-specific before you chase drivers.
+              </p>
+            </div>
           </div>
 
+          <ZoomWhatThisUsuallyMeans
+            causes={[
+              {
+                title: 'Zoom is pointed at the wrong camera',
+                text: 'Virtual cameras, old USB entries, and “default” after dock changes leave Zoom bound to a device name that no longer captures. The preview stays black even though a real camera exists elsewhere in the list.'
+              },
+              {
+                title: 'Another app is holding the camera open',
+                text: 'Teams, OBS, other Zoom sessions, or a browser tab with live preview can keep an exclusive capture session. Zoom then shows in use, no device, or a frozen last frame depending on the OS.'
+              },
+              {
+                title: 'OS privacy allows the browser but blocks desktop Zoom',
+                text: 'Windows and macOS store permissions per app. A green light in Chrome does not prove the installed Zoom client is allowed; updates can replace the executable path and silently revoke access.'
+              },
+              {
+                title: 'Browser Zoom works; the desktop app does not',
+                text: 'Web Zoom uses the browser’s permission and device list. The desktop app uses native capture and its own privacy toggles—so one path can work while the other fails on the same machine.'
+              },
+              {
+                title: 'Stale enumeration after sleep or USB changes',
+                text: 'After reconnecting a dock or waking from sleep, the OS may remount the camera with a new identity. Zoom keeps the old selection until you restart the client or re-pick the device.'
+              }
+            ]}
+          />
+
+          <ZoomCheckThisFirst
+            items={[
+              'Zoom → Settings → Video: select your physical camera (not a dead “default”).',
+              'Confirm preview works in our webcam test so you know the OS still exposes the device.',
+              'Quit other video apps, OBS, and browser tabs that might preview the camera.',
+              'Fully restart Zoom after permission or hardware changes.',
+              'If you use Zoom in the browser too, compare once: same symptom in both places narrows OS vs client.'
+            ]}
+          />
+
           <div className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
-            This is a Zoom device issue. <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800 font-medium">See all Zoom issues →</Link>
+            <p className="mb-2">
+              This page is part of the Zoom device cluster. Use the hub for triage across camera, mic, and audio.
+            </p>
+            <p>
+              <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800 font-medium">
+                Zoom issues hub →
+              </Link>
+            </p>
           </div>
 
 
@@ -115,29 +164,55 @@ export default function IssuePage() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Quick Fix Summary</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li>Check Zoom video settings</li>
-              <li>Verify camera permissions</li>
-              <li>Select correct camera in Zoom</li>
-              <li>Test camera in Zoom settings</li>
-              <li>Update Zoom application</li>
+              <li>Confirm the correct camera in Zoom → Settings → Video</li>
+              <li>Allow camera for the Zoom app in system privacy (not only the browser)</li>
+              <li>Release locks: quit other capture apps, then restart Zoom</li>
+              <li>Verify hardware with a webcam test outside Zoom</li>
+              <li>Update Zoom after major OS upgrades and re-check privacy toggles</li>
             </ul>
 
-            <p className="text-sm text-gray-500 mt-4 mb-6">
-              Next: <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">Run full meeting check</Link> · <Link href="/mic" className="text-blue-600 hover:text-blue-800">Microphone test</Link>
+            <p className="text-sm text-gray-500 mt-4 mb-2">
+              <Link href="/meeting-check" className="text-blue-600 hover:text-blue-800">
+                Run full meeting check
+              </Link>{' '}
+              before an important call.
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              If audio is also wrong, use the{' '}
+              <Link href="/mic" className="text-blue-600 hover:text-blue-800">
+                microphone test
+              </Link>{' '}
+              to separate input problems from video.
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why It Works Outside Zoom</h2>
+            <p className="text-gray-700 mb-4">
+              A browser tab proves the sensor and USB path can work, but it uses the browser’s permission prompt and media stack. Desktop Zoom is a different executable with its own row in macOS Privacy & Security or Windows camera settings—deny that row and Chrome can still show a picture while Zoom stays black.
+            </p>
+            <p className="text-gray-700 mb-4">
+              For symptom-based routing across Zoom camera, mic, and delay issues, use the{' '}
+              <Link href="/hubs/zoom-issues" className="text-blue-600 hover:text-blue-800">
+                Zoom issues hub
+              </Link>
+              .
+            </p>
+            <p className="text-gray-700 mb-4">
+              If video fails but people can hear you, treat audio as confirmed and focus on capture locks and device selection; if both fail, fix mic and camera permission entries separately—start with{' '}
+              <Link href="/issues/microphone-not-working-zoom" className="text-blue-600 hover:text-blue-800">
+                microphone not working in Zoom
+              </Link>
+              .
+            </p>
+            <p className="text-gray-700 mb-6">
+              Many cameras allow only one exclusive reader. A background meeting, virtual camera, or OS privacy preview can hold that session open so Zoom never gets a fresh open—even when a quick test in another app “works.”
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why This Happens</h2>
             <p className="text-gray-700 mb-4">
-              Zoom includes strict privacy controls that can block camera access. The system requires explicit permission for applications to use your camera, and these settings can be reset after updates or changed accidentally.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Driver issues are another common cause. Zoom may not automatically install the correct drivers for your camera, especially for USB devices or specialized equipment. Outdated drivers can cause detection problems or poor performance.
-            </p>
-            <p className="text-gray-700 mb-4">
-              System conflicts occur when multiple applications try to access the camera simultaneously. Zoom allows only one application to use the camera at a time, so background apps or previous sessions can block access.
+              Zoom does not talk to the camera directly; it asks the OS for a device handle. Anything that breaks enumeration, permission, or exclusive access surfaces inside Zoom as missing video—not always with a clear error string.
             </p>
             <p className="text-gray-700 mb-6">
-              Hardware problems include loose connections, damaged cables, or camera hardware failure. Physical issues are less common but should be checked if software solutions don't work.
+              Virtual cameras and conferencing tools multiply device entries. Zoom’s list shows names, not health, so a plausible wrong pick looks like a hardware failure until you re-select or remove the middle layer.
             </p>
 
             <TroubleshootingMatrix issue={{ deviceType: 'webcam', platform: "Zoom", slug: 'webcam-not-working-zoom' }} />
@@ -280,20 +355,13 @@ export default function IssuePage() {
               ))}
             </div>
 
-            <RelatedGuides guides={[
-          {
-                    "title": "Camera Not Detected in Teams",
-                    "href": "/issues/camera-not-detected-teams"
-          },
-          {
-                    "title": "Webcam Not Working on Windows 11",
-                    "href": "/issues/webcam-not-working-windows-11"
-          },
-          {
-                    "title": "Webcam Not Working in Firefox",
-                    "href": "/issues/webcam-not-working-firefox"
-          }
-]} />
+            <RelatedGuides
+              guides={[
+                { title: 'Microphone Not Working in Zoom', href: '/issues/microphone-not-working-zoom' },
+                { title: 'Zoom Microphone Delay or Lag', href: '/issues/zoom-audio-delay-microphone' },
+                { title: 'Webcam Not Working on Windows 11', href: '/issues/webcam-not-working-windows-11' }
+              ]}
+            />
 
             <p className="text-gray-700 mb-6 mt-8">
               Use the <Link href="/webcam" className="text-blue-600 hover:text-blue-800">online webcam test</Link> to confirm everything is working.
