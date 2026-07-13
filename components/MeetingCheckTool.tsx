@@ -59,12 +59,16 @@ export default function MeetingCheckTool() {
   const [speakerState, setSpeakerState] = useState<'idle' | 'playing' | 'asked'>('idle')
   const [speakerCheck, setSpeakerCheck] = useState<Check>('pending')
 
-  // Keep the <video> wired to the active stream.
+  // Keep the <video> wired to the active stream. Depends on `phase` too, because
+  // the <video> only mounts once we reach the 'active' phase — after `stream` is
+  // already set — so binding on `stream` alone would miss the element.
   useEffect(() => {
-    if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream
+    const el = videoRef.current
+    if (el && stream) {
+      el.srcObject = stream
+      el.play().catch(() => {})
     }
-  }, [stream])
+  }, [stream, phase])
 
   // Stop everything on unmount.
   useEffect(() => {
