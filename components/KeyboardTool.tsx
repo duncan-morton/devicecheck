@@ -100,9 +100,11 @@ const layouts: Record<LanguageLayout, Record<string, string>> = {
 
 interface KeyboardToolProps {
   variant?: 'full' | 'embed'
+  /** Render the Chromebook layout: browser/system top row + Search key, no Windows keys. */
+  chromebook?: boolean
 }
 
-export default function KeyboardTool({ variant = 'full' }: KeyboardToolProps) {
+export default function KeyboardTool({ variant = 'full', chromebook = false }: KeyboardToolProps) {
   const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set())
   const [testedKeys, setTestedKeys] = useState<Set<string>>(new Set())
   const [keyHistory, setKeyHistory] = useState<string[]>([])
@@ -256,7 +258,40 @@ export default function KeyboardTool({ variant = 'full' }: KeyboardToolProps) {
     ],
   ]
 
-  const totalKeys = 87
+  // Chromebook layout: browser/system top row (Chrome OS reports these as F1–F10),
+  // a Search/Launcher key where Caps Lock sits, and no Windows/Meta keys.
+  const chromebookRows: KeyLayout[][] = [
+    [
+      { code: 'Escape', label: 'esc', width: 'w-14' },
+      { code: 'F1', label: '← Back' },
+      { code: 'F2', label: '→ Fwd' },
+      { code: 'F3', label: '↻ Reload' },
+      { code: 'F4', label: '⛶ Full' },
+      { code: 'F5', label: '▤ Windows' },
+      { code: 'F6', label: '☀ −' },
+      { code: 'F7', label: '☀ +' },
+      { code: 'F8', label: '🔇' },
+      { code: 'F9', label: '🔉' },
+      { code: 'F10', label: '🔊' },
+    ],
+    keyboardRows[1], // number row
+    keyboardRows[2], // QWERTY row
+    // ASDF row with a Search/Launcher key in place of Caps Lock
+    [{ code: 'CapsLock', label: '🔍 Search', width: 'w-24' }, ...keyboardRows[3].slice(1)],
+    keyboardRows[4], // ZXCV row
+    // Bottom row: Chromebooks have no Windows key
+    [
+      { code: 'ControlLeft', label: 'Ctrl', width: 'w-20' },
+      { code: 'AltLeft', label: 'Alt', width: 'w-16' },
+      { code: 'Space', label: 'Space', width: 'flex-1' },
+      { code: 'AltRight', label: 'Alt', width: 'w-16' },
+      { code: 'ControlRight', label: 'Ctrl', width: 'w-20' },
+    ],
+  ]
+
+  const rows = chromebook ? chromebookRows : keyboardRows
+
+  const totalKeys = chromebook ? 63 : 87
   const testedCount = testedKeys.size
   const progress = Math.min(100, Math.round((testedCount / totalKeys) * 100))
 
@@ -297,7 +332,7 @@ export default function KeyboardTool({ variant = 'full' }: KeyboardToolProps) {
         </div>
         <div className="bg-gray-800 rounded-lg p-3 border border-gray-700">
           <div className="space-y-1 max-w-2xl mx-auto">
-            {keyboardRows.slice(1, 5).map((row, rowIndex) => (
+            {rows.slice(1, 5).map((row, rowIndex) => (
               <div key={rowIndex} className="flex gap-1 justify-center">
                 {row.map((key) => (
                   <Key
@@ -374,9 +409,9 @@ export default function KeyboardTool({ variant = 'full' }: KeyboardToolProps) {
       {/* Keyboard */}
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl p-6 md:p-8 mb-6 border border-gray-700">
         <div className="space-y-2 max-w-5xl mx-auto">
-          {keyboardRows.map((row, rowIndex) => (
+          {rows.map((row, rowIndex) => (
             <div key={rowIndex} className="flex gap-1.5 justify-center">
-              {rowIndex === 0 && <div className="w-14" />}
+              {!chromebook && rowIndex === 0 && <div className="w-14" />}
               {row.map((key) => (
                 <Key
                   key={key.code}
@@ -388,6 +423,14 @@ export default function KeyboardTool({ variant = 'full' }: KeyboardToolProps) {
             </div>
           ))}
         </div>
+        {chromebook && (
+          <p className="text-xs text-gray-400 text-center mt-4 max-w-2xl mx-auto">
+            Press any key on your Chromebook — it turns green here. Letters, numbers,
+            arrows and modifier keys work exactly as shown. Top‑row keys (Back, Reload,
+            brightness, volume) light up on most Chromebooks; a few models report them
+            differently.
+          </p>
+        )}
       </div>
 
       {/* Key History */}
