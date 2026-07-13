@@ -5,7 +5,6 @@ import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 import JsonLdScript from "@/components/JsonLdScript";
 import { generateWebSiteSchema, generateOrganizationSchema } from "@/lib/seo/jsonLd";
 import { Analytics } from "@vercel/analytics/next";
-import LocaleSwitcher from "@/components/LocaleSwitcher";
 import AppChrome from "@/components/AppChrome";
 import Footer from "@/components/Footer";
 
@@ -65,9 +64,6 @@ export default function RootLayout({
         )}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="fixed top-4 right-4 z-50">
-          <LocaleSwitcher />
-        </div>
         <AppChrome>{children}</AppChrome>
         <Footer />
         <Analytics />

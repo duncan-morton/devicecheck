@@ -108,12 +108,7 @@ export function generateWebSiteSchema(): WebSiteSchema {
     '@type': 'WebSite',
     name: 'DeviceCheck.io',
     url: BASE_URL,
-    description: 'Free online device testing tools. Test your webcam, microphone, keyboard, screen, and more.',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${BASE_URL}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string'
-    }
+    description: 'Free online device testing tools. Test your webcam, microphone, keyboard, screen, and more.'
   }
 }
 
@@ -123,7 +118,7 @@ export function generateOrganizationSchema(): OrganizationSchema {
     '@type': 'Organization',
     name: 'DeviceCheck.io',
     url: BASE_URL,
-    logo: `${BASE_URL}/logo.png`,
+    logo: `${BASE_URL}/logo.svg`,
     sameAs: []
   }
 }
@@ -227,7 +222,7 @@ export function generateArticleSchema(
     description,
     inLanguage: locale || 'en',
     author: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: 'DeviceCheck.io'
     },
     publisher: {
@@ -235,7 +230,7 @@ export function generateArticleSchema(
       name: 'DeviceCheck.io',
       logo: {
         '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.png`
+        url: `${BASE_URL}/logo.svg`
       }
     },
     datePublished,

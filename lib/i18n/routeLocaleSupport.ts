@@ -12,7 +12,9 @@ import { getLocalizedPath } from '@/i18n/getTranslation'
  * - Privacy, Terms: all locales (pages exist in de, es, fr, pt, hi)
  * - Guides (/guides/*): EN only for now (per-guide locale existence could be added later)
  */
-const ALL_LOCALES: Locale[] = ['en', 'de', 'es', 'fr', 'pt', 'hi']
+// Site is English-only. Locale route trees were removed; keeping this as ['en']
+// makes hreflang/sitemap/internal-links resolve to English everywhere.
+const ALL_LOCALES: Locale[] = ['en']
 
 const TOOL_PATHS = ['/', '/mic', '/webcam', '/keyboard', '/screen', '/meeting-check']
 

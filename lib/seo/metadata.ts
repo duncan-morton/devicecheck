@@ -34,7 +34,6 @@ export function generateMetadata(config: PageMetadata): Metadata {
     : `${config.title} | ${SITE_NAME}`
   
   const canonical = `${BASE_URL}${config.path}`
-  const ogImage = config.ogImage || `${BASE_URL}/og-image.png`
 
   // Generate hreflang only for locales that actually have this route (avoid 404s)
   const basePath = getBasePath(config.path)
@@ -59,23 +58,14 @@ export function generateMetadata(config: PageMetadata): Metadata {
       description: config.description,
       url: canonical,
       siteName: SITE_NAME,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: config.title
-        }
-      ],
+      // og:image / twitter:image are supplied automatically by app/opengraph-image.tsx
       locale: LOCALE_MAP[locale],
-      type: 'website',
-      alternateLocale: Object.values(LOCALE_MAP).filter(l => l !== LOCALE_MAP[locale])
+      type: 'website'
     },
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
-      description: config.description,
-      images: [ogImage]
+      description: config.description
     },
     robots: {
       index: !config.noindex,
