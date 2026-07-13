@@ -262,19 +262,19 @@ export default function MeetingCheckPage() {
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Step-by-Step Meeting Check Guide</h3>
             <ol className="list-decimal pl-6 space-y-3 text-gray-700 mb-6">
               <li>
-                <strong>Test Network:</strong> Click "Test Network" to check your ping and jitter. Wait for the test to complete (takes about 5 seconds).
+                <strong>Start the check:</strong> Click "Start meeting check" and choose "Allow" on the browser permission prompt. Camera, microphone, speakers, and connection are all set up from a single prompt.
               </li>
               <li>
-                <strong>Test Camera:</strong> Click "Test Camera" to verify camera access. Grant permissions if prompted. The test confirms your camera works.
+                <strong>Check your camera:</strong> Confirm you can see yourself in the live preview. If you have more than one camera, pick the right one from the dropdown.
               </li>
               <li>
-                <strong>Test Microphone:</strong> Click "Test Microphone" to verify mic access. Grant permissions if prompted. The test confirms your microphone works.
+                <strong>Check your microphone:</strong> Say a few words and watch the level bar move. When it detects sound, the mic is marked as working. Switch input devices if the bar stays flat.
               </li>
               <li>
-                <strong>Review Results:</strong> Check the summary. All tests should show "Pass" for optimal video call quality.
+                <strong>Test your speakers:</strong> Click "Play test sound" and confirm whether you heard it. This verifies you'll be able to hear other people on the call.
               </li>
               <li>
-                <strong>Fix Issues:</strong> If any test fails, follow the troubleshooting steps below before joining your call.
+                <strong>Read the verdict:</strong> The banner at the top tells you if you're ready or how many items need attention. Fix anything flagged, then rejoin with confidence.
               </li>
             </ol>
 
