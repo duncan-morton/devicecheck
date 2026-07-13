@@ -18,7 +18,7 @@ const t = getTranslation(locale)
 
 export const metadata: Metadata = genMeta({
   title: t.meeting_check_title,
-  description: 'Test your network, camera, and microphone before video calls. Check ping, jitter, and device connectivity with our free meeting check tool for Zoom, Teams, and Google Meet.',
+  description: 'Test your camera, microphone, and speakers before video calls — see your camera, watch your mic level, and confirm you can hear others. Free browser-based meeting check for Zoom, Teams, and Google Meet.',
   path: '/meeting-check',
   locale: 'en',
   keywords: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = genMeta({
 const faqs = [
   {
     question: 'What does the meeting check test?',
-    answer: 'Our meeting check tests your network connectivity (ping and jitter), camera access, and microphone access. This ensures everything is working before joining important video calls.'
+    answer: 'It checks the three things you need for a call: your camera (with a live preview so you can see yourself), your microphone (with a live level meter that confirms it hears you), and your speakers (a playback test so you know you can hear others). Everything runs in your browser—nothing is recorded or uploaded.'
   },
   {
     question: 'What is a good ping for video calls?',
@@ -70,35 +70,35 @@ const faqs = [
 
 const steps = [
   {
-    title: 'Test network first',
-    description: 'Click Test Network to measure ping and jitter. Aim for ping <150ms and low jitter.'
+    title: 'Start the check',
+    description: 'Click Start meeting check and choose Allow on the browser permission prompt to set up camera and microphone at once.'
   },
   {
-    title: 'Allow camera and mic',
-    description: 'Use the browser lock icon and system privacy settings to allow camera and microphone.'
+    title: 'Confirm your camera',
+    description: 'Check the live preview shows your face. If you have more than one camera, pick the right one from the dropdown.'
   },
   {
-    title: 'Select correct devices',
-    description: 'In your OS and conferencing app, pick the correct microphone and camera, then retest.'
+    title: 'Confirm your microphone',
+    description: 'Say a few words and watch the level bar move. Switch input devices if the bar stays flat.'
+  },
+  {
+    title: 'Test your speakers',
+    description: 'Play the test sound and confirm you heard it, so you know you can hear other people on the call.'
   },
   {
     title: 'Close other video apps',
-    description: 'Quit Zoom, Teams, Discord, or tabs holding the camera or mic before retesting.'
+    description: 'Quit Zoom, Teams, Discord, or tabs holding the camera or mic, then rerun the check if anything failed.'
   },
   {
-    title: 'Update drivers and restart',
-    description: 'Update audio/camera drivers (Windows) or keep macOS updated; restart to clear locks.'
-  },
-  {
-    title: 'Retest before joining',
-    description: 'Re-run meeting check to confirm all tests show Pass before your call.'
+    title: 'Check your connection separately',
+    description: 'For call quality, run a dedicated speed test and aim for 3+ Mbps upload; prefer wired Ethernet over WiFi.'
   }
 ]
 
 const howToSchema = generateHowToSchema({
   url: 'https://devicecheck.io/meeting-check',
   name: 'How to run a meeting check for calls',
-  description: 'Step-by-step instructions to test network, camera, and microphone before video calls.',
+  description: 'Step-by-step instructions to test your camera, microphone, and speakers before video calls.',
   steps
 })
 
@@ -143,7 +143,7 @@ export default function MeetingCheckPage() {
               {(t as Record<string, string>).meeting_check_problem_h1 || t.meeting_check_title}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl">
-              Test your network connectivity, camera, and microphone before important video calls. Ensure everything works for Zoom, Teams, Google Meet, and other platforms.
+              See your camera, check your microphone level, and confirm your speakers work—everything you need before a Zoom, Teams, or Google Meet call. Runs entirely in your browser.
             </p>
           </div>
 
@@ -190,11 +190,11 @@ export default function MeetingCheckPage() {
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">What This Meeting Check Tests</h2>
-            <p className="text-gray-700 mb-2"><strong>Network:</strong> Ping and jitter to gauge latency and stability. High values can cause lag or choppy audio in calls.</p>
-            <p className="text-gray-700 mb-2"><strong>Camera access:</strong> Whether the browser can get a video stream from your camera. Same permission and device stack that meeting apps use.</p>
-            <p className="text-gray-700 mb-2"><strong>Microphone access:</strong> Whether the browser can get an audio stream from your mic. Confirms permissions and device selection.</p>
-            <p className="text-gray-700 mb-2"><strong>Pass/fail summary:</strong> A single view of what’s working so you can fix only what failed.</p>
-            <p className="text-gray-700 mb-6"><strong>No account or install:</strong> Runs in the browser; no app or login required. Uses the same device access as web-based meeting clients.</p>
+            <p className="text-gray-700 mb-2"><strong>Camera:</strong> A live preview from your camera so you can confirm it works and check your framing—the same permission and device stack meeting apps use.</p>
+            <p className="text-gray-700 mb-2"><strong>Microphone:</strong> A live level meter that moves when you speak, so you know your mic is detected and actually picking up sound (not just that access was granted).</p>
+            <p className="text-gray-700 mb-2"><strong>Speakers:</strong> A left-to-right test tone with a quick “did you hear it?” confirmation—so you know you’ll be able to hear other people on the call.</p>
+            <p className="text-gray-700 mb-2"><strong>Device pickers:</strong> Switch between cameras or microphones to select the right one, a common cause of “no camera/mic” in meetings.</p>
+            <p className="text-gray-700 mb-6"><strong>No account or install:</strong> Runs in the browser; no app or login required. Nothing is recorded or uploaded. For connection quality, run a dedicated speed test—browsers can’t measure real call bandwidth reliably.</p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Common Problems This Check Helps Diagnose</h2>
             <p className="text-gray-700 mb-2">

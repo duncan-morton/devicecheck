@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { runConnectivityTest, TestStatus } from '@/lib/diagnostics'
 import { playStereoSweep } from '@/lib/audioGenerator'
 import VolumeMeter from '@/components/VolumeMeter'
 import {
@@ -11,18 +10,12 @@ import {
   XCircle,
   Video,
   Mic,
-  Wifi,
   Volume2,
+  Wifi,
   Loader2,
 } from 'lucide-react'
 
 type Check = 'pending' | 'pass' | 'warn' | 'fail'
-
-interface NetStats {
-  ping: number
-  jitter: number
-  status: TestStatus
-}
 
 interface DeviceOpt {
   deviceId: string
@@ -30,12 +23,6 @@ interface DeviceOpt {
 }
 
 const MIC_DETECT_THRESHOLD = 0.06 // normalized level that counts as "hearing you"
-
-function statusToCheck(s: TestStatus): Check {
-  if (s === TestStatus.SUCCESS) return 'pass'
-  if (s === TestStatus.WARNING) return 'warn'
-  return 'fail'
-}
 
 export default function MeetingCheckTool() {
   const [phase, setPhase] = useState<'idle' | 'requesting' | 'active'>('idle')
@@ -51,10 +38,6 @@ export default function MeetingCheckTool() {
 
   const [cameraCheck, setCameraCheck] = useState<Check>('pending')
   const [micHeard, setMicHeard] = useState(false)
-  const [micPeak, setMicPeak] = useState(0)
-
-  const [net, setNet] = useState<NetStats | null>(null)
-  const [netTesting, setNetTesting] = useState(false)
 
   const [speakerState, setSpeakerState] = useState<'idle' | 'playing' | 'asked'>('idle')
   const [speakerCheck, setSpeakerCheck] = useState<Check>('pending')
@@ -90,7 +73,6 @@ export default function MeetingCheckTool() {
       setCameraCheck(s.getVideoTracks().some((t) => t.readyState === 'live') ? 'pass' : 'fail')
       // reset mic detection for the new stream
       setMicHeard(false)
-      setMicPeak(0)
       return s
     },
     [stream]
@@ -114,12 +96,6 @@ export default function MeetingCheckTool() {
       setCamId(cams[0]?.deviceId ?? '')
       setMicId(ms[0]?.deviceId ?? '')
       setPhase('active')
-      // Kick off the network test in parallel.
-      setNetTesting(true)
-      runConnectivityTest()
-        .then(setNet)
-        .catch(() => setNet({ ping: 999, jitter: 0, status: TestStatus.FAILURE }))
-        .finally(() => setNetTesting(false))
     } catch (err) {
       const name = err instanceof DOMException ? err.name : ''
       setPermError(
@@ -151,7 +127,6 @@ export default function MeetingCheckTool() {
   }
 
   const handleLevel = useCallback((level: number) => {
-    setMicPeak((p) => (level > p ? level : p * 0.95 + level * 0.05))
     if (level >= MIC_DETECT_THRESHOLD) setMicHeard(true)
   }, [])
 
@@ -167,10 +142,9 @@ export default function MeetingCheckTool() {
 
   // Derived per-check states
   const micCheck: Check = phase !== 'active' ? 'pending' : micHeard ? 'pass' : 'warn'
-  const netCheck: Check = net ? statusToCheck(net.status) : 'pending'
 
-  const checks = [cameraCheck, micCheck, speakerCheck, netCheck]
-  const allResolved = phase === 'active' && !netTesting && speakerCheck !== 'pending'
+  const checks = [cameraCheck, micCheck, speakerCheck]
+  const allResolved = phase === 'active' && speakerCheck !== 'pending'
   const failCount = checks.filter((c) => c === 'fail').length
   const warnCount = checks.filter((c) => c === 'warn').length
 
@@ -179,10 +153,10 @@ export default function MeetingCheckTool() {
       <div className="rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
         <div className="flex flex-col items-center text-center">
           <div className="flex gap-3 mb-4 text-blue-600">
-            <Video size={28} /> <Mic size={28} /> <Volume2 size={28} /> <Wifi size={28} />
+            <Video size={28} /> <Mic size={28} /> <Volume2 size={28} />
           </div>
           <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-            Check your camera, mic, speakers &amp; connection — in one click
+            Check your camera, mic &amp; speakers — in one click
           </h2>
           <p className="text-gray-600 max-w-xl mb-6">
             One permission prompt tests everything you need for Zoom, Teams, or Meet. Nothing is
@@ -253,7 +227,7 @@ export default function MeetingCheckTool() {
                 ? 'Speak to test your mic and play the speaker test below.'
                 : failCount > 0 || warnCount > 0
                 ? 'See the highlighted cards for what to check.'
-                : 'Camera, microphone, speakers and connection all look good.'}
+                : 'Camera, microphone and speakers all look good.'}
             </p>
           </div>
         </div>
@@ -329,26 +303,29 @@ export default function MeetingCheckTool() {
           )}
         </CheckCard>
 
-        {/* Network */}
-        <CheckCard title="Connection" icon={<Wifi size={20} />} state={netCheck}>
-          {netTesting || !net ? (
-            <div className="flex items-center gap-2 text-gray-500 text-sm">
-              <Loader2 className="animate-spin" size={16} /> Measuring ping &amp; jitter…
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <Row label="Ping" value={net.ping >= 999 ? '—' : `${net.ping} ms`} />
-              <Row label="Jitter" value={`${net.jitter} ms`} />
-              <p className="text-sm text-gray-500">
-                {net.status === TestStatus.SUCCESS
-                  ? 'Stable enough for smooth video calls.'
-                  : net.status === TestStatus.WARNING
-                  ? 'Usable, but you may see occasional lag. Prefer wired Ethernet.'
-                  : 'Weak connection — expect choppy audio/video. Try wired Ethernet or move closer to the router.'}
-              </p>
-            </div>
-          )}
-        </CheckCard>
+        {/* Connection (informational — call quality can't be measured reliably in-browser) */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-blue-600"><Wifi size={20} /></span>
+            <h3 className="font-semibold text-gray-800">Connection</h3>
+          </div>
+          <p className="text-sm text-gray-600 mb-3">
+            Call quality depends on your upload speed and stability — which a browser can&apos;t
+            measure reliably. For an accurate check, run a quick speed test and aim for 3+ Mbps
+            upload with low latency.
+          </p>
+          <a
+            href="https://fast.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-800"
+          >
+            Run a speed test →
+          </a>
+          <p className="text-xs text-gray-400 mt-3">
+            On WiFi? A wired Ethernet connection is the most reliable fix for choppy calls.
+          </p>
+        </div>
       </div>
 
       {(failCount > 0 || warnCount > 0) && allResolved && (
@@ -425,14 +402,5 @@ function DevicePicker({
         ))}
       </select>
     </label>
-  )
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex justify-between items-center">
-      <span className="text-sm text-gray-600">{label}</span>
-      <span className="font-semibold text-gray-900">{value}</span>
-    </div>
   )
 }
