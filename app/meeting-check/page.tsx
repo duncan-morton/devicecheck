@@ -147,15 +147,6 @@ export default function MeetingCheckPage() {
             </p>
           </div>
 
-          <div className="mb-6">
-            <Link 
-              href="#test"
-              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              Run Full Meeting Check
-            </Link>
-          </div>
-
           <div id="test" className="scroll-mt-8 mb-8">
             <MeetingCheckTool />
           </div>
